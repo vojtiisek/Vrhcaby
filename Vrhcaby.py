@@ -3,4 +3,8 @@ def f(x):
 
 print("idk")
 
+print("ahoj kamarade")
+
+
 print("ahoj")
+print("coze")

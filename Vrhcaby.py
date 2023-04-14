@@ -4,109 +4,114 @@ from tkinter import messagebox, Message
 from PIL import ImageTk, Image 
 from pathlib import Path
 
+root = tk.Tk() 
+
 class HerniDeska:
-    def __init__(self, hra) -> None:
 
-        # Okno
-        self.hra = hra
-        self.hra.resizable(False, False)
-        self.hra.geometry("964x669")
-        self.hra.title("Vrhcaby")
+    # Okno
+    hra = root
+    hra.resizable(False, False)
+    hra.geometry("964x669")
+    hra.title("Vrhcaby")
 
-        # Pozadi menu
-        self.pozadi_obrazek = Image.open("wooden_table_background.jpg")
-        self.pozadi_menu = ImageTk.PhotoImage(self.pozadi_obrazek)
+    # Pozadi menu
+    pozadi_obrazek = Image.open("wooden_table_background.jpg")
+    pozadi_menu = ImageTk.PhotoImage(pozadi_obrazek)
 
-        # Platno - menu
-        self.platno_menu = tk.Canvas(self.hra, width=964, height=669)  
-        self.platno_menu.create_image(0,0,image=self.pozadi_menu, anchor=tk.NW)
-        self.platno_menu.pack()
+    # Platno - menu
+    platno_menu = tk.Canvas(hra, width=964, height=669)  
+    platno_menu.create_image(0,0,image=pozadi_menu, anchor=tk.NW)
+    platno_menu.pack()
 
-        # Ikona
-        icon = Image.open("vrhcaby_icon.png")
-        icon_tk = ImageTk.PhotoImage(icon)
-        self.hra.wm_iconphoto(False, icon_tk)
+    # Ikona
+    icon = Image.open("vrhcaby_icon.png")
+    icon_tk = ImageTk.PhotoImage(icon)
+    hra.wm_iconphoto(False, icon_tk)
 
-        # Tlacitka
-        # Tlacitko "Hrat"
-        self.start_game_bg = Image.open("start_button.png") 
-        self.start_game_bg_tk = ImageTk.PhotoImage(self.start_game_bg)
-        self.start_game_button = Button(self.platno_menu, image=self.start_game_bg_tk, command=lambda : self.hrat_button_click(), bd=0, highlightthickness=0)
-        self.start_game_button.config(width=self.start_game_bg_tk.width(), height=self.start_game_bg_tk.height())
-        self.platno_menu.create_window(480, 300, window=self.start_game_button)
+    # Tlacitka
+    # Tlacitko "Hrat"
+    start_game_bg = Image.open("start_button.png") 
+    start_game_bg_tk = ImageTk.PhotoImage(start_game_bg)
+    start_game_button = Button(platno_menu, image=start_game_bg_tk, command=lambda : HerniDeska.hrat_button_click(), bd=0, highlightthickness=0)
+    start_game_button.config(width=start_game_bg_tk.width(), height=start_game_bg_tk.height())
+    platno_menu.create_window(480, 300, window=start_game_button)
 
-        # Tlacitko "Pokracovat"
-        self.continue_game_bg = Image.open("continue_button.png") 
-        self.continue_game_bg_tk = ImageTk.PhotoImage(self.continue_game_bg)
-        self.continue_game_bg_button = Button(self.platno_menu, image=self.continue_game_bg_tk, bd=0, highlightthickness=0)
-        self.continue_game_bg_button.config(width=self.continue_game_bg_tk.width(), height=self.continue_game_bg_tk.height())
-        self.platno_menu.create_window(480, 430, window=self.continue_game_bg_button)
+    # Tlacitko "Pokracovat"
+    continue_game_bg = Image.open("continue_button.png") 
+    continue_game_bg_tk = ImageTk.PhotoImage(continue_game_bg)
+    continue_game_bg_button = Button(platno_menu, image=continue_game_bg_tk, bd=0, highlightthickness=0)
+    continue_game_bg_button.config(width=continue_game_bg_tk.width(), height=continue_game_bg_tk.height())
+    platno_menu.create_window(480, 430, window=continue_game_bg_button)
        
 
-        # Tlacitko "Ukoncit hru"
-        self.quit_game_bg = Image.open("quit_game_button.png") 
-        self.quit_game_bg_tk = ImageTk.PhotoImage(self.quit_game_bg)
-        self.quit_game_bg_button = Button(self.platno_menu, image=self.quit_game_bg_tk, command=lambda : self.ukoncit_hru(), bd=0, highlightthickness=0)
-        self.quit_game_bg_button.config(width=self.quit_game_bg_tk.width(), height=self.quit_game_bg_tk.height())
-        self.platno_menu.create_window(480, 560, window=self.quit_game_bg_button)
+    # Tlacitko "Ukoncit hru"
+    quit_game_bg = Image.open("quit_game_button.png") 
+    quit_game_bg_tk = ImageTk.PhotoImage(quit_game_bg)
+    quit_game_bg_button = Button(platno_menu, image=quit_game_bg_tk, command=lambda : HerniDeska.ukoncit_hru(), bd=0, highlightthickness=0)
+    quit_game_bg_button.config(width=quit_game_bg_tk.width(), height=quit_game_bg_tk.height())
+    platno_menu.create_window(480, 560, window=quit_game_bg_button)
 
+    # Pozadi - hra
+    pozadi_obrazek_hra = Image.open("vrhcaby_mapa.jpg")
+    pozadi_hra = ImageTk.PhotoImage(pozadi_obrazek_hra)
 
+    # Platno - hra
+    platno_hra = tk.Canvas(hra, width=964, height=669)  
+    platno_hra.create_image(0,0,image=pozadi_hra, anchor=tk.NW)
+    platno_hra.pack_forget()
+    #pridej_kameny()
 
-
-        # Pozadi - hra
-        self.pozadi_obrazek_hra = Image.open("vrhcaby_mapa.jpg")
-        self.pozadi_hra = ImageTk.PhotoImage(self.pozadi_obrazek_hra)
-
-        # Platno - hra
-        self.platno_hra = tk.Canvas(self.hra, width=964, height=669)  
-        self.platno_hra.create_image(0,0,image=self.pozadi_hra, anchor=tk.NW)
-        self.platno_hra.pack_forget()
-        self.pridej_kameny()
-
-    def pridej_kameny(self):
+    @classmethod
+    def pridej_kameny(cls):
         pass
 
-    def vytvor_pointy(self):
-        point1 = Zasobnik(self, 15)
-        point2 = Zasobnik(self, 15)
-        point3 = Zasobnik(self, 15)
-        point4 = Zasobnik(self, 15)
-        point5 = Zasobnik(self, 15)
-        point6 = Zasobnik(self, 15)
-        point7 = Zasobnik(self, 15)
-        point8 = Zasobnik(self, 15)
-        point9 = Zasobnik(self, 15)
-        point10 = Zasobnik(self, 15)
-        point11 = Zasobnik(self, 15)
-        point12 = Zasobnik(self, 15)
-        point13 = Zasobnik(self, 15)
-        point14 = Zasobnik(self, 15)
-        point15 = Zasobnik(self, 15)
-        point16 = Zasobnik(self, 15)
-        point17 = Zasobnik(self, 15)
-        point18 = Zasobnik(self, 15)
-        point19 = Zasobnik(self, 15)
-        point20 = Zasobnik(self, 15)
-        point21 = Zasobnik(self, 15)
-        point22 = Zasobnik(self, 15)
-        point23 = Zasobnik(self, 15)
-        point24 = Zasobnik(self, 15)
+    @classmethod
+    def vytvor_pointy(cls):
+        point1 = Zasobnik(15)
+        point2 = Zasobnik(15)
+        point3 = Zasobnik(15)
+        point4 = Zasobnik(15)
+        point5 = Zasobnik(15)
+        point6 = Zasobnik(15)
+        point7 = Zasobnik(15)
+        point8 = Zasobnik(15)
+        point9 = Zasobnik(15)
+        point10 = Zasobnik(15)
+        point11 = Zasobnik(15)
+        point12 = Zasobnik(15)
+        point13 = Zasobnik(15)
+        point14 = Zasobnik(15)
+        point15 = Zasobnik(15)
+        point16 = Zasobnik(15)
+        point17 = Zasobnik(15)
+        point18 = Zasobnik(15)
+        point19 = Zasobnik(15)
+        point20 = Zasobnik(15)
+        point21 = Zasobnik(15)
+        point22 = Zasobnik(15)
+        point23 = Zasobnik(15)
+        point24 = Zasobnik(15)
 
-    def hrat_button_click(self):
-        self.shovej_menu()
-        self.vykresli_hraci_desku()
+    @classmethod
+    def hrat_button_click(cls):
+        HerniDeska.shovej_menu()
+        HerniDeska.vykresli_hraci_desku()
 
-    def ukoncit_hru(self):
-        self.hra.destroy()
+    @classmethod
+    def ukoncit_hru(cls):
+        HerniDeska.hra.destroy()
 
-    def start(self):
-        self.hra.mainloop()
+    @classmethod
+    def start(cls):
+        pass
     
-    def vykresli_hraci_desku(self):
-        self.platno_hra.pack()
+    @classmethod
+    def vykresli_hraci_desku(cls):
+        HerniDeska.platno_hra.pack()
     
-    def shovej_menu(self):
-        self.platno_menu.pack_forget()
+    @classmethod
+    def shovej_menu(cls):
+        HerniDeska.platno_menu.pack_forget()
 
 class Zasobnik:
     def __init__(self, max_size : int):
@@ -149,9 +154,9 @@ class Zasobnik:
 class Hra:
     def __init__(self, hra):
         self.hra = hra
-        self.platno = HerniDeska(self.hra)
-        
+        self.platno = HerniDeska()
+  
+       
 if __name__ == "__main__":
-    root = tk.Tk()
     app = Hra(root)
     root.mainloop()

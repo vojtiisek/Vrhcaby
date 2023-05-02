@@ -98,7 +98,7 @@ class HerniDeska:
 
     @classmethod
     def pridej_pozice(cls): # naplni vsechny pointy maximalnim poctem kamenu (5ti) - tyto kameny jsou skryte a pouzivane pro posuny a pro napovedu dalsich tahu
-        kamen1_0 = Pozice()
+        kamen1_0 = Pozice(HerniDeska.platno_hra, False, None, [100,100])
 
     @classmethod
     def hrat_button_click(cls):

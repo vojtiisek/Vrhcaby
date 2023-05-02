@@ -7,7 +7,7 @@ from pathlib import Path
 from Herni_kamen import Herni_kamen
 
 class Pozice(tk.Frame):
-    def __init__(self, platno, hidden : bool, aktualni_kamen : Herni_kamen, souradnice) -> None: # souradnice - [point, pozice na pointu]
+    def __init__(self, platno, hidden : bool, aktualni_kamen : Herni_kamen, souradnice) -> None: # souradnice - [x, y]
         super().__init__(platno)
         self._platno = platno
         self._hidden = hidden

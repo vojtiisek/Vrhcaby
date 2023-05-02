@@ -4,10 +4,8 @@ from tkinter import messagebox, Message
 from PIL import ImageTk, Image 
 from pathlib import Path
 
-from Pozice import Pozice
-
 class Herni_kamen(tk.Frame):
-    def __init__(self, platno, barva_kamene: str, pozice_kamene: Pozice) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - [point, pozice na pointu]
+    def __init__(self, platno, barva_kamene: str, pozice_kamene: list) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - [point, pozice na pointu]
         super().__init__(platno)
         self._barva_kamene = barva_kamene
         self._pozice_kamene = pozice_kamene
@@ -41,7 +39,7 @@ class Herni_kamen(tk.Frame):
         return self._pozice_kamene
 
     @pozice_kamene.setter
-    def pozice_kamene(self, nova_pozice_kamene: Pozice) -> None:
+    def pozice_kamene(self, nova_pozice_kamene: list) -> None:
         if self._pozice_kamene != nova_pozice_kamene:
             self.pridej_pozici_do_historie()
             self._pozice_kamene = nova_pozice_kamene

@@ -1,8 +1,12 @@
+from this import d
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox, Message
 from PIL import ImageTk, Image 
 from pathlib import Path
+
+from Herni_kamen import Herni_kamen
+from Pozice import Pozice
 
 root = tk.Tk() 
 
@@ -66,31 +70,35 @@ class HerniDeska:
         pass
 
     @classmethod
-    def vytvor_pointy(cls):
-        point1 = Zasobnik(15)
-        point2 = Zasobnik(15)
-        point3 = Zasobnik(15)
-        point4 = Zasobnik(15)
-        point5 = Zasobnik(15)
-        point6 = Zasobnik(15)
-        point7 = Zasobnik(15)
-        point8 = Zasobnik(15)
-        point9 = Zasobnik(15)
-        point10 = Zasobnik(15)
-        point11 = Zasobnik(15)
-        point12 = Zasobnik(15)
-        point13 = Zasobnik(15)
-        point14 = Zasobnik(15)
-        point15 = Zasobnik(15)
-        point16 = Zasobnik(15)
-        point17 = Zasobnik(15)
-        point18 = Zasobnik(15)
-        point19 = Zasobnik(15)
-        point20 = Zasobnik(15)
-        point21 = Zasobnik(15)
-        point22 = Zasobnik(15)
-        point23 = Zasobnik(15)
-        point24 = Zasobnik(15)
+    def vytvor_pointy(cls): # nazev promenne - pointx - x odpovida ocisleni na mape 
+        point1 = Zasobnik(5) # 5 - maximalni pocet kamenu na danem pointu (z duvodu mista na mape vyuzivame tzv. Egyptian rule)
+        point2 = Zasobnik(5) 
+        point3 = Zasobnik(5)
+        point4 = Zasobnik(5)
+        point5 = Zasobnik(5)
+        point6 = Zasobnik(5)
+        point7 = Zasobnik(5)
+        point8 = Zasobnik(5)
+        point9 = Zasobnik(5)
+        point10 = Zasobnik(5)
+        point11 = Zasobnik(5)
+        point12 = Zasobnik(5)
+        point13 = Zasobnik(5)
+        point14 = Zasobnik(5)
+        point15 = Zasobnik(5)
+        point16 = Zasobnik(5)
+        point17 = Zasobnik(5)
+        point18 = Zasobnik(5)
+        point19 = Zasobnik(5)
+        point20 = Zasobnik(5)
+        point21 = Zasobnik(5)
+        point22 = Zasobnik(5)
+        point23 = Zasobnik(5)
+        point24 = Zasobnik(5)
+
+    @classmethod
+    def pridej_pozice(cls): # naplni vsechny pointy maximalnim poctem kamenu (5ti) - tyto kameny jsou skryte a pouzivane pro posuny a pro napovedu dalsich tahu
+        kamen1_0 = Pozice()
 
     @classmethod
     def hrat_button_click(cls):
@@ -155,7 +163,12 @@ class Hra:
     def __init__(self, hra):
         self.hra = hra
         self.platno = HerniDeska()
-  
+
+class Herni_kamen:
+    ...
+
+class Dvojkostka:
+    ...
        
 if __name__ == "__main__":
     app = Hra(root)

@@ -54,7 +54,7 @@ class HerniDeska:
     platno_menu.create_window(480, 430, window=continue_game_bg_button)
 
     # Tlacitko "Ukoncit hru"
-    quit_game_bg = Image.open("quit_game_button.png")
+    quit_game_bg = Image.open("quit_game_button.png") 
     quit_game_bg_tk = ImageTk.PhotoImage(quit_game_bg)
     quit_game_bg_button = Button(platno_menu, image=quit_game_bg_tk,
                                  command=lambda: HerniDeska.ukoncit_hru(), bd=0, highlightthickness=0)
@@ -70,7 +70,10 @@ class HerniDeska:
     platno_hra = tk.Canvas(hra, width=964, height=669)
     platno_hra.create_image(0, 0, image=pozadi_hra, anchor=tk.NW)
     platno_hra.pack_forget()
-    # pridej_kameny()
+    #HerniDeska.pridej_kameny()
+
+    kaminek = Herni_kamen(platno_hra, "bila",[0,0])
+    pozicka = Pozice(platno_hra, False, kaminek, [0,0])
 
     @classmethod
     def pridej_kameny(cls):
@@ -153,11 +156,6 @@ class Hra:
     def __init__(self, hra):
         self.hra = hra
         self.platno = HerniDeska()
-
-
-class Herni_kamen:
-    ...
-
 
 class Dvojkostka:
     def __init__(self) -> None:

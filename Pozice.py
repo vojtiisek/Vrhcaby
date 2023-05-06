@@ -14,18 +14,19 @@ class Pozice(tk.Frame):
         self._aktualni_kamen = aktualni_kamen
         self._souradnice = souradnice
 
-        kamen_bg = Image.open("hint_piece.png")
-        kamen_bg_tk = ImageTk.PhotoImage(kamen_bg)
-        
-        kamen_button.config(width=kamen_bg_tk.width(), height=kamen_bg_tk.height())
-        if(self.hidden == True):
-            kamen_button= Button(platno, image=kamen_bg_tk, command=lambda : ..., bd=0, bg="transparent", highlightcolor="", highlightthickness=0) 
+        self.pozice_bg = Image.open("hint_piece.png") 
+        self.pozice_bg_tk = ImageTk.PhotoImage(self.pozice_bg)
+
+        if(hidden == True):
+            ...
         else:
-            kamen_button= Button(platno, image=kamen_bg_tk, command=lambda : ..., bd=0, highlightthickness=0)
-        platno.create_window(480, 300, window=kamen_button)
+            self.kamen_button= Button(platno, image=self.pozice_bg_tk, command=lambda : ..., bd=0, highlightthickness=0)
+        self.kamen_button.config(width=self.pozice_bg_tk.width(), height=self.pozice_bg_tk.height())
+        platno.create_window(self.pozice_bg_tk.height(), self.pozice_bg_tk.width(), window=self.kamen_button)
+
 
     @property
-    def hidden(self) -> Herni_kamen:
+    def hidden(self) -> bool:
         return self.hidden
 
     @hidden.setter

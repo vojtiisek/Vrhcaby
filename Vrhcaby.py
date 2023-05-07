@@ -70,14 +70,6 @@ class HerniDeska:
     platno_hra = tk.Canvas(hra, width=964, height=669)
     platno_hra.create_image(0, 0, image=pozadi_hra, anchor=tk.NW)
     platno_hra.pack_forget()
-    #HerniDeska.pridej_kameny()
-
-    kaminek = Herni_kamen(platno_hra, "bila",[0,0])
-    pozicka = Pozice(platno_hra, False, kaminek, [0,0])
-
-    @classmethod
-    def pridej_kameny(cls):
-        pass
 
     @classmethod
     def vytvor_pointy(cls):
@@ -85,11 +77,79 @@ class HerniDeska:
         zasobniky = []
         for i in range(1, 24+1):
             zasobniky.append(Zasobnik(5))
+        print(zasobniky[0])
+        print(zasobniky[1])
         return zasobniky
 
+    #@classmethod
+    #def pridej_pozice(cls):  # naplni vsechny pointy maximalnim poctem kamenu (5ti) - tyto kameny jsou skryte a pouzivane pro posuny a pro napovedu dalsich tahu
+    pozice1_1 = Pozice(platno_hra, False, [610,609])
+    pozice1_2 = Pozice(platno_hra, False, [610,559])
+    pozice1_3 = Pozice(platno_hra, False, [610,509])
+    pozice1_4 = Pozice(platno_hra, False, [610,459])
+    pozice1_5 = Pozice(platno_hra, False, [610,409])
+
+    pozice2_1 = Pozice(platno_hra, False, [562,609])
+    pozice2_2 = Pozice(platno_hra, False, [562,559])
+    pozice2_3 = Pozice(platno_hra, False, [562,509])
+    pozice2_4 = Pozice(platno_hra, False, [562,459])
+    pozice2_5 = Pozice(platno_hra, False, [562,409])
+
+
+    pozice3_1 = Pozice(platno_hra, False, [515,609])
+    pozice3_2 = Pozice(platno_hra, False, [515,559])
+    pozice3_3 = Pozice(platno_hra, False, [515,509])
+    pozice3_4 = Pozice(platno_hra, False, [515,459])
+    pozice3_5 = Pozice(platno_hra, False, [515,409])
+
+    pozice4_1 = Pozice(platno_hra, False, [468,609])
+    pozice4_2 = Pozice(platno_hra, False, [468,559])
+    pozice4_3 = Pozice(platno_hra, False, [468,509])
+    pozice4_4 = Pozice(platno_hra, False, [468,459])
+    pozice4_5 = Pozice(platno_hra, False, [468,409])
+
+    pozice5_1 = Pozice(platno_hra, False, [421,609])
+    pozice5_2 = Pozice(platno_hra, False, [421,559])
+    pozice5_3 = Pozice(platno_hra, False, [421,509])
+    pozice5_4 = Pozice(platno_hra, False, [421,459])
+    pozice5_5 = Pozice(platno_hra, False, [421,409])
+
+
+    pozice6_1 = Pozice(platno_hra, False, [374,609])
+    pozice6_2 = Pozice(platno_hra, False, [374,559])
+    pozice6_3 = Pozice(platno_hra, False, [374,509])
+    pozice6_4 = Pozice(platno_hra, False, [374,459])
+    pozice6_5 = Pozice(platno_hra, False, [374,409])
+
+
+    pozice7_1 = Pozice(platno_hra, False, [294,609])
+    pozice7_2 = Pozice(platno_hra, False, [294,559])
+    pozice7_3 = Pozice(platno_hra, False, [294,509])
+    pozice7_4 = Pozice(platno_hra, False, [294,459])
+    pozice7_5 = Pozice(platno_hra, False, [294,409])
+
+    pozice8_1 = Pozice(platno_hra, False, [247,609])
+    pozice8_2 = Pozice(platno_hra, False, [247,559])
+    pozice8_3 = Pozice(platno_hra, False, [247,509])
+    pozice8_4 = Pozice(platno_hra, False, [247,459])
+    pozice8_5 = Pozice(platno_hra, False, [247,409])
+
+    pozice9_1 = Pozice(platno_hra, False, [200,609])
+    pozice9_2 = Pozice(platno_hra, False, [200,559])
+    pozice9_3 = Pozice(platno_hra, False, [200,509])
+    pozice9_4 = Pozice(platno_hra, False, [200,459])
+    pozice9_5 = Pozice(platno_hra, False, [200,409])
+
+    pozice10_1 = Pozice(platno_hra, False, [153,609])
+    pozice10_2 = Pozice(platno_hra, False, [153,559])
+    pozice10_3 = Pozice(platno_hra, False, [153,509])
+    pozice10_4 = Pozice(platno_hra, False, [153,459])
+    pozice10_5 = Pozice(platno_hra, False, [153,409])
+
+
     @classmethod
-    def pridej_pozice(cls):  # naplni vsechny pointy maximalnim poctem kamenu (5ti) - tyto kameny jsou skryte a pouzivane pro posuny a pro napovedu dalsich tahu
-        kamen1_0 = Pozice(HerniDeska.platno_hra, False, None, [100, 100])
+    def pridej_kameny(cls):
+        pass
 
     @classmethod
     def hrat_button_click(cls):
@@ -112,6 +172,9 @@ class HerniDeska:
     def shovej_menu(cls):
         HerniDeska.platno_menu.pack_forget()
 
+   #vytvor_pointy()
+    #pridej_pozice()
+    #pridej_kameny(None)
 
 class Zasobnik:
     def __init__(self, max_size: int):

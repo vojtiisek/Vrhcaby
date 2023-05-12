@@ -4,8 +4,10 @@ from tkinter import messagebox, Message
 from PIL import ImageTk, Image 
 from pathlib import Path
 
+from Mapa_pozic import Mapa_pozic
+
 class Herni_kamen(tk.Frame):
-    def __init__(self, platno, barva_kamene: str, pozice_kamene: tuple) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
+    def __init__(self, platno, barva_kamene: str, pozice_kamene) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
         super().__init__(platno)
         self._barva_kamene = barva_kamene
         self._pozice_kamene = pozice_kamene
@@ -24,7 +26,8 @@ class Herni_kamen(tk.Frame):
         kamen_bg_tk = ImageTk.PhotoImage(kamen_bg)
         kamen_button= Button(platno, image=kamen_bg_tk, command=lambda : ..., bd=0, highlightthickness=0)
         kamen_button.config(width=kamen_bg_tk.width(), height=kamen_bg_tk.height())
-        platno.create_window(480, 300, window=kamen_button)
+        pozice = Mapa_pozic.mapa_pozic[pozice_kamene]
+        platno.create_window(pozice.souradnice[0], pozice.souradnice[1], window=kamen_button)
 
     @property
     def barva_kamene(self) -> str:

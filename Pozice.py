@@ -7,7 +7,7 @@ from pathlib import Path
 from Herni_kamen import Herni_kamen
 
 class Pozice(tk.Frame):
-    def __init__(self, platno, hidden : bool, souradnice) -> None: # souradnice - [x, y]
+    def __init__(self, platno, hidden : bool, souradnice: list) -> None: # souradnice - [x, y]
         super().__init__(platno)
         self._platno = platno
         self._hidden = hidden
@@ -20,6 +20,9 @@ class Pozice(tk.Frame):
             ...
         else:
             self.pozice_bg = Image.open("hint_piece.png") 
+            #self.pozice_bg = self.pozice_bg.convert("RGBA")
+            #background = Image.new("RGBA", self.pozice_bg.size, (255, 255, 255, 255))
+            #composite = Image.alpha_composite(background, self.pozice_bg)
             self.pozice_bg_tk = ImageTk.PhotoImage(self.pozice_bg)
             self.kamen_button= Button(platno, image=self.pozice_bg_tk, command=lambda : Pozice.hint_clicked(self), bd=0, highlightthickness=0)
         self.kamen_button.config(width=self.pozice_bg_tk.width(), height=self.pozice_bg_tk.height())

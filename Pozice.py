@@ -14,37 +14,41 @@ class Pozice(tk.Frame):
         self._aktualni_kamen = None
         self._souradnice = souradnice
 
-        self.pozice_bg = Image.open("hint_piece.png") 
-        self.pozice_bg_tk = ImageTk.PhotoImage(self.pozice_bg)
+
 
         if(hidden == True):
             ...
         else:
-            self.kamen_button= Button(platno, image=self.pozice_bg_tk, command=lambda : ..., bd=0, highlightthickness=0)
+            self.pozice_bg = Image.open("hint_piece.png") 
+            self.pozice_bg_tk = ImageTk.PhotoImage(self.pozice_bg)
+            self.kamen_button= Button(platno, image=self.pozice_bg_tk, command=lambda : Pozice.hint_clicked(self), bd=0, highlightthickness=0)
         self.kamen_button.config(width=self.pozice_bg_tk.width(), height=self.pozice_bg_tk.height())
         platno.create_window(souradnice[0], souradnice[1], window=self.kamen_button)
 
 
     @property
     def hidden(self) -> bool:
-        return self.hidden
+        return self._hidden
 
     @hidden.setter
     def hidden(self, value : bool):
-        self.hidden = value
+        self._hidden = value
         
     @property
     def aktualni_kamen(self) -> Herni_kamen:
-        return self.aktualni_kamen
+        return self._aktualni_kamen
 
     @aktualni_kamen.setter
     def aktualni_kamen(self, kamen : Herni_kamen):
-        self.aktualni_kamen = kamen
+        self._aktualni_kamen = kamen
 
     @property
-    def souradnice(self) -> list:
-        return self.souradnice
+    def souradnice(self) -> list: 
+        return self._souradnice
 
     @souradnice.setter
     def aktualni_kamen(self, nove_souradnice : list):
-        self.souradnice = nove_souradnice
+        self._souradnice = nove_souradnice
+
+    def hint_clicked(self):
+        print(self.souradnice)

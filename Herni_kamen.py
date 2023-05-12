@@ -5,7 +5,7 @@ from PIL import ImageTk, Image
 from pathlib import Path
 
 class Herni_kamen(tk.Frame):
-    def __init__(self, platno, barva_kamene: str, pozice_kamene: list) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - [point, pozice na pointu]
+    def __init__(self, platno, barva_kamene: str, pozice_kamene: tuple) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
         super().__init__(platno)
         self._barva_kamene = barva_kamene
         self._pozice_kamene = pozice_kamene

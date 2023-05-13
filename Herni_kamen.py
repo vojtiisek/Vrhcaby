@@ -13,25 +13,33 @@ class Herni_kamen(tk.Frame):
         self._pozice_kamene = pozice_kamene
         self._historie = []
 
-        if(self.barva_kamene == "bila"):
-            kamen_bg = Image.open("white_piece.png")
-        elif(self.barva_kamene == "cerna"):
-            kamen_bg = Image.open("black_piece.png")
-        elif(self.barva_kamene == "hint"):
-            kamen_bg = Image.open("hint_piece.png")
-        elif(self.barva_kamene == "selected"):
-            kamen_bg = Image.open("selected_piece.png")
+        if(self._barva_kamene == "bila"):
+            self.kamen_bg = Image.open("white_piece.png")
+        elif(self._barva_kamene == "cerna"):
+            self.kamen_bg = Image.open("black_piece.png")
+        elif(self._barva_kamene == "hint"):
+            self.kamen_bg = Image.open("hint_piece.png")
+        elif(self._barva_kamene == "selected"):
+            self.kamen_bg = Image.open("selected_piece.png")
         else:
-            kamen_bg = Image.open("error_piece.png")
-        kamen_bg_tk = ImageTk.PhotoImage(kamen_bg)
-        kamen_button= Button(platno, image=kamen_bg_tk, command=lambda : ..., bd=0, highlightthickness=0)
-        kamen_button.config(width=kamen_bg_tk.width(), height=kamen_bg_tk.height())
-        pozice = Mapa_pozic.mapa_pozic[pozice_kamene]
-        platno.create_window(pozice.souradnice[0], pozice.souradnice[1], window=kamen_button)
+            self.kamen_bg = Image.open("error_piece.png")
+
+        self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
+        self.kamen_button= Button(platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
+        self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
+
+        mapa = Mapa_pozic._mapa_pozic
+        pozice = mapa.get(pozice_kamene)
+
+        platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button)
 
     @property
     def barva_kamene(self) -> str:
         return self._barva_kamene
+
+    @barva_kamene.setter
+    def barva_kamene(self, value):
+        self._barva_kamene = value
 
     @property
     def historie(self) -> list:
@@ -52,3 +60,6 @@ class Herni_kamen(tk.Frame):
 
     def __str__(self) -> str:
         return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
+
+    def click_event(self):
+        self.barva_kamene("selected")

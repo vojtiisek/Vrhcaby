@@ -91,6 +91,7 @@ class HerniDeska:
         HerniDeska.shovej_menu()
         HerniDeska.vykresli_hraci_desku()
         Hra.pridej_pozice(cls)
+        Hra.pridej_zakladni_kameny(cls)
 
     @classmethod
     def ukoncit_hru(cls):
@@ -162,161 +163,199 @@ class Hra:
         self.platno = HerniDeska()
 
     def pridej_zakladni_kameny(self):
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (1,1)), HerniDeska.mapa_pozic[(1,1)]]
+        mapa = Mapa_pozic._mapa_pozic
+
+        # Cerne zakladni pozice
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (1,1))] = mapa[(1,1)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (1,2))] = mapa[(1,2)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,1))] = mapa[(12,1)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,2))] = mapa[(12,2)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,3))] = mapa[(12,3)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,4))] = mapa[(12,4)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,5))] = mapa[(12,5)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,1))] = mapa[(17,1)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,2))] = mapa[(17,2)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,3))] = mapa[(17,3)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,1))] = mapa[(19,1)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,2))] = mapa[(19,2)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,3))] = mapa[(19,3)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,4))] = mapa[(19,4)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,5))] = mapa[(19,5)]
+
+        # Bile zakladni pozice
+
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (24,1))] = mapa[(24,1)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (24,2))] = mapa[(24,2)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,1))] = mapa[(13,1)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,2))] = mapa[(13,2)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,3))] = mapa[(13,3)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,4))] = mapa[(13,4)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,5))] = mapa[(13,5)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,1))] = mapa[(8,1)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,2))] = mapa[(8,2)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,3))] = mapa[(8,3)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,1))] = mapa[(6,1)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,2))] = mapa[(6,2)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,3))] = mapa[(6,3)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,4))] = mapa[(6,4)]
+        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,5))] = mapa[(6,5)]
+
 
     def pridej_pozice(self):  # naplni vsechny pointy maximalnim poctem kamenu (5ti) - tyto kameny jsou skryte a pouzivane pro posuny a pro napovedu dalsich tahu
-        Mapa_pozic.mapa_pozic[(1,1)] = Pozice(HerniDeska.platno_hra, False, [610,609]) 
-        Mapa_pozic.mapa_pozic[(1,2)] = Pozice(HerniDeska.platno_hra, False, [610,559])
-        Mapa_pozic.mapa_pozic[(1,3)] = Pozice(HerniDeska.platno_hra, False, [610,509])
-        Mapa_pozic.mapa_pozic[(1,4)] = Pozice(HerniDeska.platno_hra, False, [610,459])
-        Mapa_pozic.mapa_pozic[(1,5)] = Pozice(HerniDeska.platno_hra, False, [610,409])
+        mapa = Mapa_pozic._mapa_pozic
 
-        Mapa_pozic.mapa_pozic[(2,1)] = Pozice(HerniDeska.platno_hra, False, [562,609])
-        Mapa_pozic.mapa_pozic[(2,2)] = Pozice(HerniDeska.platno_hra, False, [562,559])
-        Mapa_pozic.mapa_pozic[(2,3)] = Pozice(HerniDeska.platno_hra, False, [562,509])
-        Mapa_pozic.mapa_pozic[(2,4)] = Pozice(HerniDeska.platno_hra, False, [562,459])
-        Mapa_pozic.mapa_pozic[(2,5)] = Pozice(HerniDeska.platno_hra, False, [562,409])
+        mapa[(1,1)] = Pozice(HerniDeska.platno_hra, False, [610,609]) 
+        mapa[(1,2)] = Pozice(HerniDeska.platno_hra, False, [610,559])
+        mapa[(1,3)] = Pozice(HerniDeska.platno_hra, False, [610,509])
+        mapa[(1,4)] = Pozice(HerniDeska.platno_hra, False, [610,459])
+        mapa[(1,5)] = Pozice(HerniDeska.platno_hra, False, [610,409])
 
-
-        Mapa_pozic.mapa_pozic[(3,1)] = Pozice(HerniDeska.platno_hra, False, [515,609])
-        Mapa_pozic.mapa_pozic[(3,2)] = Pozice(HerniDeska.platno_hra, False, [515,559])
-        Mapa_pozic.mapa_pozic[(3,3)] = Pozice(HerniDeska.platno_hra, False, [515,509])
-        Mapa_pozic.mapa_pozic[(3,4)] = Pozice(HerniDeska.platno_hra, False, [515,459])
-        Mapa_pozic.mapa_pozic[(3,5)] = Pozice(HerniDeska.platno_hra, False, [515,409])
-
-        Mapa_pozic.mapa_pozic[(4,1)] = Pozice(HerniDeska.platno_hra, False, [468,609])
-        Mapa_pozic.mapa_pozic[(4,2)] = Pozice(HerniDeska.platno_hra, False, [468,559])
-        Mapa_pozic.mapa_pozic[(4,3)] = Pozice(HerniDeska.platno_hra, False, [468,509])
-        Mapa_pozic.mapa_pozic[(4,4)] = Pozice(HerniDeska.platno_hra, False, [468,459])
-        Mapa_pozic.mapa_pozic[(4,5)] = Pozice(HerniDeska.platno_hra, False, [468,409])
-
-        Mapa_pozic.mapa_pozic[(5,1)] = Pozice(HerniDeska.platno_hra, False, [421,609])
-        Mapa_pozic.mapa_pozic[(5,2)] = Pozice(HerniDeska.platno_hra, False, [421,559])
-        Mapa_pozic.mapa_pozic[(5,3)] = Pozice(HerniDeska.platno_hra, False, [421,509])
-        Mapa_pozic.mapa_pozic[(5,4)] = Pozice(HerniDeska.platno_hra, False, [421,459])
-        Mapa_pozic.mapa_pozic[(5,5)] = Pozice(HerniDeska.platno_hra, False, [421,409])
+        mapa[(2,1)] = Pozice(HerniDeska.platno_hra, False, [562,609])
+        mapa[(2,2)] = Pozice(HerniDeska.platno_hra, False, [562,559])
+        mapa[(2,3)] = Pozice(HerniDeska.platno_hra, False, [562,509])
+        mapa[(2,4)] = Pozice(HerniDeska.platno_hra, False, [562,459])
+        mapa[(2,5)] = Pozice(HerniDeska.platno_hra, False, [562,409])
 
 
-        Mapa_pozic.mapa_pozic[(6,1)] = Pozice(HerniDeska.platno_hra, False, [374,609])
-        Mapa_pozic.mapa_pozic[(6,2)] = Pozice(HerniDeska.platno_hra, False, [374,559])
-        Mapa_pozic.mapa_pozic[(6,3)] = Pozice(HerniDeska.platno_hra, False, [374,509])
-        Mapa_pozic.mapa_pozic[(6,4)] = Pozice(HerniDeska.platno_hra, False, [374,459])
-        Mapa_pozic.mapa_pozic[(6,5)] = Pozice(HerniDeska.platno_hra, False, [374,409])
+        mapa[(3,1)] = Pozice(HerniDeska.platno_hra, False, [515,609])
+        mapa[(3,2)] = Pozice(HerniDeska.platno_hra, False, [515,559])
+        mapa[(3,3)] = Pozice(HerniDeska.platno_hra, False, [515,509])
+        mapa[(3,4)] = Pozice(HerniDeska.platno_hra, False, [515,459])
+        mapa[(3,5)] = Pozice(HerniDeska.platno_hra, False, [515,409])
+
+        mapa[(4,1)] = Pozice(HerniDeska.platno_hra, False, [468,609])
+        mapa[(4,2)] = Pozice(HerniDeska.platno_hra, False, [468,559])
+        mapa[(4,3)] = Pozice(HerniDeska.platno_hra, False, [468,509])
+        mapa[(4,4)] = Pozice(HerniDeska.platno_hra, False, [468,459])
+        mapa[(4,5)] = Pozice(HerniDeska.platno_hra, False, [468,409])
+
+        mapa[(5,1)] = Pozice(HerniDeska.platno_hra, False, [421,609])
+        mapa[(5,2)] = Pozice(HerniDeska.platno_hra, False, [421,559])
+        mapa[(5,3)] = Pozice(HerniDeska.platno_hra, False, [421,509])
+        mapa[(5,4)] = Pozice(HerniDeska.platno_hra, False, [421,459])
+        mapa[(5,5)] = Pozice(HerniDeska.platno_hra, False, [421,409])
 
 
-        Mapa_pozic.mapa_pozic[(7,1)] = Pozice(HerniDeska.platno_hra, False, [294,609])
-        Mapa_pozic.mapa_pozic[(7,2)] = Pozice(HerniDeska.platno_hra, False, [294,559])
-        Mapa_pozic.mapa_pozic[(7,3)] = Pozice(HerniDeska.platno_hra, False, [294,509])
-        Mapa_pozic.mapa_pozic[(7,4)] = Pozice(HerniDeska.platno_hra, False, [294,459])
-        Mapa_pozic.mapa_pozic[(7,5)] = Pozice(HerniDeska.platno_hra, False, [294,409])
+        mapa[(6,1)] = Pozice(HerniDeska.platno_hra, False, [374,609])
+        mapa[(6,2)] = Pozice(HerniDeska.platno_hra, False, [374,559])
+        mapa[(6,3)] = Pozice(HerniDeska.platno_hra, False, [374,509])
+        mapa[(6,4)] = Pozice(HerniDeska.platno_hra, False, [374,459])
+        mapa[(6,5)] = Pozice(HerniDeska.platno_hra, False, [374,409])
 
-        Mapa_pozic.mapa_pozic[(8,1)] = Pozice(HerniDeska.platno_hra, False, [247,609])
-        Mapa_pozic.mapa_pozic[(8,2)] = Pozice(HerniDeska.platno_hra, False, [247,559])
-        Mapa_pozic.mapa_pozic[(8,3)] = Pozice(HerniDeska.platno_hra, False, [247,509])
-        Mapa_pozic.mapa_pozic[(8,4)] = Pozice(HerniDeska.platno_hra, False, [247,459])
-        Mapa_pozic.mapa_pozic[(8,5)] = Pozice(HerniDeska.platno_hra, False, [247,409])
 
-        Mapa_pozic.mapa_pozic[(9,1)] = Pozice(HerniDeska.platno_hra, False, [200,609])
-        Mapa_pozic.mapa_pozic[(9,2)] = Pozice(HerniDeska.platno_hra, False, [200,559])
-        Mapa_pozic.mapa_pozic[(9,3)] = Pozice(HerniDeska.platno_hra, False, [200,509])
-        Mapa_pozic.mapa_pozic[(9,4)] = Pozice(HerniDeska.platno_hra, False, [200,459])
-        Mapa_pozic.mapa_pozic[(9,5)] = Pozice(HerniDeska.platno_hra, False, [200,409])
+        mapa[(7,1)] = Pozice(HerniDeska.platno_hra, False, [294,609])
+        mapa[(7,2)] = Pozice(HerniDeska.platno_hra, False, [294,559])
+        mapa[(7,3)] = Pozice(HerniDeska.platno_hra, False, [294,509])
+        mapa[(7,4)] = Pozice(HerniDeska.platno_hra, False, [294,459])
+        mapa[(7,5)] = Pozice(HerniDeska.platno_hra, False, [294,409])
 
-        Mapa_pozic.mapa_pozic[(10,1)] = Pozice(HerniDeska.platno_hra, False, [153,609])
-        Mapa_pozic.mapa_pozic[(10,2)] = Pozice(HerniDeska.platno_hra, False, [153,559])
-        Mapa_pozic.mapa_pozic[(10,3)] = Pozice(HerniDeska.platno_hra, False, [153,509])
-        Mapa_pozic.mapa_pozic[(10,4)] = Pozice(HerniDeska.platno_hra, False, [153,459])
-        Mapa_pozic.mapa_pozic[(10,5)] = Pozice(HerniDeska.platno_hra, False, [153,409])
+        mapa[(8,1)] = Pozice(HerniDeska.platno_hra, False, [247,609])
+        mapa[(8,2)] = Pozice(HerniDeska.platno_hra, False, [247,559])
+        mapa[(8,3)] = Pozice(HerniDeska.platno_hra, False, [247,509])
+        mapa[(8,4)] = Pozice(HerniDeska.platno_hra, False, [247,459])
+        mapa[(8,5)] = Pozice(HerniDeska.platno_hra, False, [247,409])
 
-        Mapa_pozic.mapa_pozic[(11,1)]= Pozice(HerniDeska.platno_hra, False, [106,609])
-        Mapa_pozic.mapa_pozic[(11,2)] = Pozice(HerniDeska.platno_hra, False, [106,559])
-        Mapa_pozic.mapa_pozic[(11,3)] = Pozice(HerniDeska.platno_hra, False, [106,509])
-        Mapa_pozic.mapa_pozic[(11,4)] = Pozice(HerniDeska.platno_hra, False, [106,459])
-        Mapa_pozic.mapa_pozic[(11,5)] = Pozice(HerniDeska.platno_hra, False, [106,409])
+        mapa[(9,1)] = Pozice(HerniDeska.platno_hra, False, [200,609])
+        mapa[(9,2)] = Pozice(HerniDeska.platno_hra, False, [200,559])
+        mapa[(9,3)] = Pozice(HerniDeska.platno_hra, False, [200,509])
+        mapa[(9,4)] = Pozice(HerniDeska.platno_hra, False, [200,459])
+        mapa[(9,5)] = Pozice(HerniDeska.platno_hra, False, [200,409])
 
-        Mapa_pozic.mapa_pozic[(12,1)] = Pozice(HerniDeska.platno_hra, False, [59,609])
-        Mapa_pozic.mapa_pozic[(12,2)] = Pozice(HerniDeska.platno_hra, False, [59,559])
-        Mapa_pozic.mapa_pozic[(12,3)] = Pozice(HerniDeska.platno_hra, False, [59,509])
-        Mapa_pozic.mapa_pozic[(12,4)] = Pozice(HerniDeska.platno_hra, False, [59,459])
-        Mapa_pozic.mapa_pozic[(12,5)] = Pozice(HerniDeska.platno_hra, False, [59,409])
+        mapa[(10,1)] = Pozice(HerniDeska.platno_hra, False, [153,609])
+        mapa[(10,2)] = Pozice(HerniDeska.platno_hra, False, [153,559])
+        mapa[(10,3)] = Pozice(HerniDeska.platno_hra, False, [153,509])
+        mapa[(10,4)] = Pozice(HerniDeska.platno_hra, False, [153,459])
+        mapa[(10,5)] = Pozice(HerniDeska.platno_hra, False, [153,409])
+
+        mapa[(11,1)]= Pozice(HerniDeska.platno_hra, False, [106,609])
+        mapa[(11,2)] = Pozice(HerniDeska.platno_hra, False, [106,559])
+        mapa[(11,3)] = Pozice(HerniDeska.platno_hra, False, [106,509])
+        mapa[(11,4)] = Pozice(HerniDeska.platno_hra, False, [106,459])
+        mapa[(11,5)] = Pozice(HerniDeska.platno_hra, False, [106,409])
+
+        mapa[(12,1)] = Pozice(HerniDeska.platno_hra, False, [59,609])
+        mapa[(12,2)] = Pozice(HerniDeska.platno_hra, False, [59,559])
+        mapa[(12,3)] = Pozice(HerniDeska.platno_hra, False, [59,509])
+        mapa[(12,4)] = Pozice(HerniDeska.platno_hra, False, [59,459])
+        mapa[(12,5)] = Pozice(HerniDeska.platno_hra, False, [59,409])
 
 
         # horni pulka
 
-        Mapa_pozic.mapa_pozic[(13,1)] = Pozice(HerniDeska.platno_hra, False, [610,59])
-        Mapa_pozic.mapa_pozic[(13,2)] = Pozice(HerniDeska.platno_hra, False, [610,109])
-        Mapa_pozic.mapa_pozic[(13,3)] = Pozice(HerniDeska.platno_hra, False, [610,159])
-        Mapa_pozic.mapa_pozic[(13,4)] = Pozice(HerniDeska.platno_hra, False, [610,209])
-        Mapa_pozic.mapa_pozic[(13,5)] = Pozice(HerniDeska.platno_hra, False, [610,259])
+        mapa[(24,1)] = Pozice(HerniDeska.platno_hra, False, [610,59])
+        mapa[(24,2)] = Pozice(HerniDeska.platno_hra, False, [610,109])
+        mapa[(24,3)] = Pozice(HerniDeska.platno_hra, False, [610,159])
+        mapa[(24,4)] = Pozice(HerniDeska.platno_hra, False, [610,209])
+        mapa[(24,5)] = Pozice(HerniDeska.platno_hra, False, [610,259])
 
-        Mapa_pozic.mapa_pozic[(14,1)] = Pozice(HerniDeska.platno_hra, False, [562,59])
-        Mapa_pozic.mapa_pozic[(14,2)] = Pozice(HerniDeska.platno_hra, False, [562,109])
-        Mapa_pozic.mapa_pozic[(14,3)] = Pozice(HerniDeska.platno_hra, False, [562,159])
-        Mapa_pozic.mapa_pozic[(14,4)] = Pozice(HerniDeska.platno_hra, False, [562,209])
-        Mapa_pozic.mapa_pozic[(14,5)] = Pozice(HerniDeska.platno_hra, False, [562,259])
-
-
-        Mapa_pozic.mapa_pozic[(15,1)] = Pozice(HerniDeska.platno_hra, False, [515,59])
-        Mapa_pozic.mapa_pozic[(15,2)] = Pozice(HerniDeska.platno_hra, False, [515,109])
-        Mapa_pozic.mapa_pozic[(15,3)] = Pozice(HerniDeska.platno_hra, False, [515,159])
-        Mapa_pozic.mapa_pozic[(15,4)] = Pozice(HerniDeska.platno_hra, False, [515,209])
-        Mapa_pozic.mapa_pozic[(15,5)] = Pozice(HerniDeska.platno_hra, False, [515,259])
-
-        Mapa_pozic.mapa_pozic[(16,1)] = Pozice(HerniDeska.platno_hra, False, [468,59])
-        Mapa_pozic.mapa_pozic[(16,2)] = Pozice(HerniDeska.platno_hra, False, [468,109])
-        Mapa_pozic.mapa_pozic[(16,3)] = Pozice(HerniDeska.platno_hra, False, [468,159])
-        Mapa_pozic.mapa_pozic[(16,4)] = Pozice(HerniDeska.platno_hra, False, [468,209])
-        Mapa_pozic.mapa_pozic[(16,5)] = Pozice(HerniDeska.platno_hra, False, [468,259])
-
-        Mapa_pozic.mapa_pozic[(17,1)] = Pozice(HerniDeska.platno_hra, False, [421,59])
-        Mapa_pozic.mapa_pozic[(17,2)] = Pozice(HerniDeska.platno_hra, False, [421,109])
-        Mapa_pozic.mapa_pozic[(17,3)] = Pozice(HerniDeska.platno_hra, False, [421,159])
-        Mapa_pozic.mapa_pozic[(17,4)] = Pozice(HerniDeska.platno_hra, False, [421,209])
-        Mapa_pozic.mapa_pozic[(17,5)] = Pozice(HerniDeska.platno_hra, False, [421,259])
+        mapa[(23,1)] = Pozice(HerniDeska.platno_hra, False, [562,59])
+        mapa[(23,2)] = Pozice(HerniDeska.platno_hra, False, [562,109])
+        mapa[(23,3)] = Pozice(HerniDeska.platno_hra, False, [562,159])
+        mapa[(23,4)] = Pozice(HerniDeska.platno_hra, False, [562,209])
+        mapa[(23,5)] = Pozice(HerniDeska.platno_hra, False, [562,259])
 
 
-        Mapa_pozic.mapa_pozic[(18,1)] = Pozice(HerniDeska.platno_hra, False, [374,59])
-        Mapa_pozic.mapa_pozic[(18,2)] = Pozice(HerniDeska.platno_hra, False, [374,109])
-        Mapa_pozic.mapa_pozic[(18,3)] = Pozice(HerniDeska.platno_hra, False, [374,159])
-        Mapa_pozic.mapa_pozic[(18,4)] = Pozice(HerniDeska.platno_hra, False, [374,209])
-        Mapa_pozic.mapa_pozic[(18,5)] = Pozice(HerniDeska.platno_hra, False, [374,259])
+        mapa[(22,1)] = Pozice(HerniDeska.platno_hra, False, [515,59])
+        mapa[(22,2)] = Pozice(HerniDeska.platno_hra, False, [515,109])
+        mapa[(22,3)] = Pozice(HerniDeska.platno_hra, False, [515,159])
+        mapa[(22,4)] = Pozice(HerniDeska.platno_hra, False, [515,209])
+        mapa[(22,5)] = Pozice(HerniDeska.platno_hra, False, [515,259])
+
+        mapa[(21,1)] = Pozice(HerniDeska.platno_hra, False, [468,59])
+        mapa[(21,2)] = Pozice(HerniDeska.platno_hra, False, [468,109])
+        mapa[(21,3)] = Pozice(HerniDeska.platno_hra, False, [468,159])
+        mapa[(21,4)] = Pozice(HerniDeska.platno_hra, False, [468,209])
+        mapa[(21,5)] = Pozice(HerniDeska.platno_hra, False, [468,259])
+
+        mapa[(20,1)] = Pozice(HerniDeska.platno_hra, False, [421,59])
+        mapa[(20,2)] = Pozice(HerniDeska.platno_hra, False, [421,109])
+        mapa[(20,3)] = Pozice(HerniDeska.platno_hra, False, [421,159])
+        mapa[(20,4)] = Pozice(HerniDeska.platno_hra, False, [421,209])
+        mapa[(20,5)] = Pozice(HerniDeska.platno_hra, False, [421,259])
 
 
-        Mapa_pozic.mapa_pozic[(19,1)] = Pozice(HerniDeska.platno_hra, False, [294,59])
-        Mapa_pozic.mapa_pozic[(19,2)] = Pozice(HerniDeska.platno_hra, False, [294,109])
-        Mapa_pozic.mapa_pozic[(19,3)] = Pozice(HerniDeska.platno_hra, False, [294,159])
-        Mapa_pozic.mapa_pozic[(19,4)] = Pozice(HerniDeska.platno_hra, False, [294,209])
-        Mapa_pozic.mapa_pozic[(19,5)] = Pozice(HerniDeska.platno_hra, False, [294,259])
+        mapa[(19,1)] = Pozice(HerniDeska.platno_hra, False, [374,59])
+        mapa[(19,2)] = Pozice(HerniDeska.platno_hra, False, [374,109])
+        mapa[(19,3)] = Pozice(HerniDeska.platno_hra, False, [374,159])
+        mapa[(19,4)] = Pozice(HerniDeska.platno_hra, False, [374,209])
+        mapa[(19,5)] = Pozice(HerniDeska.platno_hra, False, [374,259])
 
-        Mapa_pozic.mapa_pozic[(20,1)] = Pozice(HerniDeska.platno_hra, False, [247,59])
-        Mapa_pozic.mapa_pozic[(20,2)] = Pozice(HerniDeska.platno_hra, False, [247,109])
-        Mapa_pozic.mapa_pozic[(20,3)] = Pozice(HerniDeska.platno_hra, False, [247,159])
-        Mapa_pozic.mapa_pozic[(20,4)] = Pozice(HerniDeska.platno_hra, False, [247,209])
-        Mapa_pozic.mapa_pozic[(20,5)] = Pozice(HerniDeska.platno_hra, False, [247,259])
 
-        Mapa_pozic.mapa_pozic[(21,1)] = Pozice(HerniDeska.platno_hra, False, [200,59])
-        Mapa_pozic.mapa_pozic[(21,2)] = Pozice(HerniDeska.platno_hra, False, [200,109])
-        Mapa_pozic.mapa_pozic[(21,3)] = Pozice(HerniDeska.platno_hra, False, [200,159])
-        Mapa_pozic.mapa_pozic[(21,4)] = Pozice(HerniDeska.platno_hra, False, [200,209])
-        Mapa_pozic.mapa_pozic[(21,5)] = Pozice(HerniDeska.platno_hra, False, [200,259])
+        mapa[(18,1)] = Pozice(HerniDeska.platno_hra, False, [294,59])
+        mapa[(18,2)] = Pozice(HerniDeska.platno_hra, False, [294,109])
+        mapa[(18,3)] = Pozice(HerniDeska.platno_hra, False, [294,159])
+        mapa[(18,4)] = Pozice(HerniDeska.platno_hra, False, [294,209])
+        mapa[(18,5)] = Pozice(HerniDeska.platno_hra, False, [294,259])
 
-        Mapa_pozic.mapa_pozic[(22,1)] = Pozice(HerniDeska.platno_hra, False, [153,59])
-        Mapa_pozic.mapa_pozic[(22,2)] = Pozice(HerniDeska.platno_hra, False, [153,109])
-        Mapa_pozic.mapa_pozic[(22,3)] = Pozice(HerniDeska.platno_hra, False, [153,159])
-        Mapa_pozic.mapa_pozic[(22,4)] = Pozice(HerniDeska.platno_hra, False, [153,209])
-        Mapa_pozic.mapa_pozic[(22,5)] = Pozice(HerniDeska.platno_hra, False, [153,259])
+        mapa[(17,1)] = Pozice(HerniDeska.platno_hra, False, [247,59])
+        mapa[(17,2)] = Pozice(HerniDeska.platno_hra, False, [247,109])
+        mapa[(17,3)] = Pozice(HerniDeska.platno_hra, False, [247,159])
+        mapa[(17,4)] = Pozice(HerniDeska.platno_hra, False, [247,209])
+        mapa[(17,5)] = Pozice(HerniDeska.platno_hra, False, [247,259])
 
-        Mapa_pozic.mapa_pozic[(23,1)] = Pozice(HerniDeska.platno_hra, False, [106,59])
-        Mapa_pozic.mapa_pozic[(23,2)] = Pozice(HerniDeska.platno_hra, False, [106,109])
-        Mapa_pozic.mapa_pozic[(23,3)] = Pozice(HerniDeska.platno_hra, False, [106,159])
-        Mapa_pozic.mapa_pozic[(23,4)] = Pozice(HerniDeska.platno_hra, False, [106,209])
-        Mapa_pozic.mapa_pozic[(23,5)] = Pozice(HerniDeska.platno_hra, False, [106,259])
+        mapa[(16,1)] = Pozice(HerniDeska.platno_hra, False, [200,59])
+        mapa[(16,2)] = Pozice(HerniDeska.platno_hra, False, [200,109])
+        mapa[(16,3)] = Pozice(HerniDeska.platno_hra, False, [200,159])
+        mapa[(16,4)] = Pozice(HerniDeska.platno_hra, False, [200,209])
+        mapa[(16,5)] = Pozice(HerniDeska.platno_hra, False, [200,259])
 
-        Mapa_pozic.mapa_pozic[(24,1)] = Pozice(HerniDeska.platno_hra, False, [59,59])
-        Mapa_pozic.mapa_pozic[(24,2)] = Pozice(HerniDeska.platno_hra, False, [59,109])
-        Mapa_pozic.mapa_pozic[(24,3)] = Pozice(HerniDeska.platno_hra, False, [59,159])
-        Mapa_pozic.mapa_pozic[(24,4)] = Pozice(HerniDeska.platno_hra, False, [59,209])
-        Mapa_pozic.mapa_pozic[(24,5)] = Pozice(HerniDeska.platno_hra, False, [59,259])
+        mapa[(15,1)] = Pozice(HerniDeska.platno_hra, False, [153,59])
+        mapa[(15,2)] = Pozice(HerniDeska.platno_hra, False, [153,109])
+        mapa[(15,3)] = Pozice(HerniDeska.platno_hra, False, [153,159])
+        mapa[(15,4)] = Pozice(HerniDeska.platno_hra, False, [153,209])
+        mapa[(15,5)] = Pozice(HerniDeska.platno_hra, False, [153,259])
+
+        mapa[(14,1)] = Pozice(HerniDeska.platno_hra, False, [106,59])
+        mapa[(14,2)] = Pozice(HerniDeska.platno_hra, False, [106,109])
+        mapa[(14,3)] = Pozice(HerniDeska.platno_hra, False, [106,159])
+        mapa[(14,4)] = Pozice(HerniDeska.platno_hra, False, [106,209])
+        mapa[(14,5)] = Pozice(HerniDeska.platno_hra, False, [106,259])
+
+        mapa[(13,1)] = Pozice(HerniDeska.platno_hra, False, [59,59])
+        mapa[(13,2)] = Pozice(HerniDeska.platno_hra, False, [59,109])
+        mapa[(13,3)] = Pozice(HerniDeska.platno_hra, False, [59,159])
+        mapa[(13,4)] = Pozice(HerniDeska.platno_hra, False, [59,209])
+        mapa[(13,5)] = Pozice(HerniDeska.platno_hra, False, [59,259])
 
 
 class Dvojkostka:

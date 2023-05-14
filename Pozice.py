@@ -14,10 +14,8 @@ class Pozice(tk.Frame):
         self._aktualni_kamen = None
         self._souradnice = souradnice
 
-
-
         if(hidden == True):
-            ...
+            pass
         else:
             self.pozice_bg = Image.open("hint_piece.png") 
             #self.pozice_bg = self.pozice_bg.convert("RGBA")
@@ -25,8 +23,8 @@ class Pozice(tk.Frame):
             #composite = Image.alpha_composite(background, self.pozice_bg)
             self.pozice_bg_tk = ImageTk.PhotoImage(self.pozice_bg)
             self.kamen_button= Button(platno, image=self.pozice_bg_tk, command=lambda : Pozice.hint_clicked(self), bd=0, highlightthickness=0)
-        self.kamen_button.config(width=self.pozice_bg_tk.width(), height=self.pozice_bg_tk.height())
-        platno.create_window(souradnice[0], souradnice[1], window=self.kamen_button)
+            self.kamen_button.config(width=self.pozice_bg_tk.width(), height=self.pozice_bg_tk.height())
+            platno.create_window(souradnice[0], souradnice[1], window=self.kamen_button)
 
 
     @property
@@ -50,4 +48,9 @@ class Pozice(tk.Frame):
         return self._souradnice
 
     def hint_clicked(self):
-        print(self.souradnice)
+        print("HINT:")
+        print(self._souradnice)
+
+    def hidden_clicked(self):
+        print("HIDDEN:")
+        print(self._souradnice)

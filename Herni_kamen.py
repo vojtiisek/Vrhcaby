@@ -5,6 +5,7 @@ from PIL import ImageTk, Image
 from pathlib import Path
 
 from Mapa_pozic import Mapa_pozic
+from Mapa_kamenu import Mapa_kamenu
 from Zasobnik import Zasobnik
 
 class Herni_kamen(tk.Frame):
@@ -103,3 +104,43 @@ class Herni_kamen(tk.Frame):
                     messagebox.showinfo("Informace", "Muzete hrat pouze s nejvyse umistenym kamenem na danem klinu.")
             else:
                 messagebox.showinfo("Informace", "Jiz mate vybrany jiny kamen, se kterym chcete hybat.")
+
+    def update_po_presunu(self, nova_pozice):
+        self._platno.delete(self)
+        if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
+            self._barva_kamene = "selected"
+            self.kamen_bg = Image.open("selected_piece.png")
+            Herni_kamen.zvoleny_kamen = self 
+            #self.platno.update()
+
+        elif(self._barva_kamene == "selected"):
+
+            self._barva_kamene = self._default_color
+            Herni_kamen.zvoleny_kamen = None
+
+            if(self._default_color == "bila"):
+                self.kamen_bg = Image.open("white_piece.png")
+            elif(self._default_color == "cerna"):
+                self.kamen_bg = Image.open("black_piece.png")
+            else:
+                self.kamen_bg = Image.open("error_piece.png")
+        else:
+            self.kamen_bg = Image.open("error_piece.png")
+
+        self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
+        self.kamen_button= Button(self._platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
+        self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
+        self._platno.create_window(nova_pozice.get_souradnice[0], nova_pozice.get_souradnice[1], window=self.kamen_button) 
+
+    def presun_kamen(kamen, nova_pozice):
+        Zasobnik.zasobniky[kamen._pozice_kamene[0]].pop()
+        mapa_pozic = Mapa_pozic._mapa_pozic
+        point = ()
+        for point in mapa_pozic.keys():
+            if mapa_pozic[point] == nova_pozice:
+                print(f"Nalezeny point: {point}")
+                break
+        Zasobnik.zasobniky[point[0]].push(kamen)
+        mapa_kamenu = Mapa_kamenu._mapa_kamenu
+        mapa_kamenu[kamen] = nova_pozice
+        

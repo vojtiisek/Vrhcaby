@@ -1,5 +1,4 @@
 from struct import pack
-from this import d
 import tkinter as tk
 import random
 from tkinter import *
@@ -10,15 +9,12 @@ from pathlib import Path
 from Herni_kamen import Herni_kamen
 from Pozice import Pozice
 from Mapa_pozic import Mapa_pozic
+from Mapa_kamenu import Mapa_kamenu
 from Zasobnik import Zasobnik
 
 root = tk.Tk()
 
 class HerniDeska:
-
-    def __init__(cls):
-        ...
-
     # Okno
     hra = root
     hra.resizable(False, False)
@@ -75,9 +71,6 @@ class HerniDeska:
     platno_hra = tk.Canvas(hra, width=964, height=669)
     platno_hra.create_image(0, 0, image=pozadi_hra, anchor=tk.NW)
     platno_hra.pack_forget()
-
-    mapa_kamenu = {} # Kamen() : Pozice()
-
 
     @classmethod
     def vytvor_pointy(cls):
@@ -145,43 +138,44 @@ class Hra:
 
     def pridej_zakladni_kameny(self):
         mapa = Mapa_pozic._mapa_pozic
+        mapa_kamenu = Mapa_kamenu._mapa_kamenu
 
         # Cerne zakladni pozice
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (1,1))] = mapa[(1,1)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (1,2))] = mapa[(1,2)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,1))] = mapa[(12,1)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,2))] = mapa[(12,2)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,3))] = mapa[(12,3)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,4))] = mapa[(12,4)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,5))] = mapa[(12,5)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,1))] = mapa[(17,1)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,2))] = mapa[(17,2)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,3))] = mapa[(17,3)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,1))] = mapa[(19,1)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,2))] = mapa[(19,2)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,3))] = mapa[(19,3)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,4))] = mapa[(19,4)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,5))] = mapa[(19,5)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (1,1))] = mapa[(1,1)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (1,2))] = mapa[(1,2)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,1))] = mapa[(12,1)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,2))] = mapa[(12,2)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,3))] = mapa[(12,3)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,4))] = mapa[(12,4)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,5))] = mapa[(12,5)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,1))] = mapa[(17,1)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,2))] = mapa[(17,2)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,3))] = mapa[(17,3)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,1))] = mapa[(19,1)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,2))] = mapa[(19,2)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,3))] = mapa[(19,3)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,4))] = mapa[(19,4)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,5))] = mapa[(19,5)]
 
         # Bile zakladni pozice
 
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (24,1))] = mapa[(24,1)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (24,2))] = mapa[(24,2)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,1))] = mapa[(13,1)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,2))] = mapa[(13,2)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,3))] = mapa[(13,3)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,4))] = mapa[(13,4)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,5))] = mapa[(13,5)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,1))] = mapa[(8,1)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,2))] = mapa[(8,2)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,3))] = mapa[(8,3)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,1))] = mapa[(6,1)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,2))] = mapa[(6,2)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,3))] = mapa[(6,3)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,4))] = mapa[(6,4)]
-        HerniDeska.mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,5))] = mapa[(6,5)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (24,1))] = mapa[(24,1)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (24,2))] = mapa[(24,2)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,1))] = mapa[(13,1)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,2))] = mapa[(13,2)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,3))] = mapa[(13,3)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,4))] = mapa[(13,4)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,5))] = mapa[(13,5)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,1))] = mapa[(8,1)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,2))] = mapa[(8,2)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,3))] = mapa[(8,3)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,1))] = mapa[(6,1)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,2))] = mapa[(6,2)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,3))] = mapa[(6,3)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,4))] = mapa[(6,4)]
+        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,5))] = mapa[(6,5)]
 
-        for kamen in HerniDeska.mapa_kamenu.keys(): # roztridi kameny do zasobniku (zasobnik[1 až 24 - odpovida pointum na mape])
+        for kamen in Mapa_kamenu._mapa_kamenu.keys(): # roztridi kameny do zasobniku (zasobnik[1 až 24 - odpovida pointum na mape])
             Zasobnik.zasobniky[kamen.pozice_kamene[0]].push(kamen)
 
 

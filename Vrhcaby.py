@@ -294,7 +294,7 @@ class Hra:
 
         mapa[(19,1)] = Pozice(HerniDeska.platno_hra, True, [374,59])
         mapa[(19,2)] = Pozice(HerniDeska.platno_hra, True, [374,109])
-        mapa[(19,3)] = Pozice(HerniDeska.platno_hra, True, [374,159])
+        mapa[(19,3)] = Pozice(HerniDeska.platno_hra, False, [374,159])
         mapa[(19,4)] = Pozice(HerniDeska.platno_hra, True, [374,209])
         mapa[(19,5)] = Pozice(HerniDeska.platno_hra, True, [374,259])
 

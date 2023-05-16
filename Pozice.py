@@ -19,9 +19,6 @@ class Pozice(tk.Frame):
             pass
         else:
             self.pozice_bg = Image.open("hint_piece.png") 
-            #self.pozice_bg = self.pozice_bg.convert("RGBA")
-            #background = Image.new("RGBA", self.pozice_bg.size, (255, 255, 255, 255))
-            #composite = Image.alpha_composite(background, self.pozice_bg)
             self.pozice_bg_tk = ImageTk.PhotoImage(self.pozice_bg)
             self.kamen_button= Button(platno, image=self.pozice_bg_tk, command=lambda : Pozice.hint_clicked(self), bd=0, highlightthickness=0)
             self.kamen_button.config(width=self.pozice_bg_tk.width(), height=self.pozice_bg_tk.height())

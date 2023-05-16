@@ -44,19 +44,14 @@ class Pozice(tk.Frame):
         print(self._souradnice)
         if(Herni_kamen.zvoleny_kamen != None):
 
-            mapa_kamenu = Mapa_kamenu._mapa_kamenu
-            puvodni_pozice = mapa_kamenu[Herni_kamen.zvoleny_kamen]
             mapa_pozic = Mapa_pozic._mapa_pozic
-            nova_pozice = mapa_pozic[Herni_kamen.zvoleny_kamen._pozice_kamene]
-
+            nova_pozice = mapa_pozic[Herni_kamen.zvoleny_kamen._pozice_kamene] #pozice kamene pred presunem (misto nej se vytvori volna Pozice())
             Herni_kamen.presun_kamen(Herni_kamen.zvoleny_kamen, self)
-            self.pozice_bg = Image.open("hint_piece.png") 
-            self.pozice_bg_tk = ImageTk.PhotoImage(self.pozice_bg)
-            self.kamen_button= Button(self._platno, image=self.pozice_bg_tk, command=lambda : Pozice.hint_clicked(self), bd=0, highlightthickness=0)
-            self.kamen_button.config(width=self.pozice_bg_tk.width(), height=self.pozice_bg_tk.height())
-            self._platno.create_window(nova_pozice._souradnice[0], nova_pozice._souradnice[1], window=self.kamen_button)
-            Herni_kamen.zvoleny_kamen.update_po_presunu(self)
 
-    def hidden_clicked(self):
-        print("HIDDEN:")
-        print(self._souradnice)
+            nova_pozice.pozice_bg = Image.open("hint_piece.png") 
+            nova_pozice.pozice_bg_tk = ImageTk.PhotoImage(nova_pozice.pozice_bg)
+            nova_pozice.kamen_button= Button(nova_pozice._platno, image=nova_pozice.pozice_bg_tk, command=lambda : Pozice.hint_clicked(nova_pozice), bd=0, highlightthickness=0)
+            nova_pozice.kamen_button.config(width=nova_pozice.pozice_bg_tk.width(), height=nova_pozice.pozice_bg_tk.height())
+            nova_pozice._platno.create_window(nova_pozice._souradnice[0], nova_pozice._souradnice[1], window=nova_pozice.kamen_button)
+
+            Herni_kamen.zvoleny_kamen.update_po_presunu(self)

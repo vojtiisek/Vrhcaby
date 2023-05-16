@@ -12,7 +12,6 @@ class Zasobnik:
 
     def pop(self) -> None:
         if (len(self.zasobnik) > 0):
-            print(self.zasobnik[-1])
             self.zasobnik.pop(-1)
         else:
             pass

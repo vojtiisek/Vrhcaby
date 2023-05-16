@@ -17,7 +17,7 @@ root = tk.Tk()
 class HerniDeska:
     # Okno
     hra = root
-    hra.resizable(False, False)
+    hra.resizable(True, True)
     hra.geometry("964x669")
     hra.title("Vrhcaby")
 
@@ -33,7 +33,7 @@ class HerniDeska:
     # Ikona
     icon = Image.open("vrhcaby_icon.png")
     icon_tk = ImageTk.PhotoImage(icon)
-    hra.wm_iconphoto(False, icon_tk)
+    hra.wm_iconphoto(True, icon_tk)
 
     # Tlacitka
     # Tlacitko "Hrat"

@@ -177,6 +177,7 @@ class Hra:
 
         for kamen in Mapa_kamenu._mapa_kamenu.keys(): # roztridi kameny do zasobniku (zasobnik[1 až 24 - odpovida pointum na mape])
             Zasobnik.zasobniky[kamen.pozice_kamene[0]].push(kamen)
+            kamen.pridej_pozici_do_historie()
 
 
     def pridej_pozice(self):  # naplni vsechny pointy maximalnim poctem kamenu (5ti) - tyto kameny jsou skryte a pouzivane pro posuny a pro napovedu dalsich tahu
@@ -210,7 +211,7 @@ class Hra:
         mapa[(5,1)] = Pozice(HerniDeska.platno_hra, True, [421,609])
         mapa[(5,2)] = Pozice(HerniDeska.platno_hra, True, [421,559])
         mapa[(5,3)] = Pozice(HerniDeska.platno_hra, True, [421,509])
-        mapa[(5,4)] = Pozice(HerniDeska.platno_hra, True, [421,459])
+        mapa[(5,4)] = Pozice(HerniDeska.platno_hra, False, [421,459])
         mapa[(5,5)] = Pozice(HerniDeska.platno_hra, True, [421,409])
 
 
@@ -231,7 +232,7 @@ class Hra:
         mapa[(8,2)] = Pozice(HerniDeska.platno_hra, True, [247,559])
         mapa[(8,3)] = Pozice(HerniDeska.platno_hra, True, [247,509])
         mapa[(8,4)] = Pozice(HerniDeska.platno_hra, True, [247,459])
-        mapa[(8,5)] = Pozice(HerniDeska.platno_hra, True, [247,409])
+        mapa[(8,5)] = Pozice(HerniDeska.platno_hra, False, [247,409])
 
         mapa[(9,1)] = Pozice(HerniDeska.platno_hra, True, [200,609])
         mapa[(9,2)] = Pozice(HerniDeska.platno_hra, True, [200,559])
@@ -240,7 +241,7 @@ class Hra:
         mapa[(9,5)] = Pozice(HerniDeska.platno_hra, True, [200,409])
 
         mapa[(10,1)] = Pozice(HerniDeska.platno_hra, True, [153,609])
-        mapa[(10,2)] = Pozice(HerniDeska.platno_hra, True, [153,559])
+        mapa[(10,2)] = Pozice(HerniDeska.platno_hra, False, [153,559])
         mapa[(10,3)] = Pozice(HerniDeska.platno_hra, True, [153,509])
         mapa[(10,4)] = Pozice(HerniDeska.platno_hra, True, [153,459])
         mapa[(10,5)] = Pozice(HerniDeska.platno_hra, True, [153,409])
@@ -294,7 +295,7 @@ class Hra:
 
         mapa[(19,1)] = Pozice(HerniDeska.platno_hra, True, [374,59])
         mapa[(19,2)] = Pozice(HerniDeska.platno_hra, True, [374,109])
-        mapa[(19,3)] = Pozice(HerniDeska.platno_hra, False, [374,159])
+        mapa[(19,3)] = Pozice(HerniDeska.platno_hra, True, [374,159])
         mapa[(19,4)] = Pozice(HerniDeska.platno_hra, True, [374,209])
         mapa[(19,5)] = Pozice(HerniDeska.platno_hra, True, [374,259])
 
@@ -334,18 +335,6 @@ class Hra:
         mapa[(13,3)] = Pozice(HerniDeska.platno_hra, True, [59,159])
         mapa[(13,4)] = Pozice(HerniDeska.platno_hra, True, [59,209])
         mapa[(13,5)] = Pozice(HerniDeska.platno_hra, True, [59,259])
-
-class Dvojkostka:
-    def __init__(self) -> None:
-        pass
-
-    def hod_dvojkostkou(self) -> list:
-        prvni_hod = random.randint(1, 6)
-        druhy_hod = random.randint(1, 6)
-        if (prvni_hod == druhy_hod):
-            return [prvni_hod for _ in range(4)]
-        else:
-            return [prvni_hod, druhy_hod]
 
 if __name__ == "__main__":
     app = Hra(root)

@@ -7,6 +7,7 @@ from pathlib import Path
 from Mapa_pozic import Mapa_pozic
 from Mapa_kamenu import Mapa_kamenu
 from Zasobnik import Zasobnik
+from Label_manager import Label_manager
 
 class Herni_kamen(tk.Frame):
     zvoleny_kamen = None
@@ -68,6 +69,7 @@ class Herni_kamen(tk.Frame):
         return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
 
     def click_event(self):
+        print(self._historie)
         if(self._default_color == Herni_kamen.barva_hrace):
             if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
                 if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):
@@ -123,6 +125,9 @@ class Herni_kamen(tk.Frame):
         self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
         self._platno.create_window(nova_pozice.get_souradnice[0], nova_pozice.get_souradnice[1], window=self.kamen_button) 
 
+        Label_manager.zmena_pozice(self._platno,self._default_color, self.historie[-2], self.historie[-1], None)
+        Label_manager.zmena_stavu(self._platno, self._default_color, "wip")
+
     def presun_kamen(kamen, nova_pozice):
         Zasobnik.zasobniky[kamen._pozice_kamene[0]].zasobnik.index(kamen)
         Zasobnik.zasobniky[kamen._pozice_kamene[0]].pop()
@@ -133,6 +138,7 @@ class Herni_kamen(tk.Frame):
                 break
         Zasobnik.zasobniky[point[0]].push(kamen)
         kamen._pozice_kamene = point
+        kamen.pridej_pozici_do_historie()
         mapa_kamenu = Mapa_kamenu._mapa_kamenu
         mapa_kamenu[kamen] = nova_pozice
         Herni_kamen.zvoleny_kamen = kamen

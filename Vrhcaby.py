@@ -108,7 +108,6 @@ class HerniDeska:
         HerniDeska.vytvor_pointy()
         Hra.pridej_zakladni_kameny(cls)
         Hra.rozhodni_o_barve_hrace()
-        print(HerniDeska.radio_var.get())
 
     def vysledek_hodu_kostkami(cls, hrac_barva : str, vysledek : list):
         #hrac_barva = Hra.get_aktualni_hrac()._barva_hrace
@@ -231,7 +230,7 @@ class Hra:
         mapa[(5,1)] = Pozice(HerniDeska.platno_hra, True, [421,609])
         mapa[(5,2)] = Pozice(HerniDeska.platno_hra, True, [421,559])
         mapa[(5,3)] = Pozice(HerniDeska.platno_hra, True, [421,509])
-        mapa[(5,4)] = Pozice(HerniDeska.platno_hra, False, [421,459])
+        mapa[(5,4)] = Pozice(HerniDeska.platno_hra, True, [421,459])
         mapa[(5,5)] = Pozice(HerniDeska.platno_hra, True, [421,409])
 
 
@@ -252,7 +251,7 @@ class Hra:
         mapa[(8,2)] = Pozice(HerniDeska.platno_hra, True, [247,559])
         mapa[(8,3)] = Pozice(HerniDeska.platno_hra, True, [247,509])
         mapa[(8,4)] = Pozice(HerniDeska.platno_hra, True, [247,459])
-        mapa[(8,5)] = Pozice(HerniDeska.platno_hra, False, [247,409])
+        mapa[(8,5)] = Pozice(HerniDeska.platno_hra, True, [247,409])
 
         mapa[(9,1)] = Pozice(HerniDeska.platno_hra, True, [200,609])
         mapa[(9,2)] = Pozice(HerniDeska.platno_hra, True, [200,559])
@@ -261,7 +260,7 @@ class Hra:
         mapa[(9,5)] = Pozice(HerniDeska.platno_hra, True, [200,409])
 
         mapa[(10,1)] = Pozice(HerniDeska.platno_hra, True, [153,609])
-        mapa[(10,2)] = Pozice(HerniDeska.platno_hra, False, [153,559])
+        mapa[(10,2)] = Pozice(HerniDeska.platno_hra, True, [153,559])
         mapa[(10,3)] = Pozice(HerniDeska.platno_hra, True, [153,509])
         mapa[(10,4)] = Pozice(HerniDeska.platno_hra, True, [153,459])
         mapa[(10,5)] = Pozice(HerniDeska.platno_hra, True, [153,409])
@@ -355,6 +354,13 @@ class Hra:
         mapa[(13,3)] = Pozice(HerniDeska.platno_hra, True, [59,159])
         mapa[(13,4)] = Pozice(HerniDeska.platno_hra, True, [59,209])
         mapa[(13,5)] = Pozice(HerniDeska.platno_hra, True, [59,259])
+
+        # Bar
+
+        mapa[(99,1)] = Pozice(HerniDeska.platno_hra, False, [335,259]) # Bily
+        mapa[(99,2)] = Pozice(HerniDeska.platno_hra, False, [335,409]) # Cerny        
+
+
 
 if __name__ == "__main__":
     app = Hra(root)

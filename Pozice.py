@@ -38,7 +38,6 @@ class Pozice(tk.Frame):
         return self._souradnice
 
     def hint_clicked(self):
-        print(self._souradnice)
         if(Herni_kamen.zvoleny_kamen != None):
 
             mapa_pozic = Mapa_pozic._mapa_pozic

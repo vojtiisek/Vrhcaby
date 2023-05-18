@@ -8,6 +8,7 @@ from Mapa_pozic import Mapa_pozic
 from Mapa_kamenu import Mapa_kamenu
 from Zasobnik import Zasobnik
 from Label_manager import Label_manager
+from Bar import Bar
 
 class Herni_kamen(tk.Frame):
     zvoleny_kamen = None
@@ -142,4 +143,15 @@ class Herni_kamen(tk.Frame):
         mapa_kamenu = Mapa_kamenu._mapa_kamenu
         mapa_kamenu[kamen] = nova_pozice
         Herni_kamen.zvoleny_kamen = kamen
+
+    def vyhodit_na_bar(self):
+        mapa_pozic = Mapa_pozic._mapa_pozic
+        Bar.presun_na_bar(self._platno, self._pozice_kamene)
+        if(self._default_color == "bila"):
+            Herni_kamen.presun_kamen(self, mapa_pozic[(99,1)])    
+            self.update_po_presunu(mapa_pozic[(99,1)])
+        else:
+            Herni_kamen.presun_kamen(self, mapa_pozic[(99,2)])    
+            self.update_po_presunu(mapa_pozic[(99,2)])
+
         

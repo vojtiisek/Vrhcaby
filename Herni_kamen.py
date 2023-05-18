@@ -64,7 +64,10 @@ class Herni_kamen(tk.Frame):
             self._pozice_kamene = nova_pozice_kamene
 
     def pridej_pozici_do_historie(self) -> None:
-        self.historie.append(self._pozice_kamene)
+        if(self._pozice_kamene != (99,1) or self._pozice_kamene != (99,2)): 
+            self.historie.append(self._pozice_kamene)
+        else:
+            self.historie.append("Bar")
 
     def __str__(self) -> str:
         return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
@@ -137,7 +140,8 @@ class Herni_kamen(tk.Frame):
         for point in mapa_pozic.keys():
             if mapa_pozic[point] == nova_pozice:
                 break
-        Zasobnik.zasobniky[point[0]].push(kamen)
+        if(point != (99,1) or point != (99,2)): 
+            Zasobnik.zasobniky[point[0]].push(kamen)
         kamen._pozice_kamene = point
         kamen.pridej_pozici_do_historie()
         mapa_kamenu = Mapa_kamenu._mapa_kamenu

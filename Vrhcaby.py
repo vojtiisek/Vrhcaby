@@ -357,8 +357,8 @@ class Hra:
 
         # Bar
 
-        mapa[(99,1)] = Pozice(HerniDeska.platno_hra, False, [335,259]) # Bily
-        mapa[(99,2)] = Pozice(HerniDeska.platno_hra, False, [335,409]) # Cerny        
+        mapa[(99,1)] = Pozice(HerniDeska.platno_hra, True, [335,259]) # Bily
+        mapa[(99,2)] = Pozice(HerniDeska.platno_hra, True, [335,409]) # Cerny        
 
 
 

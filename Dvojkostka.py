@@ -1,3 +1,4 @@
+import math
 import random
 
 class Dvojkostka:
@@ -5,6 +6,7 @@ class Dvojkostka:
         pass
 
     def hod_dvojkostkou(self) -> list:
+
         prvni_hod = random.randint(1, 6)
         druhy_hod = random.randint(1, 6)
         if (prvni_hod == druhy_hod):

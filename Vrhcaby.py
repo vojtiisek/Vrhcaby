@@ -2,9 +2,10 @@ from struct import pack
 import tkinter as tk
 import random
 from tkinter import *
-from tkinter import messagebox, Message
+from tkinter import messagebox, Message, font
 from PIL import ImageTk, Image
 from pathlib import Path
+from Dvojkostka import Dvojkostka
 
 from Herni_kamen import Herni_kamen
 from Pozice import Pozice
@@ -17,7 +18,7 @@ root = tk.Tk()
 class HerniDeska:
     # Okno
     hra = root
-    hra.resizable(True, True)
+    hra.resizable(False, False)
     hra.geometry("964x669")
     hra.title("Vrhcaby")
 
@@ -63,14 +64,33 @@ class HerniDeska:
         width=quit_game_bg_tk.width(), height=quit_game_bg_tk.height())
     platno_menu.create_window(480, 560, window=quit_game_bg_button)
 
+    # Radiobuttony pro zvoleni oponenta
+    radio_var = tk.StringVar()
+    radio_var.set("AI")
+    font_radiobuttons = font.Font(family="Arial", size=14)
+
+    radio_button1 = tk.Radiobutton(hra, text="Hra proti AI", variable=radio_var, value="AI", font=font_radiobuttons, bg="#cb8742")
+    radio_button2 = tk.Radiobutton(hra, text="Hra proti cloveku", variable=radio_var, value="KonzolovyHrac", font=font_radiobuttons, bg="#cb8742")
+
+    platno_menu.create_window(820, 270, window=radio_button1)
+    platno_menu.create_window(840, 330, window=radio_button2)
+
     # Pozadi - hra
     pozadi_obrazek_hra = Image.open("vrhcaby_mapa.jpg")
     pozadi_hra = ImageTk.PhotoImage(pozadi_obrazek_hra)
-
     # Platno - hra
     platno_hra = tk.Canvas(hra, width=964, height=669)
     platno_hra.create_image(0, 0, image=pozadi_hra, anchor=tk.NW)
     platno_hra.pack_forget()
+
+    kostky_textura = Image.open("quit_game_button.png") 
+    kostky_textura_tk = ImageTk.PhotoImage(kostky_textura)
+    dvojkostka = Dvojkostka()
+    kostky_button = Button(platno_menu, image=kostky_textura_tk,
+                                 command=lambda: HerniDeska.ukoncit_hru(), bd=0, highlightthickness=0)
+    kostky_button.config(
+        width=kostky_textura_tk.width(), height=kostky_textura_tk.height())
+    platno_menu.create_window(700, 700, window=kostky_button)
 
     @classmethod
     def vytvor_pointy(cls):
@@ -88,6 +108,12 @@ class HerniDeska:
         HerniDeska.vytvor_pointy()
         Hra.pridej_zakladni_kameny(cls)
         Hra.rozhodni_o_barve_hrace()
+        print(HerniDeska.radio_var.get())
+
+    def vysledek_hodu_kostkami(cls, hrac_barva : str, vysledek : list):
+        #hrac_barva = Hra.get_aktualni_hrac()._barva_hrace
+
+        ...
 
 
     @classmethod
@@ -106,14 +132,8 @@ class HerniDeska:
     def shovej_menu(cls):
         HerniDeska.platno_menu.pack_forget()
 
-    #@classmethod
-    #def platno_hra(cls):
-    #    return HerniDeska.platno_hra
-
-
-   #vytvor_pointy()
-    #pridej_pozice()
-    #pridej_kameny(None)
+    def get_zvoleny_souper() -> str:
+        return HerniDeska.radio_var.get()
 
 class Hra:
     def __init__(self, hra):
@@ -175,7 +195,7 @@ class Hra:
         mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,4))] = mapa[(6,4)]
         mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,5))] = mapa[(6,5)]
 
-        for kamen in Mapa_kamenu._mapa_kamenu.keys(): # roztridi kameny do zasobniku (zasobnik[1 až 24 - odpovida pointum na mape])
+        for kamen in Mapa_kamenu._mapa_kamenu.keys(): # roztridi kameny do zasobniku (zasobnik[1 aï¿½ 24 - odpovida pointum na mape])
             Zasobnik.zasobniky[kamen.pozice_kamene[0]].push(kamen)
             kamen.pridej_pozici_do_historie()
 

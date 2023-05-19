@@ -23,6 +23,8 @@ class Zasobnik:
             pass
 
     def rear(self):
+        if(len(self.zasobnik) == 0):
+            return 0
         if (len(self.zasobnik) > 0):
             return self.zasobnik[len(self.zasobnik)-1]
         else:

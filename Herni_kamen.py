@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox, Message
 from PIL import ImageTk, Image 
 from pathlib import Path
+from CalculateTahy import CalculateTahy
 
 from Mapa_pozic import Mapa_pozic
 from Mapa_kamenu import Mapa_kamenu
@@ -73,19 +74,26 @@ class Herni_kamen(tk.Frame):
         return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
 
     def click_event(self):
-        print(self._historie)
         if(self._default_color == Herni_kamen.barva_hrace):
             if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
-                if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):
-            
-                    if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
+                if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
 
+                    mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, [3,2])
+                    print(mozne_tahy)
+
+                    if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
+                        
+                        CalculateTahy.vykreslit_pozice(mozne_tahy)
                         self._barva_kamene = "selected"
+
                         self.kamen_bg = Image.open("selected_piece.png")
                         Herni_kamen.zvoleny_kamen = self
 
                     elif(self._barva_kamene == "selected"):
 
+
+
+                        CalculateTahy.skryj_pozice(self._platno, mozne_tahy)
                         self._barva_kamene = self._default_color
                         Herni_kamen.zvoleny_kamen = None
 
@@ -107,7 +115,7 @@ class Herni_kamen(tk.Frame):
                     mapa = Mapa_pozic._mapa_pozic
                     pozice = mapa.get(self._pozice_kamene)
 
-                    self._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button)
+                    self._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags="selected")
                 else:
                     messagebox.showinfo("Informace", "Muzete hrat pouze s nejvyse umistenym kamenem na danem klinu.")
             else:
@@ -115,6 +123,15 @@ class Herni_kamen(tk.Frame):
 
     def update_po_presunu(self, nova_pozice):
         self._barva_kamene = self._default_color
+        mapa_pozic = Mapa_pozic._mapa_pozic
+        
+        point = ()
+        for point in mapa_pozic.keys():
+            if mapa_pozic[point] == nova_pozice:
+                break
+
+        CalculateTahy.mozne_tahy.remove(Zasobnik.zasobniky[point[0]])
+        CalculateTahy.skryj_pozice(self._platno, CalculateTahy.mozne_tahy)
         Herni_kamen.zvoleny_kamen = None
 
         if(self._default_color == "bila"):

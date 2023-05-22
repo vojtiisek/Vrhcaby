@@ -1,6 +1,7 @@
 from tkinter import Tk as tk
 from tkinter import Canvas, messagebox, Button
 from PIL import Image, ImageTk
+from Label_manager import Label_manager
 
 from Zasobnik import Zasobnik
 from Mapa_pozic import Mapa_pozic
@@ -14,6 +15,7 @@ class CalculateTahy:
     def vyhodnotit_mozne_tahy(platno : Canvas, pozice_kamene : tuple, vysledek_dvojkostky : list) -> list:
         
         CalculateTahy.mozne_tahy = []
+        soucet_kostek = vysledek_dvojkostky[0] + vysledek_dvojkostky[1]
 
         mapa_kamenu = Mapa_kamenu.get_mapa_kamenu()
         kamen = None
@@ -21,16 +23,25 @@ class CalculateTahy:
             if kamen._pozice_kamene == pozice_kamene:
                 break
         if(kamen._default_color == "bila"):
+            print("BILA")
             if(len(vysledek_dvojkostky) == 2):
-                if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]], kamen._default_color)):
-                   CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]])
+                print("1")
+                if(CalculateTahy.kontrola_budoucich_mist(pozice_kamene[0], vysledek_dvojkostky, kamen._default_color)):
+                   
+                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]], kamen._default_color)):
+                       print(Zasobnik.zasobniky.index(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]]))
+                       CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]])
+                       print("2")
+                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]], kamen._default_color)):
+                         print(Zasobnik.zasobniky.index(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]]))
+                         CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]])
+                         print("3")
 
-                if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]], kamen._default_color)):
-                     CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]])
-
-                if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - (vysledek_dvojkostky[0] + vysledek_dvojkostky[1])], kamen._default_color)):
-                     CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - (vysledek_dvojkostky[0] + vysledek_dvojkostky[1])])
-
+                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - soucet_kostek], kamen._default_color)):
+                     
+                         print(Zasobnik.zasobniky.index(Zasobnik.zasobniky[pozice_kamene[0] - soucet_kostek]))
+                         CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - soucet_kostek])
+                         print("4")
             elif(len(vysledek_dvojkostky) == 4):
                 if(len(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]]) <=1):
                     CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]])
@@ -38,14 +49,15 @@ class CalculateTahy:
                 messagebox.showinfo("Chyba", f"Chyba pri rozhodovani o velikosti vysledek_dvojkostky, velikost: {len(vysledek_dvojkostky)}"  )
         else:
             if(len(vysledek_dvojkostky) == 2):
-                if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[0]], kamen._default_color)):
-                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[0]])
+                if(CalculateTahy.kontrola_budoucich_mist(pozice_kamene[0], vysledek_dvojkostky, kamen._default_color)):
+                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[0]], kamen._default_color)):
+                        CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[0]])
 
-                if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[1]], kamen._default_color)):
-                     CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[1]])
+                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[1]], kamen._default_color)):
+                         CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[1]])
 
-                if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] + (vysledek_dvojkostky[0] + vysledek_dvojkostky[1])], kamen._default_color)):
-                     CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + (vysledek_dvojkostky[0] + vysledek_dvojkostky[1])])
+                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] + soucet_kostek], kamen._default_color)):
+                         CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + soucet_kostek])
 
             elif(len(vysledek_dvojkostky) == 4):
                 if(len(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[0]].zasobnik) <=1):
@@ -53,22 +65,18 @@ class CalculateTahy:
             else:
                 messagebox.showinfo("Chyba", f"Chyba pri rozhodovani o velikosti vysledek_dvojkostky, velikost: {len(vysledek_dvojkostky)}"  )
 
-        return  CalculateTahy.mozne_tahy
+        return CalculateTahy.mozne_tahy
 
     def vykreslit_pozice(seznam_tahu):
         mapa_pozic = Mapa_pozic._mapa_pozic
-        pozice = None
-        for mozny_tah in seznam_tahu:
-            vyska = len(mozny_tah.zasobnik) + 1
-            point = (Zasobnik.zasobniky.index(mozny_tah),vyska)
+        for mozny_tah in range(len(seznam_tahu)):
+            pozice = None
+            vyska = len(seznam_tahu[mozny_tah].zasobnik) + 1
+            point = (Zasobnik.zasobniky.index(seznam_tahu[mozny_tah]),vyska)
             pozice = mapa_pozic[point]
-            pozice._hidden = False
+            pozice.set_hidden(False)
 
-            pozice.pozice_bg = Image.open("hint_piece.png") 
-            pozice.pozice_bg_tk = ImageTk.PhotoImage(pozice.pozice_bg)
-            pozice.kamen_button= Button(pozice._platno, image=pozice.pozice_bg_tk, command=lambda : pozice.hint_clicked(), bd=0, highlightthickness=0)
-            pozice.kamen_button.config(width=pozice.pozice_bg_tk.width(), height=pozice.pozice_bg_tk.height())
-            pozice._platno.create_window(pozice._souradnice[0], pozice._souradnice[1], window=pozice.kamen_button, tags="mozny_tah")
+            print(f"KONEC, pozice: {pozice._souradnice}, point: {point}, mapa pozic: {mapa_pozic[point]._souradnice}")
 
     def skryj_pozice(platno : Canvas, seznam_tahu):
         mapa_pozic = Mapa_pozic._mapa_pozic
@@ -95,3 +103,37 @@ class CalculateTahy:
 
         return vysledek
 
+    def kontrola_budoucich_mist(pozice_kamene : int, vysledek_dvojkostky : list, barva_hrace : str):
+        vysledek = False
+        soucet = vysledek_dvojkostky[0] + vysledek_dvojkostky[1]
+        if(barva_hrace == "bila"):
+            if(pozice_kamene - vysledek_dvojkostky[0] < 1 or pozice_kamene - vysledek_dvojkostky[0] > 24):
+                vysledek = False
+            else:
+                vysledek = True
+
+            if(pozice_kamene - vysledek_dvojkostky[1] < 1 or pozice_kamene - vysledek_dvojkostky[1] > 24):
+                vysledek = False
+            else:
+                vysledek = True
+
+            if(pozice_kamene - soucet < 1 or pozice_kamene - soucet > 24):
+                vysledek = False
+            else:
+                vysledek = True
+        else:
+            if(pozice_kamene + vysledek_dvojkostky[0] < 1 or pozice_kamene + vysledek_dvojkostky[0] > 24):
+                vysledek = False
+            else:
+                vysledek = True
+
+            if(pozice_kamene + vysledek_dvojkostky[1] < 1 or pozice_kamene + vysledek_dvojkostky[1] > 24):
+                vysledek = False
+            else:
+                vysledek = True
+
+            if(pozice_kamene + soucet < 1 or pozice_kamene + soucet > 24):
+                vysledek = False
+            else:
+                vysledek = True
+        return vysledek

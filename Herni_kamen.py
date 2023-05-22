@@ -14,7 +14,7 @@ from Bar import Bar
 class Herni_kamen(tk.Frame):
     zvoleny_kamen = None
     barva_hrace = None
-    def __init__(self, platno, barva_kamene: str, pozice_kamene) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
+    def __init__(self, platno, barva_kamene: str, pozice_kamene: tuple) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
         super().__init__(platno)
         self._platno = platno
         self._barva_kamene = barva_kamene
@@ -74,12 +74,12 @@ class Herni_kamen(tk.Frame):
         return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
 
     def click_event(self):
+        print(self._pozice_kamene)
         if(self._default_color == Herni_kamen.barva_hrace):
             if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
                 if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
 
                     mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, [3,2])
-                    print(mozne_tahy)
 
                     if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
                         

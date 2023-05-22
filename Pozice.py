@@ -52,7 +52,6 @@ class Pozice(tk.Frame):
             #nova_pozice = mapa_pozic[Herni_kamen.zvoleny_kamen._pozice_kamene] #pozice kamene pred presunem (misto nej se vytvori volna Pozice())
             Herni_kamen.presun_kamen(Herni_kamen.zvoleny_kamen, self)
             self._hidden = True
-            Herni_kamen.zvoleny_kamen._platno.delete("selected")
 
             #nova_pozice.pozice_bg = Image.open("hint_piece.png") 
             #nova_pozice.pozice_bg_tk = ImageTk.PhotoImage(nova_pozice.pozice_bg)
@@ -61,3 +60,4 @@ class Pozice(tk.Frame):
             #nova_pozice._platno.create_window(nova_pozice._souradnice[0], nova_pozice._souradnice[1], window=nova_pozice.kamen_button)
 
             Herni_kamen.zvoleny_kamen.update_po_presunu(self)
+            #Herni_kamen.obnov_pozadi(self._platno)

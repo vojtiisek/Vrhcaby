@@ -19,6 +19,7 @@ class Herni_kamen(tk.Frame):
         self._platno = platno
         self._barva_kamene = barva_kamene
         self._pozice_kamene = pozice_kamene
+        self._tag = "tag" + str(self._pozice_kamene[0]) + str(self._pozice_kamene[1])
         self._historie = []
         self._default_color = barva_kamene
 
@@ -40,7 +41,7 @@ class Herni_kamen(tk.Frame):
         mapa = Mapa_pozic._mapa_pozic
         pozice = mapa.get(self._pozice_kamene)
 
-        platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button)
+        platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
 
     @property
     def barva_kamene(self) -> str:
@@ -74,7 +75,6 @@ class Herni_kamen(tk.Frame):
         return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
 
     def click_event(self):
-        print(self._pozice_kamene)
         if(self._default_color == Herni_kamen.barva_hrace):
             if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
                 if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
@@ -115,12 +115,12 @@ class Herni_kamen(tk.Frame):
                     mapa = Mapa_pozic._mapa_pozic
                     pozice = mapa.get(self._pozice_kamene)
 
-                    self._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags="selected")
+                    self._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
                 else:
                     messagebox.showinfo("Informace", "Muzete hrat pouze s nejvyse umistenym kamenem na danem klinu.")
             else:
                 messagebox.showinfo("Informace", "Jiz mate vybrany jiny kamen, se kterym chcete hybat.")
-
+            
     def update_po_presunu(self, nova_pozice):
         self._barva_kamene = self._default_color
         mapa_pozic = Mapa_pozic._mapa_pozic
@@ -144,12 +144,13 @@ class Herni_kamen(tk.Frame):
         self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
         self.kamen_button= Button(self._platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
         self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
-        self._platno.create_window(nova_pozice.get_souradnice[0], nova_pozice.get_souradnice[1], window=self.kamen_button) 
+        self._platno.create_window(nova_pozice.get_souradnice[0], nova_pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag) 
 
         Label_manager.zmena_pozice(self._platno,self._default_color, self.historie[-2], self.historie[-1], None)
         Label_manager.zmena_stavu(self._platno, self._default_color, "wip")
 
     def presun_kamen(kamen, nova_pozice):
+        kamen._platno.delete(kamen._tag)
         Zasobnik.zasobniky[kamen._pozice_kamene[0]].zasobnik.index(kamen)
         Zasobnik.zasobniky[kamen._pozice_kamene[0]].pop()
         mapa_pozic = Mapa_pozic._mapa_pozic
@@ -174,5 +175,3 @@ class Herni_kamen(tk.Frame):
         else:
             Herni_kamen.presun_kamen(self, mapa_pozic[(99,2)])    
             self.update_po_presunu(mapa_pozic[(99,2)])
-
-        

@@ -141,8 +141,8 @@ class Hra:
 
     def rozhodni_o_barve_hrace():
         barva_hrace = "error"
-        #volba = random.randint(1,6)
-        volba = 1
+        volba = random.randint(1,6)
+
         if(volba == 1 or volba == 3 or volba == 5):
             barva_hrace = "bila"
         elif(volba == 2 or volba == 4 or volba == 6):

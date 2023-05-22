@@ -79,7 +79,7 @@ class Herni_kamen(tk.Frame):
             if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
                 if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
 
-                    mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, [3,2])
+                    mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, Herni_kamen.posledni_vysledky_hodu)
 
                     if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
                         

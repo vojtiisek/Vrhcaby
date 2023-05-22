@@ -83,14 +83,13 @@ class HerniDeska:
     platno_hra.create_image(0, 0, image=pozadi_hra, anchor=tk.NW)
     platno_hra.pack_forget()
 
-    kostky_textura = Image.open("quit_game_button.png") 
+    kostky_textura = Image.open("dice.jpg") 
     kostky_textura_tk = ImageTk.PhotoImage(kostky_textura)
-    dvojkostka = Dvojkostka()
-    kostky_button = Button(platno_menu, image=kostky_textura_tk,
-                                 command=lambda: HerniDeska.ukoncit_hru(), bd=0, highlightthickness=0)
+    kostky_button = Button(platno_hra, image=kostky_textura_tk,
+                                 command=lambda: Hra.hod_kostkou())
     kostky_button.config(
         width=kostky_textura_tk.width(), height=kostky_textura_tk.height())
-    platno_menu.create_window(700, 700, window=kostky_button)
+    platno_hra.create_window(840, 360, window=kostky_button)
 
     @classmethod
     def vytvor_pointy(cls):
@@ -360,6 +359,9 @@ class Hra:
 
         mapa[(99,1)] = Pozice(HerniDeska.platno_hra, True, [335,259]) # Bily
         mapa[(99,2)] = Pozice(HerniDeska.platno_hra, True, [335,409]) # Cerny        
+
+    def hod_kostkou():
+        Herni_kamen.posledni_vysledky_hodu = Dvojkostka.hod_dvojkostkou()
 
 
 

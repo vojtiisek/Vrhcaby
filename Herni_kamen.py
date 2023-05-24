@@ -14,6 +14,7 @@ from Bar import Bar
 class Herni_kamen(tk.Frame):
     zvoleny_kamen = None
     barva_hrace = None
+    posledni_vysledky_hodu = []
     def __init__(self, platno, barva_kamene: str, pozice_kamene: tuple, historie=[]) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
         super().__init__(platno)
         self._platno = platno
@@ -78,44 +79,47 @@ class Herni_kamen(tk.Frame):
         if(self._default_color == Herni_kamen.barva_hrace):
             if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
                 if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
+                    if(len(Herni_kamen.posledni_vysledky_hodu) > 0 ) :
 
-                    mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, Herni_kamen.posledni_vysledky_hodu)
+                        mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, Herni_kamen.posledni_vysledky_hodu)
 
-                    if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
+                        if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
                         
-                        CalculateTahy.vykreslit_pozice(mozne_tahy)
-                        self._barva_kamene = "selected"
+                            CalculateTahy.vykreslit_pozice(mozne_tahy)
+                            self._barva_kamene = "selected"
 
-                        self.kamen_bg = Image.open("selected_piece.png")
-                        Herni_kamen.zvoleny_kamen = self
+                            self.kamen_bg = Image.open("selected_piece.png")
+                            Herni_kamen.zvoleny_kamen = self
 
-                    elif(self._barva_kamene == "selected"):
+                        elif(self._barva_kamene == "selected"):
 
 
 
-                        CalculateTahy.skryj_pozice(self._platno, mozne_tahy)
-                        self._barva_kamene = self._default_color
-                        Herni_kamen.zvoleny_kamen = None
+                            CalculateTahy.skryj_pozice(self._platno, mozne_tahy)
+                            self._barva_kamene = self._default_color
+                            Herni_kamen.zvoleny_kamen = None
 
-                        if(self._default_color == "bila"):
-                            self.kamen_bg = Image.open("white_piece.png")
-                        elif(self._default_color == "cerna"):
-                            self.kamen_bg = Image.open("black_piece.png")
+                            if(self._default_color == "bila"):
+                                self.kamen_bg = Image.open("white_piece.png")
+                            elif(self._default_color == "cerna"):
+                                self.kamen_bg = Image.open("black_piece.png")
+                            else:
+                                self.kamen_bg = Image.open("error_piece.png")
                         else:
                             self.kamen_bg = Image.open("error_piece.png")
-                    else:
-                        self.kamen_bg = Image.open("error_piece.png")
 
 
                     
-                    self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
-                    self.kamen_button= Button(self._platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
-                    self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
+                        self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
+                        self.kamen_button= Button(self._platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
+                        self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
 
-                    mapa = Mapa_pozic._mapa_pozic
-                    pozice = mapa.get(self._pozice_kamene)
+                        mapa = Mapa_pozic._mapa_pozic
+                        pozice = mapa.get(self._pozice_kamene)
 
-                    self._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
+                        self._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
+                    else:
+                        messagebox.showinfo("Upozorneni", "Musite si nejdrive hodit kostkami!")
                 else:
                     messagebox.showinfo("Informace", "Muzete hrat pouze s nejvyse umistenym kamenem na danem klinu.")
             else:

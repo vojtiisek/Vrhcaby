@@ -1,8 +1,10 @@
 from struct import pack
 import tkinter as tk
 import random
+import json
 from tkinter import *
 from tkinter import messagebox, Message, font
+from tkinter import filedialog
 from PIL import ImageTk, Image
 from pathlib import Path
 from Dvojkostka import Dvojkostka
@@ -15,6 +17,16 @@ from Zasobnik import Zasobnik
 
 root = tk.Tk()
 
+def open_file():
+    return filedialog.askopenfilename(title="Vyberte soubor", filetypes=([("JSON files", "*.json")]))
+
+def save_file():
+    json_objects = json.dumps(Hra.pole_kamenu_k_ulozeni(), indent=4)
+
+    with open("vrhcaby_json", "w") as soubor:
+        soubor.write(json_objects)
+    print("Hra ulozena")
+        
 class HerniDeska:
     # Okno
     hra = root
@@ -49,8 +61,8 @@ class HerniDeska:
     # Tlacitko "Pokracovat"
     continue_game_bg = Image.open("continue_button.png")
     continue_game_bg_tk = ImageTk.PhotoImage(continue_game_bg)
-    continue_game_bg_button = Button(
-        platno_menu, image=continue_game_bg_tk, bd=0, highlightthickness=0)
+    continue_game_bg_button = Button(platno_menu, image=continue_game_bg_tk, 
+                                     command=lambda: HerniDeska.pokracovat_button_click(), bd=0, highlightthickness=0)
     continue_game_bg_button.config(
         width=continue_game_bg_tk.width(), height=continue_game_bg_tk.height())
     platno_menu.create_window(480, 430, window=continue_game_bg_button)
@@ -108,6 +120,16 @@ class HerniDeska:
         Hra.pridej_zakladni_kameny(cls)
         Hra.rozhodni_o_barve_hrace()
 
+    @classmethod
+    def pokracovat_button_click(cls):
+        HerniDeska.shovej_menu()
+        HerniDeska.vykresli_hraci_desku()
+        Hra.pridej_pozice(cls)
+        HerniDeska.vytvor_pointy()
+        file_path = open_file()
+        Hra.loadni_kameny(file_path)
+        
+
     def vysledek_hodu_kostkami(cls, hrac_barva : str, vysledek : list):
         #hrac_barva = Hra.get_aktualni_hrac()._barva_hrace
 
@@ -154,6 +176,21 @@ class Hra:
         else:
             messagebox.showinfo("Informace", "Vase barva je: CERNA")
 
+    def pole_kamenu_k_ulozeni():
+        mapa_kamenu = Mapa_kamenu._mapa_kamenu
+        pole_kamenu = []
+        # mapa_kamenu.keys()
+        for kamen in mapa_kamenu:
+            slovnik = {
+                "barva_kamene": kamen.barva_kamene,
+                "historie": kamen.historie,
+                "pozice_kamene": kamen.pozice_kamene
+            }
+            pole_kamenu.append(slovnik)        
+        return pole_kamenu 
+    
+    def loadni_kameny(self, json_file):
+        pass
 
     def pridej_zakladni_kameny(self):
         mapa = Mapa_pozic._mapa_pozic
@@ -194,10 +231,12 @@ class Hra:
         mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,4))] = mapa[(6,4)]
         mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,5))] = mapa[(6,5)]
 
-        for kamen in Mapa_kamenu._mapa_kamenu.keys(): # roztridi kameny do zasobniku (zasobnik[1 a� 24 - odpovida pointum na mape])
+        for kamen in Mapa_kamenu._mapa_kamenu.keys(): # roztridi kameny do zasobniku (zasobnik[1 az 24 - odpovida pointum na mape])
             Zasobnik.zasobniky[kamen.pozice_kamene[0]].push(kamen)
             kamen.pridej_pozici_do_historie()
 
+        #print([i.barva_kamene for i in mapa_kamenu])
+        #print([i.pozice_kamene for i in mapa_kamenu])
 
     def pridej_pozice(self):  # naplni vsechny pointy maximalnim poctem kamenu (5ti) - tyto kameny jsou skryte a pouzivane pro posuny a pro napovedu dalsich tahu
         mapa = Mapa_pozic._mapa_pozic
@@ -363,6 +402,8 @@ class Hra:
     def hod_kostkou():
         Herni_kamen.posledni_vysledky_hodu = Dvojkostka.hod_dvojkostkou()
 
+        # Pouze na otestovani ulozeni hry
+        save_file()
 
 
 if __name__ == "__main__":

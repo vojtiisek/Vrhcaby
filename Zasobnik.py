@@ -5,36 +5,23 @@ class Zasobnik:
         self.zasobniky = []
 
     def push(self, item) -> None:
-        if (self.size() >= self.max_size):
-            pass
-        else:
+        if len(self.zasobnik) <= self.max_size:
             self.zasobnik.append(item)
 
     def pop(self) -> None:
-        if (len(self.zasobnik) > 0):
-            self.zasobnik.pop(-1)
-        else:
-            pass
+        if len(self.zasobnik) > 0:
+            self.zasobnik.pop()
 
     def front(self):
-        if (len(self.zasobnik) > 0):
+        if len(self.zasobnik) > 0:
             return self.zasobnik[0]
-        else:
-            pass
 
     def rear(self):
-        if(len(self.zasobnik) == 0):
-            return 0
-        if (len(self.zasobnik) > 0):
-            return self.zasobnik[len(self.zasobnik)-1]
-        else:
-            pass
+        if len(self.zasobnik) > 0:
+            return self.zasobnik[-1]
 
     def is_empty(self) -> bool:
-        if (len(self.zasobnik) <= 0):
-            return True
-        else:
-            return False
+        return len(self.zasobnik) == 0
 
     def print_all(self):
         for prvek in self.zasobnik:

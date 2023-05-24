@@ -14,13 +14,13 @@ from Bar import Bar
 class Herni_kamen(tk.Frame):
     zvoleny_kamen = None
     barva_hrace = None
-    def __init__(self, platno, barva_kamene: str, pozice_kamene: tuple) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
+    def __init__(self, platno, barva_kamene: str, pozice_kamene: tuple, historie=[]) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
         super().__init__(platno)
         self._platno = platno
         self._barva_kamene = barva_kamene
         self._pozice_kamene = pozice_kamene
         self._tag = "tag" + str(self._pozice_kamene[0]) + str(self._pozice_kamene[1])
-        self._historie = []
+        self._historie = historie
         self._default_color = barva_kamene
 
         if(self._barva_kamene == "bila"):

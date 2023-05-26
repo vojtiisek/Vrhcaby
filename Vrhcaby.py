@@ -101,7 +101,7 @@ class HerniDeska:
                                  command=lambda: Hra.hod_kostkou())
     kostky_button.config(
         width=kostky_textura_tk.width(), height=kostky_textura_tk.height())
-    platno_hra.create_window(840, 360, window=kostky_button)
+    platno_hra.create_window(830, 360, window=kostky_button)
 
     @classmethod
     def vytvor_pointy(cls):

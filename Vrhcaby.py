@@ -1,4 +1,3 @@
-from struct import pack
 import tkinter as tk
 import random
 import json
@@ -7,13 +6,17 @@ from tkinter import messagebox, Message, font
 from tkinter import filedialog
 from PIL import ImageTk, Image
 from pathlib import Path
-from Dvojkostka import Dvojkostka
 
+from Dvojkostka import Dvojkostka
 from Herni_kamen import Herni_kamen
 from Pozice import Pozice
 from Mapa_pozic import Mapa_pozic
 from Mapa_kamenu import Mapa_kamenu
 from Zasobnik import Zasobnik
+from Konzolovy_hrac import Konzolovy_Hrac
+from AI_hrac import AI_Hrac
+from StavHry import StavHry
+from Label_manager import Label_manager
 
 root = tk.Tk()
 
@@ -119,6 +122,9 @@ class HerniDeska:
         HerniDeska.vytvor_pointy()
         Hra.pridej_zakladni_kameny(cls)
         Hra.rozhodni_o_barve_hrace()
+        StavHry.set_stav("hrac1_kostka")
+        print(StavHry.get_stav())
+        Label_manager.zmena_stavu(HerniDeska.platno_hra, "","Ceka se na hod dvojkostkou Hrace1")
 
     @classmethod
     def pokracovat_button_click(cls):
@@ -156,6 +162,10 @@ class HerniDeska:
         return HerniDeska.radio_var.get()
 
 class Hra:
+
+    hrac1 = "" #vzdy konzolovy_hrac
+    hrac2 = "" # dle radiobuttonu v menu
+
     def __init__(self, hra):
         self.hra = hra
         self.platno = HerniDeska()
@@ -169,12 +179,26 @@ class Hra:
         elif(volba == 2 or volba == 4 or volba == 6):
             barva_hrace = "cerna"
         else:
-            messagebox.showinfo("Chyba", "Vyskytla se chyba pri vybirani barvy hrace.")
+            messagebox.showinfo("Chyba", "Vyskytla se chyba pri vyberu barvy hrace.")
         Herni_kamen.barva_hrace = barva_hrace
         if(barva_hrace == "bila"):
-            messagebox.showinfo("Informace", "Vase barva je: BILA")
+            Hra.hrac1 = Konzolovy_Hrac(barva_hrace)
+            if HerniDeska.get_zvoleny_souper() == "AI" :
+                Hra.hrac2 = AI_Hrac("cerna")
+                messagebox.showinfo("Informace", "Vase barva je: BILA")
+            else:
+                Hra.hrac2 = Konzolovy_Hrac("cerna")
         else:
-            messagebox.showinfo("Informace", "Vase barva je: CERNA")
+            Hra.hrac1 = Konzolovy_Hrac(barva_hrace)
+            if HerniDeska.get_zvoleny_souper() == "AI" :
+                Hra.hrac2 = AI_Hrac("bila")
+                messagebox.showinfo("Informace", "Vase barva je: CERNA")
+            else:
+                Hra.hrac2 = Konzolovy_Hrac("bila")
+
+        StavHry.add_hrac("Hrac1", Hra.hrac1)
+        StavHry.add_hrac("Hrac2", Hra.hrac2)
+
 
     def pole_kamenu_k_ulozeni():
         mapa_kamenu = Mapa_kamenu._mapa_kamenu
@@ -404,6 +428,10 @@ class Hra:
 
         # Pouze na otestovani ulozeni hry
         save_file()
+
+    def get_hrac_na_tahu():
+        
+        ...
 
 
 if __name__ == "__main__":

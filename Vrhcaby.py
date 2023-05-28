@@ -424,16 +424,34 @@ class Hra:
         mapa[(99,2)] = Pozice(HerniDeska.platno_hra, True, [335,409]) # Cerny        
 
     def hod_kostkou():
-        Herni_kamen.posledni_vysledky_hodu = Dvojkostka.hod_dvojkostkou()
+        hraci = StavHry.get_hraci()
+        hrac1 = hraci["Hrac1"]
+        hrac2 = hraci["Hrac2"]
+
+        if(StavHry.get_stav() == "hrac1_kostka" or StavHry.get_stav() == "hrac2_kostka"):
+            print("rozehrani")
+            Dvojkostka.rozehrat()
+        else:
+            Herni_kamen.posledni_vysledky_hodu = Dvojkostka.hod_dvojkostkou()
+
+        if(StavHry.get_stav() == "hrac2_kostka"):
+            Label_manager.zmena_stavu(HerniDeska.platno_hra, "","Ceka se na hod dvojkostkou Hrace2")
+
+        if(StavHry.get_stav() == "Hrac1"):
+            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac1 hraje ({hrac1.get_barva})")
+
+        if(StavHry.get_stav() == "Hrac2"):
+            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva})")
+
 
         # Pouze na otestovani ulozeni hry
         save_file()
 
-    def get_hrac_na_tahu():
-        
-        ...
-
-
 if __name__ == "__main__":
     app = Hra(root)
     root.mainloop()
+
+
+
+    # DALE: Dokoncit tahy - ruzne kameny na 2 nebo az 4 tahy (vypocet vzdalenosti pointu A->B, odebrani tohoto hodu, neboli vysledku dvojkostky, z vysledku hrace.)
+    #       Stridani stavu hry mezi Hrac1 a Hrac2 - dle pravidel, pravdepodobne bude reseno pri presunech kamenu

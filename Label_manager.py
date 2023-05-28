@@ -25,7 +25,7 @@ class Label_manager:
             posledni_tah_cerna_lbl.place(x=701, y=125)
 
     def zmena_stavu(platno : Canvas, barva : str, stav : str) -> None:
-
-        aktualni_stav_hry_lbl = Label(platno, text=textwrap.fill(stav, 25))
-        aktualni_stav_hry_lbl.config(font=("Arial", 16), fg="white", bg="#843c24")
+        aktualni_stav_hry_lbl = Label(platno)
+        aktualni_stav_hry_lbl.config(text=textwrap.fill(stav, 25), font=("Arial", 16), fg="white", bg="#843c24") 
         aktualni_stav_hry_lbl.place(x=705, y=235)
+        aktualni_stav_hry_lbl.update()

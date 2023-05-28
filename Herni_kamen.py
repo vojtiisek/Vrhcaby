@@ -10,6 +10,7 @@ from Mapa_kamenu import Mapa_kamenu
 from Zasobnik import Zasobnik
 from Label_manager import Label_manager
 from Bar import Bar
+from StavHry import StavHry
 
 class Herni_kamen(tk.Frame):
     zvoleny_kamen = None
@@ -76,7 +77,8 @@ class Herni_kamen(tk.Frame):
         return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
 
     def click_event(self):
-        if(self._default_color == Herni_kamen.barva_hrace):
+        hraci = StavHry.get_hraci()
+        if(self._default_color == hraci[StavHry.get_stav()].get_barva):
             if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
                 if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
                     if(len(Herni_kamen.posledni_vysledky_hodu) > 0 ) :

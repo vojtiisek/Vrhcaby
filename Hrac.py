@@ -29,7 +29,7 @@ class Hrac(ABC):
         self._mozne_tahy = values
 
     @property
-    def get_prvni_hod(self):
+    def get_prvni_hod(self) -> int:
         return self._prvni_hod
       
     def set_prvni_hod(self, value : int):

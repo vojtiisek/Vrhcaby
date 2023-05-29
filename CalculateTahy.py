@@ -11,50 +11,44 @@ from Mapa_kamenu import Mapa_kamenu
 class CalculateTahy:
 
     mozne_tahy = []
+    vysledne_zasobniky_bily = [] # na jake pointy (zasobniky) muze hrac dane barvy se zvolenym kamenem jit dle hozenych cisel z Dvojkostky. Nejsou upraveny pravidly.
+    vysledne_zasobniky_cerny = [] # Musi se projet, zkontrolovat, zda splnuji podminky a pravidla a az pak pridat jakozto mozny tah.
 
-    def vyhodnotit_mozne_tahy(platno : Canvas, pozice_kamene : tuple, vysledek_dvojkostky : list) -> list:
+    def vyhodnotit_mozne_tahy(platno : Canvas, pozice_kamene : tuple, vysledek_dvojkostky : list) -> list: 
         
         CalculateTahy.mozne_tahy = []
-        soucet_kostek = vysledek_dvojkostky[0] + vysledek_dvojkostky[1]
+
+
+        if(len(vysledek_dvojkostky) == 4): # aby nedoslo k tomu, ze se od len 2 povoli hybani s ostatnimi kostkami, tak musim do Hrace pridat posledne hozeny pocet tahu, ktery bude nemenny, 
+            ...                            # dokud nespotrebuje vsechny 4 tahy
+        elif(len(vysledek_dvojkostky) == 3): 
+            ...
+        elif(len(vysledek_dvojkostky) == 2):
+            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[1])
+            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
+
+            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])
+            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[1])
+            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
+
+        elif(len(vysledek_dvojkostky) == 1):
+            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+
+            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])
+        else:
+             messagebox.showinfo("Chyba", f"Chyba pri rozhodovani o vyslednych zasobnicich, velikost vysledek_dvojkostky: {len(vysledek_dvojkostky)}"  )
+
 
         mapa_kamenu = Mapa_kamenu.get_mapa_kamenu()
         kamen = None
         for kamen in mapa_kamenu.keys():
             if kamen._pozice_kamene == pozice_kamene:
                 break
-        if(kamen._default_color == "bila"):
-            if(len(vysledek_dvojkostky) == 2):
-                if(CalculateTahy.kontrola_budoucich_mist(pozice_kamene[0], vysledek_dvojkostky, kamen._default_color)):
-                   
-                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]], kamen._default_color)):
-                       CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]])
-                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]], kamen._default_color)):
-                         CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]])
 
-                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - soucet_kostek], kamen._default_color)):
-                         CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - soucet_kostek])
-            elif(len(vysledek_dvojkostky) == 4):
-                if(len(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]]) <=1):
-                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]])
-            else:
-                messagebox.showinfo("Chyba", f"Chyba pri rozhodovani o velikosti vysledek_dvojkostky, velikost: {len(vysledek_dvojkostky)}"  )
-        else:
-            if(len(vysledek_dvojkostky) == 2):
-                if(CalculateTahy.kontrola_budoucich_mist(pozice_kamene[0], vysledek_dvojkostky, kamen._default_color)):
-                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[0]], kamen._default_color)):
-                        CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[0]])
 
-                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[1]], kamen._default_color)):
-                         CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[1]])
-
-                    if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] + soucet_kostek], kamen._default_color)):
-                         CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + soucet_kostek])
-
-            elif(len(vysledek_dvojkostky) == 4):
-                if(len(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[0]].zasobnik) <=1):
-                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] + vysledek_dvojkostky[0]])
-            else:
-                messagebox.showinfo("Chyba", f"Chyba pri rozhodovani o velikosti vysledek_dvojkostky, velikost: {len(vysledek_dvojkostky)}"  )
+        if(CalculateTahy.kontrola_budoucich_mist(pozice_kamene[0], vysledek_dvojkostky, kamen._default_color)):   
+                CalculateTahy.splnuje_podminky(kamen._default_color)
 
         return CalculateTahy.mozne_tahy
 
@@ -80,23 +74,31 @@ class CalculateTahy:
 
             platno.delete("mozny_tah")
 
-    def splnuje_podminky(point_zasobnik : Zasobnik, barva_hrace : str) -> bool:
-        vysledek = False
-
-        if(len(point_zasobnik.zasobnik) == 1 and point_zasobnik.rear()._default_color != barva_hrace):
-            vysledek = True
-        elif(len(point_zasobnik.zasobnik) >= 1 and len(point_zasobnik.zasobnik) <5 and point_zasobnik.rear()._default_color == barva_hrace):
-            vysledek = True
-        elif(len(point_zasobnik.zasobnik) < 1):
-            vysledek = True
+    def splnuje_podminky(barva_hrace : str) -> None:
+        if(barva_hrace == "bila"):
+            for zasobnik in CalculateTahy.vysledne_zasobniky_bily:
+                if(len(Zasobnik.zasobniky[zasobnik].zasobnik) == 1 and Zasobnik.zasobniky[zasobnik].rear()._default_color != barva_hrace):
+                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) >= 1 and len(Zasobnik.zasobniky[zasobnik].zasobnik) <5 and Zasobnik.zasobniky[zasobnik].rear()._default_color == barva_hrace):
+                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) < 1):
+                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                else:
+                    pass
         else:
-            pass
+            for zasobnik in CalculateTahy.vysledne_zasobniky_cerny:
+                if(len(Zasobnik.zasobniky[zasobnik].zasobnik) == 1 and Zasobnik.zasobniky[zasobnik].rear()._default_color != barva_hrace):
+                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) >= 1 and len(Zasobnik.zasobniky[zasobnik].zasobnik) <5 and Zasobnik.zasobniky[zasobnik].rear()._default_color == barva_hrace):
+                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) < 1):
+                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                else:
+                    pass
 
-        return vysledek
 
-    def kontrola_budoucich_mist(pozice_kamene : int, vysledek_dvojkostky : list, barva_hrace : str):
+    def kontrola_budoucich_mist(pozice_kamene : int, vysledek_dvojkostky : list, barva_hrace : str): # PREDELAT KOMPLET CELY
         vysledek = False
-        soucet = vysledek_dvojkostky[0] + vysledek_dvojkostky[1]
         if(barva_hrace == "bila"):
             if(pozice_kamene - vysledek_dvojkostky[0] < 1 or pozice_kamene - vysledek_dvojkostky[0] > 24):
                 vysledek = False

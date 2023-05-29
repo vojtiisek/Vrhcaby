@@ -165,7 +165,7 @@ class HerniDeska:
 
 class Hra:
 
-    hrac1 = "" #vzdy konzolovy_hrac
+    hrac1 = "" # vzdy konzolovy_hrac
     hrac2 = "" # dle radiobuttonu v menu
 
     def __init__(self, hra):

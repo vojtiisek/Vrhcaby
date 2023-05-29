@@ -28,7 +28,7 @@ def open_file():
 def save_file():
     json_objects = json.dumps(Hra.pole_kamenu_k_ulozeni(), indent=4)
 
-    with open("vrhcaby_json", "w") as soubor:
+    with open("vrhcaby_json.json", "w") as soubor:
         soubor.write(json_objects)
     print("Hra ulozena")
         
@@ -135,7 +135,7 @@ class HerniDeska:
         Hra.pridej_pozice(cls)
         HerniDeska.vytvor_pointy()
         file_path = open_file()
-        Hra.loadni_kameny(file_path)
+        Hra.loadni_kameny(cls, file_path)
         
 
     def vysledek_hodu_kostkami(cls, hrac_barva : str, vysledek : list):
@@ -209,60 +209,47 @@ class Hra:
         for kamen in mapa_kamenu:
             slovnik = {
                 "barva_kamene": kamen.barva_kamene,
-                "historie": kamen.historie,
+                #"historie": kamen.historie,
                 "pozice_kamene": kamen.pozice_kamene
             }
             pole_kamenu.append(slovnik)        
         return pole_kamenu 
     
     def loadni_kameny(self, json_file):
-        pass
+        mapa = Mapa_pozic._mapa_pozic
+        mapa_kamenu = Mapa_kamenu._mapa_kamenu
+
+        data = json.load(open(json_file))
+        for i in data:
+            list_of_values = list(i.values())
+            mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, list_of_values[0], tuple(list_of_values[1]))] = mapa[tuple(list_of_values[1])]
+        
+        # roztridi kameny do zasobniku (zasobnik[1 az 24 - odpovida pointum na mape])
+        for kamen in Mapa_kamenu._mapa_kamenu.keys(): 
+            Zasobnik.zasobniky[kamen.pozice_kamene[0]].push(kamen)
+            kamen.pridej_pozici_do_historie()
 
     def pridej_zakladni_kameny(self):
         mapa = Mapa_pozic._mapa_pozic
         mapa_kamenu = Mapa_kamenu._mapa_kamenu
 
+        puvodni_cerny_kameny = [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 3, 0, 5, 0, 0, 0, 0, 0]
+        puvodni_bily_kameny = [0, 0, 0, 0, 0, 5, 0, 3, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2]
+
         # Cerne zakladni pozice
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (1,1))] = mapa[(1,1)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (1,2))] = mapa[(1,2)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,1))] = mapa[(12,1)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,2))] = mapa[(12,2)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,3))] = mapa[(12,3)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,4))] = mapa[(12,4)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (12,5))] = mapa[(12,5)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,1))] = mapa[(17,1)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,2))] = mapa[(17,2)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (17,3))] = mapa[(17,3)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,1))] = mapa[(19,1)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,2))] = mapa[(19,2)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,3))] = mapa[(19,3)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,4))] = mapa[(19,4)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (19,5))] = mapa[(19,5)]
+        for i in range(len(puvodni_cerny_kameny)):
+            for j in range(puvodni_cerny_kameny[i]):
+                mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (i+1, j+1))] = mapa[(i+1, j+1)]
 
         # Bile zakladni pozice
+        for i in range(len(puvodni_bily_kameny)):
+            for j in range(puvodni_bily_kameny[i]):
+                mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (i+1, j+1))] = mapa[(i+1, j+1)]
 
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (24,1))] = mapa[(24,1)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (24,2))] = mapa[(24,2)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,1))] = mapa[(13,1)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,2))] = mapa[(13,2)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,3))] = mapa[(13,3)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,4))] = mapa[(13,4)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (13,5))] = mapa[(13,5)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,1))] = mapa[(8,1)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,2))] = mapa[(8,2)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (8,3))] = mapa[(8,3)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,1))] = mapa[(6,1)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,2))] = mapa[(6,2)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,3))] = mapa[(6,3)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,4))] = mapa[(6,4)]
-        mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (6,5))] = mapa[(6,5)]
-
-        for kamen in Mapa_kamenu._mapa_kamenu.keys(): # roztridi kameny do zasobniku (zasobnik[1 az 24 - odpovida pointum na mape])
+        # roztridi kameny do zasobniku (zasobnik[1 az 24 - odpovida pointum na mape])
+        for kamen in Mapa_kamenu._mapa_kamenu.keys(): 
             Zasobnik.zasobniky[kamen.pozice_kamene[0]].push(kamen)
             kamen.pridej_pozici_do_historie()
-
-        #print([i.barva_kamene for i in mapa_kamenu])
-        #print([i.pozice_kamene for i in mapa_kamenu])
 
     def pridej_pozice(self):  # naplni vsechny pointy maximalnim poctem kamenu (5ti) - tyto kameny jsou skryte a pouzivane pro posuny a pro napovedu dalsich tahu
         mapa = Mapa_pozic._mapa_pozic
@@ -453,7 +440,7 @@ class Hra:
 
 
         # Pouze na otestovani ulozeni hry
-        save_file()
+        # save_file()
 
 if __name__ == "__main__":
     app = Hra(root)

@@ -4,6 +4,7 @@ from tkinter import messagebox, Message
 from PIL import ImageTk, Image 
 from pathlib import Path
 
+import SoundManager
 from Herni_kamen import Herni_kamen
 from Mapa_kamenu import Mapa_kamenu
 from Mapa_pozic import Mapa_pozic
@@ -60,4 +61,5 @@ class Pozice(tk.Frame):
             #nova_pozice._platno.create_window(nova_pozice._souradnice[0], nova_pozice._souradnice[1], window=nova_pozice.kamen_button)
 
             Herni_kamen.zvoleny_kamen.update_po_presunu(self)
+            SoundManager.move_sound.play() # Pustí move.mp3 z soundManageru
             #Herni_kamen.obnov_pozadi(self._platno)

@@ -7,6 +7,8 @@ from tkinter import filedialog
 from PIL import ImageTk, Image
 from pathlib import Path
 
+
+import SoundManager 
 from Dvojkostka import Dvojkostka
 from Herni_kamen import Herni_kamen
 from Pozice import Pozice
@@ -431,10 +433,12 @@ class Hra:
         if(StavHry.get_stav() == "hrac1_kostka" or StavHry.get_stav() == "hrac2_kostka"):
             print("rozehrani")
             Dvojkostka.rozehrat()
+            SoundManager.throw_sound.play() # Pustí throw.mp3 sound z soundManageru
         else:
             if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
                 if(len(hraci[StavHry.get_stav()].get_vysledky) <= 0):
                     hraci[StavHry.get_stav()].set_vysledky(Dvojkostka.hod_dvojkostkou())
+                    SoundManager.throw_sound.play()
                 else:
                     messagebox.showinfo("Informace", f"Jiz jste si kostkou hodili. Nyni, pokud mozno, hrajte s kameny. Vase barva: {hraci[StavHry.get_stav()].get_barva}")
 

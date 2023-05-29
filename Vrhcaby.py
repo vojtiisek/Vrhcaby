@@ -432,16 +432,20 @@ class Hra:
             print("rozehrani")
             Dvojkostka.rozehrat()
         else:
-            Herni_kamen.posledni_vysledky_hodu = Dvojkostka.hod_dvojkostkou()
+            if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
+                if(len(hraci[StavHry.get_stav()].get_vysledky) <= 0):
+                    hraci[StavHry.get_stav()].set_vysledky(Dvojkostka.hod_dvojkostkou())
+                else:
+                    messagebox.showinfo("Informace", f"Jiz jste si kostkou hodili. Nyni, pokud mozno, hrajte s kameny. Vase barva: {hraci[StavHry.get_stav()].get_barva}")
 
         if(StavHry.get_stav() == "hrac2_kostka"):
             Label_manager.zmena_stavu(HerniDeska.platno_hra, "","Ceka se na hod dvojkostkou Hrace2")
 
         if(StavHry.get_stav() == "Hrac1"):
-            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac1 hraje ({hrac1.get_barva})")
+            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac1 hraje ({hrac1.get_barva}). Hodte si dvojkostkou!")
 
         if(StavHry.get_stav() == "Hrac2"):
-            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva})")
+            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva}). Hodte si dvojkostkou!")
 
 
         # Pouze na otestovani ulozeni hry

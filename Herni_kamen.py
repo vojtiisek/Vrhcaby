@@ -78,12 +78,12 @@ class Herni_kamen(tk.Frame):
 
     def click_event(self):
         hraci = StavHry.get_hraci()
-        if(self._default_color == hraci[StavHry.get_stav()].get_barva):
+        if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2" and self._default_color == hraci[StavHry.get_stav()].get_barva):
             if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
                 if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
-                    if(len(Herni_kamen.posledni_vysledky_hodu) > 0 ) :
+                    if(len(hraci[StavHry.get_stav()].get_vysledky) > 0 ) :
 
-                        mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, Herni_kamen.posledni_vysledky_hodu)
+                        mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
 
                         if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
                         
@@ -156,6 +156,9 @@ class Herni_kamen(tk.Frame):
         Label_manager.zmena_stavu(self._platno, self._default_color, "wip")
 
     def presun_kamen(kamen, nova_pozice):
+        hraci = StavHry.get_hraci()
+        puvodni_pozice = kamen._pozice_kamene
+        
         kamen._platno.delete(kamen._tag)
         Zasobnik.zasobniky[kamen._pozice_kamene[0]].zasobnik.index(kamen)
         Zasobnik.zasobniky[kamen._pozice_kamene[0]].pop()
@@ -166,6 +169,7 @@ class Herni_kamen(tk.Frame):
                 break
         if(point != (99,1) or point != (99,2)): 
             Zasobnik.zasobniky[point[0]].push(kamen)
+            hraci[StavHry.get_stav()].get_vysledky.remove(Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0]))
         kamen._pozice_kamene = point
         kamen.pridej_pozici_do_historie()
         mapa_kamenu = Mapa_kamenu._mapa_kamenu
@@ -181,3 +185,11 @@ class Herni_kamen(tk.Frame):
         else:
             Herni_kamen.presun_kamen(self, mapa_pozic[(99,2)])    
             self.update_po_presunu(mapa_pozic[(99,2)])
+
+    def vypocitej_vzdalenost(barva : str, puvodni_pozice : tuple, nova_pozice : tuple) -> int:
+        if(barva == "bila"):
+            print(f"Vzdalenost: {(puvodni_pozice - nova_pozice)}")
+            return (puvodni_pozice - nova_pozice)
+        else:
+            print(f"Vzdalenost: {(nova_pozice - puvodni_pozice)}")
+            return (nova_pozice - puvodni_pozice)

@@ -23,25 +23,16 @@ class CalculateTahy:
             if kamen._pozice_kamene == pozice_kamene:
                 break
         if(kamen._default_color == "bila"):
-            print("BILA")
             if(len(vysledek_dvojkostky) == 2):
-                print("1")
                 if(CalculateTahy.kontrola_budoucich_mist(pozice_kamene[0], vysledek_dvojkostky, kamen._default_color)):
                    
                     if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]], kamen._default_color)):
-                       print(Zasobnik.zasobniky.index(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]]))
                        CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]])
-                       print("2")
                     if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]], kamen._default_color)):
-                         print(Zasobnik.zasobniky.index(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]]))
                          CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[1]])
-                         print("3")
 
                     if(CalculateTahy.splnuje_podminky(Zasobnik.zasobniky[pozice_kamene[0] - soucet_kostek], kamen._default_color)):
-                     
-                         print(Zasobnik.zasobniky.index(Zasobnik.zasobniky[pozice_kamene[0] - soucet_kostek]))
                          CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - soucet_kostek])
-                         print("4")
             elif(len(vysledek_dvojkostky) == 4):
                 if(len(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]]) <=1):
                     CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[pozice_kamene[0] - vysledek_dvojkostky[0]])

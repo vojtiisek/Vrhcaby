@@ -17,7 +17,8 @@ class CalculateTahy:
     def vyhodnotit_mozne_tahy(platno : Canvas, pozice_kamene : tuple, vysledek_dvojkostky : list) -> list: 
         
         CalculateTahy.mozne_tahy = []
-
+        CalculateTahy.vysledne_zasobniky_bily.clear()
+        CalculateTahy.vysledne_zasobniky_cerny.clear()
 
         if(len(vysledek_dvojkostky) == 4): # aby nedoslo k tomu, ze se od len 2 povoli hybani s ostatnimi kostkami, tak musim do Hrace pridat posledne hozeny pocet tahu, ktery bude nemenny, 
             ...                            # dokud nespotrebuje vsechny 4 tahy
@@ -47,8 +48,8 @@ class CalculateTahy:
                 break
 
 
-        if(CalculateTahy.kontrola_budoucich_mist(pozice_kamene[0], vysledek_dvojkostky, kamen._default_color)):   
-                CalculateTahy.splnuje_podminky(kamen._default_color)
+        CalculateTahy.kontrola_budoucich_mist(kamen._default_color)
+        CalculateTahy.splnuje_podminky(kamen._default_color)
 
         return CalculateTahy.mozne_tahy
 
@@ -60,8 +61,6 @@ class CalculateTahy:
             point = (Zasobnik.zasobniky.index(seznam_tahu[mozny_tah]),vyska)
             pozice = mapa_pozic[point]
             pozice.set_hidden(False)
-
-            print(f"KONEC, pozice: {pozice._souradnice}, point: {point}, mapa pozic: {mapa_pozic[point]._souradnice}")
 
     def skryj_pozice(platno : Canvas, seznam_tahu):
         mapa_pozic = Mapa_pozic._mapa_pozic
@@ -97,36 +96,12 @@ class CalculateTahy:
                     pass
 
 
-    def kontrola_budoucich_mist(pozice_kamene : int, vysledek_dvojkostky : list, barva_hrace : str): # PREDELAT KOMPLET CELY
-        vysledek = False
+    def kontrola_budoucich_mist(barva_hrace : str):
         if(barva_hrace == "bila"):
-            if(pozice_kamene - vysledek_dvojkostky[0] < 1 or pozice_kamene - vysledek_dvojkostky[0] > 24):
-                vysledek = False
-            else:
-                vysledek = True
-
-            if(pozice_kamene - vysledek_dvojkostky[1] < 1 or pozice_kamene - vysledek_dvojkostky[1] > 24):
-                vysledek = False
-            else:
-                vysledek = True
-
-            if(pozice_kamene - soucet < 1 or pozice_kamene - soucet > 24):
-                vysledek = False
-            else:
-                vysledek = True
+            for point in CalculateTahy.vysledne_zasobniky_bily:
+                if(point < 1 or point > 24):
+                    CalculateTahy.vysledne_zasobniky_bily.remove(point)
         else:
-            if(pozice_kamene + vysledek_dvojkostky[0] < 1 or pozice_kamene + vysledek_dvojkostky[0] > 24):
-                vysledek = False
-            else:
-                vysledek = True
-
-            if(pozice_kamene + vysledek_dvojkostky[1] < 1 or pozice_kamene + vysledek_dvojkostky[1] > 24):
-                vysledek = False
-            else:
-                vysledek = True
-
-            if(pozice_kamene + soucet < 1 or pozice_kamene + soucet > 24):
-                vysledek = False
-            else:
-                vysledek = True
-        return vysledek
+            for point in CalculateTahy.vysledne_zasobniky_cerny:
+                if(point < 1 or point > 24):
+                    CalculateTahy.vysledne_zasobniky_cerny.remove(point)

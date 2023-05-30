@@ -78,54 +78,54 @@ class Herni_kamen(tk.Frame):
 
     def click_event(self):
         hraci = StavHry.get_hraci()
-        if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2" and self._default_color == hraci[StavHry.get_stav()].get_barva):
-            if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
-                if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
-                    if(len(hraci[StavHry.get_stav()].get_vysledky) > 0 ) :
+        if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
+            if(self._default_color.__eq__(hraci[StavHry.get_stav()].get_barva)):
+                if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
+                    if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
+                        if(len(hraci[StavHry.get_stav()].get_vysledky) > 0 ) :
+                            mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
 
-                        mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
-
-                        if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
+                            if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
                         
-                            CalculateTahy.vykreslit_pozice(mozne_tahy)
-                            self._barva_kamene = "selected"
+                                CalculateTahy.vykreslit_pozice(mozne_tahy)
+                                self._barva_kamene = "selected"
 
-                            self.kamen_bg = Image.open("selected_piece.png")
-                            Herni_kamen.zvoleny_kamen = self
+                                self.kamen_bg = Image.open("selected_piece.png")
+                                Herni_kamen.zvoleny_kamen = self
 
-                        elif(self._barva_kamene == "selected"):
+                            elif(self._barva_kamene == "selected"):
 
 
 
-                            CalculateTahy.skryj_pozice(self._platno, mozne_tahy)
-                            self._barva_kamene = self._default_color
-                            Herni_kamen.zvoleny_kamen = None
+                                CalculateTahy.skryj_pozice(self._platno, mozne_tahy)
+                                self._barva_kamene = self._default_color
+                                Herni_kamen.zvoleny_kamen = None
 
-                            if(self._default_color == "bila"):
-                                self.kamen_bg = Image.open("white_piece.png")
-                            elif(self._default_color == "cerna"):
-                                self.kamen_bg = Image.open("black_piece.png")
+                                if(self._default_color == "bila"):
+                                    self.kamen_bg = Image.open("white_piece.png")
+                                elif(self._default_color == "cerna"):
+                                    self.kamen_bg = Image.open("black_piece.png")
+                                else:
+                                    self.kamen_bg = Image.open("error_piece.png")
                             else:
                                 self.kamen_bg = Image.open("error_piece.png")
-                        else:
-                            self.kamen_bg = Image.open("error_piece.png")
 
 
                     
-                        self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
-                        self.kamen_button= Button(self._platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
-                        self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
+                            self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
+                            self.kamen_button= Button(self._platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
+                            self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
 
-                        mapa = Mapa_pozic._mapa_pozic
-                        pozice = mapa.get(self._pozice_kamene)
+                            mapa = Mapa_pozic._mapa_pozic
+                            pozice = mapa.get(self._pozice_kamene)
 
-                        self._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
+                            self._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
+                        else:
+                            messagebox.showinfo("Upozorneni", "Musite si nejdrive hodit kostkami!")
                     else:
-                        messagebox.showinfo("Upozorneni", "Musite si nejdrive hodit kostkami!")
+                        messagebox.showinfo("Informace", "Muzete hrat pouze s nejvyse umistenym kamenem na danem klinu.")
                 else:
-                    messagebox.showinfo("Informace", "Muzete hrat pouze s nejvyse umistenym kamenem na danem klinu.")
-            else:
-                messagebox.showinfo("Informace", "Jiz mate vybrany jiny kamen, se kterym chcete hybat.")
+                    messagebox.showinfo("Informace", "Jiz mate vybrany jiny kamen, se kterym chcete hybat.")
             
     def update_po_presunu(self, nova_pozice):
         self._barva_kamene = self._default_color
@@ -152,8 +152,17 @@ class Herni_kamen(tk.Frame):
         self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
         self._platno.create_window(nova_pozice.get_souradnice[0], nova_pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag) 
 
+        hraci = StavHry.get_hraci()
+        if(len(hraci[StavHry.get_stav()].get_vysledky) < 1):
+            if(StavHry.get_stav() == "Hrac1"):
+                print("zmena na hrace2")
+                StavHry.set_stav("Hrac2")
+            else:
+                print("zmena na hrace1")
+                StavHry.set_stav("Hrac1")
+
+        Label_manager.zmena_stavu(self._platno, "",f"{StavHry.get_stav()} hraje ({hraci[StavHry.get_stav()].get_barva}). Hodte si dvojkostkou!")
         Label_manager.zmena_pozice(self._platno,self._default_color, self.historie[-2], self.historie[-1], None)
-        Label_manager.zmena_stavu(self._platno, self._default_color, "wip")
 
     def presun_kamen(kamen, nova_pozice):
         hraci = StavHry.get_hraci()
@@ -188,8 +197,6 @@ class Herni_kamen(tk.Frame):
 
     def vypocitej_vzdalenost(barva : str, puvodni_pozice : tuple, nova_pozice : tuple) -> int:
         if(barva == "bila"):
-            print(f"Vzdalenost: {(puvodni_pozice - nova_pozice)}")
             return (puvodni_pozice - nova_pozice)
         else:
-            print(f"Vzdalenost: {(nova_pozice - puvodni_pozice)}")
             return (nova_pozice - puvodni_pozice)

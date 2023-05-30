@@ -125,6 +125,7 @@ class HerniDeska:
         Hra.pridej_zakladni_kameny(cls)
         Hra.rozhodni_o_barve_hrace()
         StavHry.set_stav("hrac1_kostka")
+        print(StavHry.get_stav())
         Label_manager.zmena_stavu(HerniDeska.platno_hra, "","Ceka se na hod dvojkostkou Hrace1")
 
     @classmethod
@@ -259,6 +260,9 @@ class Hra:
         for kamen in Mapa_kamenu._mapa_kamenu.keys(): # roztridi kameny do zasobniku (zasobnik[1 az 24 - odpovida pointum na mape])
             Zasobnik.zasobniky[kamen.pozice_kamene[0]].push(kamen)
             kamen.pridej_pozici_do_historie()
+
+        #print([i.barva_kamene for i in mapa_kamenu])
+        #print([i.pozice_kamene for i in mapa_kamenu])
 
     def pridej_pozice(self):  # naplni vsechny pointy maximalnim poctem kamenu (5ti) - tyto kameny jsou skryte a pouzivane pro posuny a pro napovedu dalsich tahu
         mapa = Mapa_pozic._mapa_pozic

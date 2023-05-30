@@ -120,10 +120,9 @@ class HerniDeska:
     def hrat_button_click(cls):
         HerniDeska.priprav_hraci_desku(cls)
 
-        Hra.pridej_zakladni_kameny(cls)
+
         Hra.rozhodni_o_barve_hrace()
         StavHry.set_stav("hrac1_kostka")
-        print(StavHry.get_stav())
         Label_manager.zmena_stavu(HerniDeska.platno_hra, "","Ceka se na hod dvojkostkou Hrace1")
 
     @classmethod
@@ -138,6 +137,7 @@ class HerniDeska:
         HerniDeska.vykresli_hraci_desku()
         Hra.pridej_pozice(cls)
         HerniDeska.vytvor_pointy()
+        Hra.pridej_zakladni_kameny(cls)
         Hra.roztrid_kameny_do_zasobniku(cls)
         
 
@@ -245,7 +245,8 @@ class Hra:
 
     def roztrid_kameny_do_zasobniku(self):
     # roztridi kameny do zasobniku (zasobnik[1 az 24 - odpovida pointum na mape])
-        for kamen in Mapa_kamenu._mapa_kamenu.keys(): 
+        mapa_kamenu = Mapa_kamenu._mapa_kamenu
+        for kamen in mapa_kamenu.keys(): 
             Zasobnik.zasobniky[kamen.pozice_kamene[0]].push(kamen)
             kamen.pridej_pozici_do_historie()
 

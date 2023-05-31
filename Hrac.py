@@ -6,6 +6,8 @@ class Hrac(ABC):
         self._vysledky_dvojkostky = []
         self._mozne_tahy = []
         self._prvni_hod = 0
+        self._pocet_hozenych_cisel = 0
+        self._odehrane_kameny = []
 
     @property
     def get_barva(self):
@@ -35,3 +37,13 @@ class Hrac(ABC):
     def set_prvni_hod(self, value : int):
         self._prvni_hod = value
 
+    @property
+    def get_hozeny_pocet(self) -> int:
+        return self._pocet_hozenych_cisel
+      
+    def set_hozeny_pocet(self, value : int):
+        self._pocet_hozenych_cisel = value
+
+    @property
+    def get_odehrane_kameny(self) -> list:
+        return self._odehrane_kameny

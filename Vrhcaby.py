@@ -295,6 +295,10 @@ class Hra:
             if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
                 if(len(hraci[StavHry.get_stav()].get_vysledky) <= 0):
                     hraci[StavHry.get_stav()].set_vysledky(Dvojkostka.hod_dvojkostkou())
+                    if(len(hraci[StavHry.get_stav()].get_vysledky) == 4):
+                        hraci[StavHry.get_stav()].set_hozeny_pocet(4)
+                    else:
+                        hraci[StavHry.get_stav()].set_hozeny_pocet(2)
                     SoundManager.throw_sound.play()
                 else:
                     messagebox.showinfo("Informace", f"Jiz jste si kostkou hodili. Nyni, pokud mozno, hrajte s kameny. Vase barva: {hraci[StavHry.get_stav()].get_barva}")

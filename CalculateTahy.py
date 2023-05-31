@@ -6,6 +6,7 @@ from Label_manager import Label_manager
 from Zasobnik import Zasobnik
 from Mapa_pozic import Mapa_pozic
 from Mapa_kamenu import Mapa_kamenu
+from StavHry import StavHry
 
 
 class CalculateTahy:
@@ -14,29 +15,46 @@ class CalculateTahy:
     vysledne_zasobniky_bily = [] # na jake pointy (zasobniky) muze hrac dane barvy se zvolenym kamenem jit dle hozenych cisel z Dvojkostky. Nejsou upraveny pravidly.
     vysledne_zasobniky_cerny = [] # Musi se projet, zkontrolovat, zda splnuji podminky a pravidla a az pak pridat jakozto mozny tah.
 
+    hrac = None
+
     def vyhodnotit_mozne_tahy(platno : Canvas, pozice_kamene : tuple, vysledek_dvojkostky : list) -> list: 
         
         CalculateTahy.mozne_tahy = []
         CalculateTahy.vysledne_zasobniky_bily.clear()
         CalculateTahy.vysledne_zasobniky_cerny.clear()
 
-        if(len(vysledek_dvojkostky) == 4): # aby nedoslo k tomu, ze se od len 2 povoli hybani s ostatnimi kostkami, tak musim do Hrace pridat posledne hozeny pocet tahu, ktery bude nemenny, 
-            ...                            # dokud nespotrebuje vsechny 4 tahy
-        elif(len(vysledek_dvojkostky) == 3): 
+        hraci = StavHry.get_hraci()
+        hrac = hraci[StavHry.get_stav()]
+        velikost_hodu = hrac.get_hozeny_pocet
+
+        if(len(vysledek_dvojkostky) == 4 or len(vysledek_dvojkostky) == 3): 
+            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+
+            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])                   
             ...
         elif(len(vysledek_dvojkostky) == 2):
-            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
-            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[1])
-            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
+            if(velikost_hodu != 4):
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[1])
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
 
-            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])
-            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[1])
-            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[1])
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
+            else:
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])   
 
         elif(len(vysledek_dvojkostky) == 1):
-            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+            if(velikost_hodu != 4):
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
 
-            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])
+            else:
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])   
         else:
              messagebox.showinfo("Chyba", f"Chyba pri rozhodovani o vyslednych zasobnicich, velikost vysledek_dvojkostky: {len(vysledek_dvojkostky)}"  )
 

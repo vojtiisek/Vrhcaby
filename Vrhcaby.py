@@ -140,13 +140,6 @@ class HerniDeska:
         Hra.pridej_zakladni_kameny(cls)
         Hra.roztrid_kameny_do_zasobniku(cls)
         
-
-    def vysledek_hodu_kostkami(cls, hrac_barva : str, vysledek : list):
-        #hrac_barva = Hra.get_aktualni_hrac()._barva_hrace
-
-        ...
-
-
     @classmethod
     def ukoncit_hru(cls):
         HerniDeska.hra.destroy()
@@ -320,7 +313,3 @@ if __name__ == "__main__":
     app = Hra(root)
     root.mainloop()
 
-
-
-    # DALE: Dokoncit tahy - ruzne kameny na 2 nebo az 4 tahy (vypocet vzdalenosti pointu A->B, odebrani tohoto hodu, neboli vysledku dvojkostky, z vysledku hrace.)
-    #       Stridani stavu hry mezi Hrac1 a Hrac2 - dle pravidel, pravdepodobne bude reseno pri presunech kamenu

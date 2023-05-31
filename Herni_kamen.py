@@ -141,8 +141,9 @@ class Herni_kamen(tk.Frame):
         for point in mapa_pozic.keys():
             if mapa_pozic[point] == nova_pozice:
                 break
-
-        CalculateTahy.mozne_tahy.remove(Zasobnik.zasobniky[point[0]])
+        if(point != (99,1) and point != (99,2)): 
+            if(Zasobnik.zasobniky[point[0]] in CalculateTahy.mozne_tahy) :
+                CalculateTahy.mozne_tahy.remove(Zasobnik.zasobniky[point[0]])
         CalculateTahy.skryj_pozice(self._platno, CalculateTahy.mozne_tahy)
         Herni_kamen.zvoleny_kamen = None
 
@@ -178,14 +179,20 @@ class Herni_kamen(tk.Frame):
         puvodni_pozice = kamen._pozice_kamene
         
         kamen._platno.delete(kamen._tag)
-        Zasobnik.zasobniky[kamen._pozice_kamene[0]].zasobnik.index(kamen)
+        #Zasobnik.zasobniky[kamen._pozice_kamene[0]].zasobnik.index(kamen)
         Zasobnik.zasobniky[kamen._pozice_kamene[0]].pop()
         mapa_pozic = Mapa_pozic._mapa_pozic
         point = ()
         for point in mapa_pozic.keys():
             if mapa_pozic[point] == nova_pozice:
                 break
-        if(point != (99,1) or point != (99,2)): 
+        if(point != (99,1) and point != (99,2)): 
+            print(f"Point: {point}")
+            if(len(Zasobnik.zasobniky[point[0]].zasobnik) == 1):
+                if(Zasobnik.zasobniky[point[0]].rear()._default_color != kamen._default_color):
+                    vyhozeny_kamen = Zasobnik.zasobniky[point[0]].rear()
+                    Zasobnik.zasobniky[point[0]].pop()
+                    Herni_kamen.vyhodit_na_bar(vyhozeny_kamen)
             Zasobnik.zasobniky[point[0]].push(kamen)
             vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
             if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):

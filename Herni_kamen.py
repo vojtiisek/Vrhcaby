@@ -78,6 +78,7 @@ class Herni_kamen(tk.Frame):
         return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
 
     def click_event(self):
+        print(f"Self: {self._pozice_kamene}")
         hraci = StavHry.get_hraci()
         if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
             if(self._default_color.__eq__(hraci[StavHry.get_stav()].get_barva)):
@@ -136,7 +137,10 @@ class Herni_kamen(tk.Frame):
     def update_po_presunu(self, nova_pozice):
         self._barva_kamene = self._default_color
         mapa_pozic = Mapa_pozic._mapa_pozic
-        
+        mapa_kamenu = Mapa_kamenu._mapa_kamenu
+
+        nova_pozice = mapa_kamenu[self]
+
         point = ()
         for point in mapa_pozic.keys():
             if mapa_pozic[point] == nova_pozice:
@@ -179,9 +183,10 @@ class Herni_kamen(tk.Frame):
         puvodni_pozice = kamen._pozice_kamene
         
         kamen._platno.delete(kamen._tag)
-        #Zasobnik.zasobniky[kamen._pozice_kamene[0]].zasobnik.index(kamen)
         Zasobnik.zasobniky[kamen._pozice_kamene[0]].pop()
         mapa_pozic = Mapa_pozic._mapa_pozic
+        mapa_kamenu = Mapa_kamenu._mapa_kamenu
+
         point = ()
         for point in mapa_pozic.keys():
             if mapa_pozic[point] == nova_pozice:
@@ -191,6 +196,7 @@ class Herni_kamen(tk.Frame):
             if(len(Zasobnik.zasobniky[point[0]].zasobnik) == 1):
                 if(Zasobnik.zasobniky[point[0]].rear()._default_color != kamen._default_color):
                     vyhozeny_kamen = Zasobnik.zasobniky[point[0]].rear()
+                    nova_pozice = mapa_kamenu[vyhozeny_kamen]
                     Zasobnik.zasobniky[point[0]].pop()
                     Herni_kamen.vyhodit_na_bar(vyhozeny_kamen)
             Zasobnik.zasobniky[point[0]].push(kamen)
@@ -201,7 +207,7 @@ class Herni_kamen(tk.Frame):
                 hraci[StavHry.get_stav()].get_vysledky.clear()
         kamen._pozice_kamene = point
         kamen.pridej_pozici_do_historie()
-        mapa_kamenu = Mapa_kamenu._mapa_kamenu
+
         mapa_kamenu[kamen] = nova_pozice
         Herni_kamen.zvoleny_kamen = kamen
 

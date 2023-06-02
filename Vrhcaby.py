@@ -229,12 +229,12 @@ class Hra:
         # Cerne zakladni pozice
         for i in range(len(puvodni_cerny_kameny)):
             for j in range(puvodni_cerny_kameny[i]):
-                mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (i+1, j+1))] = mapa[(i+1, j+1)]
+                mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (i+1, j+1))] = mapa[(i+1, j+1)]
 
         # Bile zakladni pozice
         for i in range(len(puvodni_bily_kameny)):
             for j in range(puvodni_bily_kameny[i]):
-                mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "bila", (i+1, j+1))] = mapa[(i+1, j+1)]
+                mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, "cerna", (i+1, j+1))] = mapa[(i+1, j+1)]
 
     def roztrid_kameny_do_zasobniku(self):
     # roztridi kameny do zasobniku (zasobnik[1 az 24 - odpovida pointum na mape])

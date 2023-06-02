@@ -26,35 +26,38 @@ class CalculateTahy:
         hraci = StavHry.get_hraci()
         hrac = hraci[StavHry.get_stav()]
         velikost_hodu = hrac.get_hozeny_pocet
+        print(f"velikost_hodu: {velikost_hodu}")
+        print(f"pozice_kamene: {pozice_kamene}")
+        print(f"vysledek_dvojkostky: {vysledek_dvojkostky}")
 
         if(len(vysledek_dvojkostky) == 4 or len(vysledek_dvojkostky) == 3): 
-            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+            CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
 
-            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])                   
+            CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - vysledek_dvojkostky[0])                   
             ...
         elif(len(vysledek_dvojkostky) == 2):
             if(velikost_hodu != 4):
-                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
-                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[1])
-                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[1])
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
 
-                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])
-                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[1])
-                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - vysledek_dvojkostky[1])
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
             else:
-                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
 
-                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])   
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - vysledek_dvojkostky[0])   
 
         elif(len(vysledek_dvojkostky) == 1):
             if(velikost_hodu != 4):
-                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
 
-                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - vysledek_dvojkostky[0])
             else:
-                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] - vysledek_dvojkostky[0])
+                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
 
-                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] + vysledek_dvojkostky[0])   
+                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - vysledek_dvojkostky[0])   
         else:
              messagebox.showinfo("Chyba", f"Chyba pri rozhodovani o vyslednych zasobnicich, velikost vysledek_dvojkostky: {len(vysledek_dvojkostky)}"  )
 

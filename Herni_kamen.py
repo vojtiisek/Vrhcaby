@@ -17,7 +17,7 @@ class Herni_kamen(tk.Frame):
     zvoleny_kamen = None
     barva_hrace = None
     posledni_vysledky_hodu = []
-    def __init__(self, platno, barva_kamene: str, pozice_kamene: tuple, historie=[]) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
+    def __init__(self, platno, barva_kamene: str, pozice_kamene: tuple, historie: list) -> None: # barva_kamene - bila/cerna/hint/hidden/selected , pozice_kamene - (point, pozice na pointu)
         super().__init__(platno)
         self._platno = platno
         self._barva_kamene = barva_kamene
@@ -69,10 +69,12 @@ class Herni_kamen(tk.Frame):
             self._pozice_kamene = nova_pozice_kamene
 
     def pridej_pozici_do_historie(self) -> None:
+        #print(f"POZICE KAMENE {self._pozice_kamene}")
+        #print(f"HISTORIE {self._historie}")
         if(self._pozice_kamene != (99,1) or self._pozice_kamene != (99,2)): 
-            self.historie.append(self._pozice_kamene)
+            self._historie.append(self._pozice_kamene)
         else:
-            self.historie.append("Bar")
+            self._historie.append("Bar")
 
     def __str__(self) -> str:
         return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
@@ -175,8 +177,10 @@ class Herni_kamen(tk.Frame):
                 print("zmena na hrace1")
                 StavHry.set_stav("Hrac1")      
 
+        #print(f"{self.historie[-2], self.historie[-1]}")
+        #print(f"HISTORIE PŘED VYPSÁNÍM: {self._historie}")
         Label_manager.zmena_stavu(self._platno, "",f"{StavHry.get_stav()} hraje ({hraci[StavHry.get_stav()].get_barva}). Hodte si dvojkostkou!")
-        Label_manager.zmena_pozice(self._platno,self._default_color, self.historie[-2], self.historie[-1], None)
+        Label_manager.zmena_pozice(self._platno,self._default_color, self.historie[-2], self._historie[-1], None)
 
     def presun_kamen(kamen, nova_pozice):
         hraci = StavHry.get_hraci()

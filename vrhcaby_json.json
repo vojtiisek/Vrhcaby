@@ -1,212 +1,400 @@
 [
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                1,
+                1
+            ]
+        ],
         "pozice_kamene": [
             1,
             1
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                1,
+                2
+            ],
+            [
+                5,
+                1
+            ]
+        ],
         "pozice_kamene": [
-            1,
-            2
+            5,
+            1
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                12,
+                1
+            ]
+        ],
         "pozice_kamene": [
             12,
             1
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                12,
+                2
+            ]
+        ],
         "pozice_kamene": [
             12,
             2
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                12,
+                3
+            ]
+        ],
         "pozice_kamene": [
             12,
             3
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                12,
+                4
+            ]
+        ],
         "pozice_kamene": [
             12,
             4
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                12,
+                5
+            ]
+        ],
         "pozice_kamene": [
             12,
             5
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                17,
+                1
+            ]
+        ],
         "pozice_kamene": [
             17,
             1
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                17,
+                2
+            ]
+        ],
         "pozice_kamene": [
             17,
             2
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                17,
+                3
+            ]
+        ],
         "pozice_kamene": [
             17,
             3
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                19,
+                1
+            ]
+        ],
         "pozice_kamene": [
             19,
             1
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                19,
+                2
+            ]
+        ],
         "pozice_kamene": [
             19,
             2
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                19,
+                3
+            ]
+        ],
         "pozice_kamene": [
             19,
             3
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                19,
+                4
+            ]
+        ],
         "pozice_kamene": [
             19,
             4
         ]
     },
     {
-        "barva_kamene": "cerna",
+        "barva_kamene": "bila",
+        "historie": [
+            [
+                19,
+                5
+            ]
+        ],
         "pozice_kamene": [
             19,
             5
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                6,
+                1
+            ]
+        ],
         "pozice_kamene": [
             6,
             1
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                6,
+                2
+            ]
+        ],
         "pozice_kamene": [
             6,
             2
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                6,
+                3
+            ]
+        ],
         "pozice_kamene": [
             6,
             3
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                6,
+                4
+            ]
+        ],
         "pozice_kamene": [
             6,
             4
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                6,
+                5
+            ]
+        ],
         "pozice_kamene": [
             6,
             5
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                8,
+                1
+            ]
+        ],
         "pozice_kamene": [
             8,
             1
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                8,
+                2
+            ]
+        ],
         "pozice_kamene": [
             8,
             2
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                8,
+                3
+            ]
+        ],
         "pozice_kamene": [
             8,
             3
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                13,
+                1
+            ]
+        ],
         "pozice_kamene": [
             13,
             1
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                13,
+                2
+            ]
+        ],
         "pozice_kamene": [
             13,
             2
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                13,
+                3
+            ]
+        ],
         "pozice_kamene": [
             13,
             3
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                13,
+                4
+            ]
+        ],
         "pozice_kamene": [
             13,
             4
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                13,
+                5
+            ]
+        ],
         "pozice_kamene": [
             13,
             5
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                24,
+                1
+            ]
+        ],
         "pozice_kamene": [
             24,
             1
         ]
     },
     {
-        "barva_kamene": "bila",
+        "barva_kamene": "cerna",
+        "historie": [
+            [
+                24,
+                2
+            ],
+            [
+                18,
+                1
+            ]
+        ],
         "pozice_kamene": [
-            24,
-            2
+            18,
+            1
         ]
     }
 ]

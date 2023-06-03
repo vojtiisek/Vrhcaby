@@ -7,6 +7,7 @@ from Zasobnik import Zasobnik
 from Mapa_pozic import Mapa_pozic
 from Mapa_kamenu import Mapa_kamenu
 from StavHry import StavHry
+from Domecek import Domecek
 
 
 class CalculateTahy:
@@ -39,11 +40,10 @@ class CalculateTahy:
             if(velikost_hodu != 4):
                 CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
                 CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[1])
-                CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
+
 
                 CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - vysledek_dvojkostky[0])
                 CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - vysledek_dvojkostky[1])
-                CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - (vysledek_dvojkostky[1] + vysledek_dvojkostky[1]))
             else:
                 CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
 
@@ -69,7 +69,7 @@ class CalculateTahy:
                 break
 
 
-        CalculateTahy.kontrola_budoucich_mist(kamen._default_color)
+        CalculateTahy.kontrola_budoucich_mist()
         CalculateTahy.splnuje_podminky(kamen._default_color)
 
         return CalculateTahy.mozne_tahy
@@ -77,52 +77,74 @@ class CalculateTahy:
     def vykreslit_pozice(seznam_tahu):
         mapa_pozic = Mapa_pozic._mapa_pozic
         for mozny_tah in range(len(seznam_tahu)):
-            pozice = None
-            vyska = len(seznam_tahu[mozny_tah].zasobnik) + 1
-            point = (Zasobnik.zasobniky.index(seznam_tahu[mozny_tah]),vyska)
-            pozice = mapa_pozic[point]
-            pozice.set_hidden(False)
+            if(seznam_tahu[mozny_tah] == Domecek.domecek_bily):
+                pozice = mapa_pozic[(0,2)]
+                pozice.set_hidden(False)
+            elif(seznam_tahu[mozny_tah] == Domecek.domecek_cerny):
+                pozice = mapa_pozic[(0,1)]
+                pozice.set_hidden(False)
+            else:
+                pozice = None
+                vyska = len(seznam_tahu[mozny_tah].zasobnik) + 1
+                point = (Zasobnik.zasobniky.index(seznam_tahu[mozny_tah]),vyska)
+                pozice = mapa_pozic[point]
+                pozice.set_hidden(False)
 
     def skryj_pozice(platno : Canvas, seznam_tahu):
         mapa_pozic = Mapa_pozic._mapa_pozic
         pozice = None
         for mozny_tah in seznam_tahu:
-            vyska = len(mozny_tah.zasobnik) + 1
-            point = (Zasobnik.zasobniky.index(mozny_tah),vyska)
-            pozice = mapa_pozic[point]
-            pozice._hidden = True
+            if(mozny_tah == Domecek.domecek_bily):
+                pozice = mapa_pozic[(0,2)]
+                pozice._hidden = True
+            elif(mozny_tah == Domecek.domecek_cerny):
+                pozice = mapa_pozic[(0,1)]
+                pozice._hidden = True
+            else:
+                vyska = len(mozny_tah.zasobnik) + 1
+                point = (Zasobnik.zasobniky.index(mozny_tah),vyska)
+                pozice = mapa_pozic[point]
+                pozice._hidden = True
 
             platno.delete("mozny_tah")
 
     def splnuje_podminky(barva_hrace : str) -> None:
         if(barva_hrace == "bila"):
             for zasobnik in CalculateTahy.vysledne_zasobniky_bily:
-                if(len(Zasobnik.zasobniky[zasobnik].zasobnik) == 1 and Zasobnik.zasobniky[zasobnik].rear()._default_color != barva_hrace):
-                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
-                elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) >= 1 and len(Zasobnik.zasobniky[zasobnik].zasobnik) <5 and Zasobnik.zasobniky[zasobnik].rear()._default_color == barva_hrace):
-                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
-                elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) < 1):
-                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                print(f"Zasobnik ve for: {zasobnik}")
+                if(zasobnik == 25):
+                    CalculateTahy.mozne_tahy.append(Domecek.domecek_bily)
                 else:
-                    pass
+                    if(len(Zasobnik.zasobniky[zasobnik].zasobnik) == 1 and Zasobnik.zasobniky[zasobnik].rear()._default_color != barva_hrace):
+                        CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                    elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) >= 1 and len(Zasobnik.zasobniky[zasobnik].zasobnik) <5 and Zasobnik.zasobniky[zasobnik].rear()._default_color == barva_hrace):
+                        CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                    elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) < 1):
+                        CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                    else:
+                        pass
         else:
             for zasobnik in CalculateTahy.vysledne_zasobniky_cerny:
-                if(len(Zasobnik.zasobniky[zasobnik].zasobnik) == 1 and Zasobnik.zasobniky[zasobnik].rear()._default_color != barva_hrace):
-                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
-                elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) >= 1 and len(Zasobnik.zasobniky[zasobnik].zasobnik) <5 and Zasobnik.zasobniky[zasobnik].rear()._default_color == barva_hrace):
-                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
-                elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) < 1):
-                    CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                if(zasobnik == 0):
+                    CalculateTahy.mozne_tahy.append(Domecek.domecek_cerny)
                 else:
-                    pass
+                    if(len(Zasobnik.zasobniky[zasobnik].zasobnik) == 1 and Zasobnik.zasobniky[zasobnik].rear()._default_color != barva_hrace):
+                        CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                    elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) >= 1 and len(Zasobnik.zasobniky[zasobnik].zasobnik) <5 and Zasobnik.zasobniky[zasobnik].rear()._default_color == barva_hrace):
+                        CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                    elif(len(Zasobnik.zasobniky[zasobnik].zasobnik) < 1):
+                        CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
+                    else:
+                        pass
 
 
-    def kontrola_budoucich_mist(barva_hrace : str):
-        if(barva_hrace == "bila"):
+    def kontrola_budoucich_mist():
+        if(len(CalculateTahy.vysledne_zasobniky_bily) > 0):
             for point in CalculateTahy.vysledne_zasobniky_bily:
-                if(point < 1 or point > 24):
+                if(point < 1 or point > 25):
                     CalculateTahy.vysledne_zasobniky_bily.remove(point)
-        else:
+
+        if(len(CalculateTahy.vysledne_zasobniky_cerny) > 0):
             for point in CalculateTahy.vysledne_zasobniky_cerny:
-                if(point < 1 or point > 24):
+                if(point < 0 or point > 24):
                     CalculateTahy.vysledne_zasobniky_cerny.remove(point)

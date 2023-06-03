@@ -5,14 +5,28 @@ import textwrap
 class Label_manager:
 
     def zmena_pozice(platno : Canvas, barva : str, z_pozice : tuple, na_pozici: tuple, sebrany_kamen : tuple) -> None:
-        if(z_pozice == (99,99)):
+        z_pozice_processed = z_pozice
+        na_pozici_processed = na_pozici
+
+        if(z_pozice == (99,1)):
             z_pozice_processed = "Bar"
-        else:
-            z_pozice_processed = z_pozice
-        if(na_pozici == (99,99)):
+
+        if(na_pozici == (99,1)):
             na_pozici_processed = "Bar"
-        else:
-            na_pozici_processed = na_pozici
+
+
+        if(z_pozice == (99,2)):
+            z_pozice_processed = "Bar"
+
+        if(na_pozici == (99,2)):
+            na_pozici_processed = "Bar"
+
+        if(na_pozici == (0,1)):
+            na_pozici_processed = "Domecek"
+
+        if(na_pozici == (0,2)):
+            na_pozici_processed = "Domecek"
+
 
         if(barva == "bila"):
 

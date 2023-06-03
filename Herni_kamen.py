@@ -12,6 +12,7 @@ from Zasobnik import Zasobnik
 from Label_manager import Label_manager
 from Bar import Bar
 from StavHry import StavHry
+from Domecek import Domecek
 
 class Herni_kamen(tk.Frame):
     zvoleny_kamen = None
@@ -147,9 +148,13 @@ class Herni_kamen(tk.Frame):
         for point in mapa_pozic.keys():
             if mapa_pozic[point] == nova_pozice:
                 break
-        if(point != (99,1) and point != (99,2)): 
+
+        if(point == (99,1) or point == (99,2)):
+            ...
+        else:
             if(Zasobnik.zasobniky[point[0]] in CalculateTahy.mozne_tahy) :
                 CalculateTahy.mozne_tahy.remove(Zasobnik.zasobniky[point[0]])
+
         CalculateTahy.skryj_pozice(self._platno, CalculateTahy.mozne_tahy)
         Herni_kamen.zvoleny_kamen = None
 
@@ -160,16 +165,19 @@ class Herni_kamen(tk.Frame):
         else:
             self.kamen_bg = Image.open("error_piece.png")
 
-        self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
-        self.kamen_button= Button(self._platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
-        self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
-        self._platno.create_window(nova_pozice.get_souradnice[0], nova_pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag) 
+        if(nova_pozice != mapa_pozic[(0,1)] and nova_pozice != mapa_pozic[(0,2)]):
+            self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
+            self.kamen_button= Button(self._platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
+            self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
+            self._platno.create_window(nova_pozice.get_souradnice[0], nova_pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag) 
 
         hraci = StavHry.get_hraci()
 
         hraci[StavHry.get_stav()].get_odehrane_kameny.append(self)
+        print(f"Odehrane kameny: {hraci[StavHry.get_stav()].get_odehrane_kameny}")
         if(len(hraci[StavHry.get_stav()].get_vysledky) < 1):
-            hraci[StavHry.get_stav()].get_odehrane_kameny.clear
+            hraci["Hrac1"].get_odehrane_kameny.clear()
+            hraci["Hrac2"].get_odehrane_kameny.clear()
             if(StavHry.get_stav() == "Hrac1"):
                 print("zmena na hrace2")
                 StavHry.set_stav("Hrac2")
@@ -195,11 +203,26 @@ class Herni_kamen(tk.Frame):
         for point in mapa_pozic.keys():
             if mapa_pozic[point] == nova_pozice:
                 break
-        if(point != (99,1) and point != (99,2)): 
+
+        if(point == (99,1) or point == (99,2)): 
+            ...
+        elif(point == (0,1) or point == (0,2)):
+            if(kamen._default_color == "bila"):
+                Domecek.domecek_bily.push(kamen)
+            else:
+                Domecek.domecek_cerny.push(kamen)
+
+            vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
+            if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
+                hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
+            else:
+                hraci[StavHry.get_stav()].get_vysledky.clear()
+        else:
             print(f"Point: {point}")
             if(len(Zasobnik.zasobniky[point[0]].zasobnik) == 1):
                 if(Zasobnik.zasobniky[point[0]].rear()._default_color != kamen._default_color):
                     vyhozeny_kamen = Zasobnik.zasobniky[point[0]].rear()
+                    point = vyhozeny_kamen._pozice_kamene
                     nova_pozice = mapa_kamenu[vyhozeny_kamen]
                     Zasobnik.zasobniky[point[0]].pop()
                     Herni_kamen.vyhodit_na_bar(vyhozeny_kamen)
@@ -209,6 +232,7 @@ class Herni_kamen(tk.Frame):
                 hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
             else:
                 hraci[StavHry.get_stav()].get_vysledky.clear()
+
         kamen._pozice_kamene = point
         kamen.pridej_pozici_do_historie()
 
@@ -226,7 +250,7 @@ class Herni_kamen(tk.Frame):
             self.update_po_presunu(mapa_pozic[(99,2)])
 
     def vypocitej_vzdalenost(barva : str, puvodni_pozice : tuple, nova_pozice : tuple) -> int:
-        if(barva == "bila"):
+        if(barva == "cerna"):
             return (puvodni_pozice - nova_pozice)
         else:
             return (nova_pozice - puvodni_pozice)

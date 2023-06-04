@@ -27,9 +27,18 @@ class CalculateTahy:
         hraci = StavHry.get_hraci()
         hrac = hraci[StavHry.get_stav()]
         velikost_hodu = hrac.get_hozeny_pocet
-        #print(f"velikost_hodu: {velikost_hodu}")
-        #print(f"pozice_kamene: {pozice_kamene}")
-        #print(f"vysledek_dvojkostky: {vysledek_dvojkostky}")
+
+        mapa_kamenu = Mapa_kamenu.get_mapa_kamenu()
+        kamen = None
+        for kamen in mapa_kamenu.keys():
+            if kamen._pozice_kamene == pozice_kamene:
+                break
+
+        if(pozice_kamene[0] == 99):
+            if(kamen._default_color == "bila"):
+                pozice_kamene = (0,0)
+            else:
+                pozice_kamene = (24,0)
 
         if(len(vysledek_dvojkostky) == 4 or len(vysledek_dvojkostky) == 3): 
             CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])

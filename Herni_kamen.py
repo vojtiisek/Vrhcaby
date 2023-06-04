@@ -86,7 +86,10 @@ class Herni_kamen(tk.Frame):
         if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
             if(self._default_color.__eq__(hraci[StavHry.get_stav()].get_barva)):
                 if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
-                    if(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
+                    if(self._pozice_kamene[0] == 99):
+                        mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
+                        Herni_kamen.vykreslit_kamen(self, mozne_tahy)
+                    elif(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
                         if(len(hraci[StavHry.get_stav()].get_vysledky) > 0 ) :
                             if(hraci[StavHry.get_stav()].get_hozeny_pocet == 4 and self in hraci[StavHry.get_stav()].get_odehrane_kameny):
                                 messagebox.showinfo("Informace", "Musite hrat se ctyrmi ruznymi kameny, jelikoz jste hodili dve stejna cisla.")
@@ -95,41 +98,7 @@ class Herni_kamen(tk.Frame):
                                 
                                 mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
 
-                                if(self._barva_kamene == "bila" or self._barva_kamene == "cerna"):
-                        
-                                    CalculateTahy.vykreslit_pozice(mozne_tahy)
-                                    self._barva_kamene = "selected"
-
-                                    self.kamen_bg = Image.open("selected_piece.png")
-                                    Herni_kamen.zvoleny_kamen = self
-
-                                elif(self._barva_kamene == "selected"):
-
-
-
-                                    CalculateTahy.skryj_pozice(self._platno, mozne_tahy)
-                                    self._barva_kamene = self._default_color
-                                    Herni_kamen.zvoleny_kamen = None
-
-                                    if(self._default_color == "bila"):
-                                        self.kamen_bg = Image.open("white_piece.png")
-                                    elif(self._default_color == "cerna"):
-                                        self.kamen_bg = Image.open("black_piece.png")
-                                    else:
-                                        self.kamen_bg = Image.open("error_piece.png")
-                                else:
-                                    self.kamen_bg = Image.open("error_piece.png")
-
-
-                    
-                                self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
-                                self.kamen_button= Button(self._platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
-                                self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
-
-                                mapa = Mapa_pozic._mapa_pozic
-                                pozice = mapa.get(self._pozice_kamene)
-
-                                self._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
+                                Herni_kamen.vykreslit_kamen(self, mozne_tahy)
                         else:
                             messagebox.showinfo("Upozorneni", "Musite si nejdrive hodit kostkami!")
                     else:
@@ -195,7 +164,8 @@ class Herni_kamen(tk.Frame):
         puvodni_pozice = kamen._pozice_kamene
         
         kamen._platno.delete(kamen._tag)
-        Zasobnik.zasobniky[kamen._pozice_kamene[0]].pop()
+        if(kamen._pozice_kamene[0] != 99):
+            Zasobnik.zasobniky[kamen._pozice_kamene[0]].pop()
         mapa_pozic = Mapa_pozic._mapa_pozic
         mapa_kamenu = Mapa_kamenu._mapa_kamenu
 
@@ -204,8 +174,23 @@ class Herni_kamen(tk.Frame):
             if mapa_pozic[point] == nova_pozice:
                 break
 
-        if(point == (99,1) or point == (99,2)): 
-            ...
+        if(kamen._pozice_kamene == (99,1) or kamen._pozice_kamene == (99,2)): 
+            if(len(Zasobnik.zasobniky[point[0]].zasobnik) == 1):
+                if(Zasobnik.zasobniky[point[0]].rear()._default_color != kamen._default_color):
+                    vyhozeny_kamen = Zasobnik.zasobniky[point[0]].rear()
+                    point = vyhozeny_kamen._pozice_kamene
+                    nova_pozice = mapa_kamenu[vyhozeny_kamen]
+                    Zasobnik.zasobniky[point[0]].pop()
+                    Herni_kamen.vyhodit_na_bar(vyhozeny_kamen)
+            Bar.presun_z_baru(kamen._pozice_kamene)
+            Zasobnik.zasobniky[point[0]].push(kamen)
+            vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
+            if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
+                hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
+            else:
+                hraci[StavHry.get_stav()].get_vysledky.clear()
+        elif(point == (99,1) or point == (99,2)): 
+            ... # nic se nevykona protoze tento if je true poouze v pripade automatickeho presunu vyhozeneho kamene, nejedna se o presun podle Dvojkostky na pozici z CalculateTahy
         elif(point == (0,1) or point == (0,2)):
             if(kamen._default_color == "bila"):
                 Domecek.domecek_bily.push(kamen)
@@ -254,3 +239,40 @@ class Herni_kamen(tk.Frame):
             return (puvodni_pozice - nova_pozice)
         else:
             return (nova_pozice - puvodni_pozice)
+
+    def vykreslit_kamen(kamen, mozne_tahy):
+        if(kamen._barva_kamene == "bila" or kamen._barva_kamene == "cerna"):
+                        
+            CalculateTahy.vykreslit_pozice(mozne_tahy)
+            kamen._barva_kamene = "selected"
+
+            kamen.kamen_bg = Image.open("selected_piece.png")
+            Herni_kamen.zvoleny_kamen = kamen
+
+        elif(kamen._barva_kamene == "selected"):
+
+
+
+            CalculateTahy.skryj_pozice(kamen._platno, mozne_tahy)
+            kamen._barva_kamene = kamen._default_color
+            Herni_kamen.zvoleny_kamen = None
+
+            if(kamen._default_color == "bila"):
+                kamen.kamen_bg = Image.open("white_piece.png")
+            elif(kamen._default_color == "cerna"):
+                kamen.kamen_bg = Image.open("black_piece.png")
+            else:
+                kamen.kamen_bg = Image.open("error_piece.png")
+        else:
+            kamen.kamen_bg = Image.open("error_piece.png")
+
+
+                    
+        kamen.kamen_bg_tk = ImageTk.PhotoImage(kamen.kamen_bg)
+        kamen.kamen_button= Button(kamen._platno, image=kamen.kamen_bg_tk, command=lambda : Herni_kamen.click_event(kamen), bd=0, highlightthickness=0)
+        kamen.kamen_button.config(width=kamen.kamen_bg_tk.width(), height=kamen.kamen_bg_tk.height())
+
+        mapa = Mapa_pozic._mapa_pozic
+        pozice = mapa.get(kamen._pozice_kamene)
+
+        kamen._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=kamen.kamen_button, tags=kamen._tag)

@@ -40,11 +40,13 @@ class CalculateTahy:
             else:
                 pozice_kamene = (24,0)
 
+        print(f"pozice_kamene: {pozice_kamene}")
+        print(f"vysledek_dvojkostky: {vysledek_dvojkostky}")
         if(len(vysledek_dvojkostky) == 4 or len(vysledek_dvojkostky) == 3): 
             CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
 
             CalculateTahy.vysledne_zasobniky_cerny.append(pozice_kamene[0] - vysledek_dvojkostky[0])                   
-            ...
+            
         elif(len(vysledek_dvojkostky) == 2):
             if(velikost_hodu != 4):
                 CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
@@ -145,6 +147,7 @@ class CalculateTahy:
                         CalculateTahy.mozne_tahy.append(Zasobnik.zasobniky[zasobnik])
                     else:
                         pass
+        print(f"Splnuje podminky: {CalculateTahy.mozne_tahy}")
 
 
     def kontrola_budoucich_mist():

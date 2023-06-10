@@ -85,26 +85,30 @@ class Herni_kamen(tk.Frame):
         hraci = StavHry.get_hraci()
         if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
             if(self._default_color.__eq__(hraci[StavHry.get_stav()].get_barva)):
-                if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
-                    if(self._pozice_kamene[0] == 99):
-                        mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
-                        Herni_kamen.vykreslit_kamen(self, mozne_tahy)
-                    elif(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
-                        if(len(hraci[StavHry.get_stav()].get_vysledky) > 0 ) :
-                            if(hraci[StavHry.get_stav()].get_hozeny_pocet == 4 and self in hraci[StavHry.get_stav()].get_odehrane_kameny):
-                                messagebox.showinfo("Informace", "Musite hrat se ctyrmi ruznymi kameny, jelikoz jste hodili dve stejna cisla.")
-                            elif(((hraci[StavHry.get_stav()].get_hozeny_pocet == 4 and self not in hraci[StavHry.get_stav()].get_odehrane_kameny) 
-                                  or hraci[StavHry.get_stav()].get_hozeny_pocet == 2)):
+                if((len(Bar.get_bary(hraci[StavHry.get_stav()].get_barva).zasobnik) <= 0) and (self not in Bar.get_bary(hraci[StavHry.get_stav()].get_barva).zasobnik)
+                   or (len(Bar.get_bary(hraci[StavHry.get_stav()].get_barva).zasobnik) > 0 and Bar.get_bary(hraci[StavHry.get_stav()].get_barva).rear()) == self):
+                    if Herni_kamen.zvoleny_kamen == None or Herni_kamen.zvoleny_kamen == self:
+                        if(self._pozice_kamene[0] == 99):
+                            mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
+                            Herni_kamen.vykreslit_kamen(self, mozne_tahy)
+                        elif(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
+                            if(len(hraci[StavHry.get_stav()].get_vysledky) > 0 ) :
+                                if(hraci[StavHry.get_stav()].get_hozeny_pocet == 4 and self in hraci[StavHry.get_stav()].get_odehrane_kameny):
+                                    messagebox.showinfo("Informace", "Musite hrat se ctyrmi ruznymi kameny, jelikoz jste hodili dve stejna cisla.")
+                                elif(((hraci[StavHry.get_stav()].get_hozeny_pocet == 4 and self not in hraci[StavHry.get_stav()].get_odehrane_kameny) 
+                                      or hraci[StavHry.get_stav()].get_hozeny_pocet == 2)):
                                 
-                                mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
+                                    mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
 
-                                Herni_kamen.vykreslit_kamen(self, mozne_tahy)
+                                    Herni_kamen.vykreslit_kamen(self, mozne_tahy)
+                            else:
+                                messagebox.showinfo("Upozorneni", "Musite si nejdrive hodit kostkami!")
                         else:
-                            messagebox.showinfo("Upozorneni", "Musite si nejdrive hodit kostkami!")
+                            messagebox.showinfo("Informace", "Muzete hrat pouze s nejvyse umistenym kamenem na danem klinu.")
                     else:
-                        messagebox.showinfo("Informace", "Muzete hrat pouze s nejvyse umistenym kamenem na danem klinu.")
+                        messagebox.showinfo("Informace", "Jiz mate vybrany jiny kamen, se kterym chcete hybat.")
                 else:
-                    messagebox.showinfo("Informace", "Jiz mate vybrany jiny kamen, se kterym chcete hybat.")
+                    messagebox.showinfo("Informace", "Musite hrat s kamenem, ktery mate na baru!")
             
     def update_po_presunu(self, nova_pozice):
         self._barva_kamene = self._default_color
@@ -200,8 +204,8 @@ class Herni_kamen(tk.Frame):
             vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
             if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
                 hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
-            else:
-                hraci[StavHry.get_stav()].get_vysledky.clear()
+          #  else:
+          #      hraci[StavHry.get_stav()].get_vysledky.clear()
         else:
             print(f"Point: {point}")
             if(len(Zasobnik.zasobniky[point[0]].zasobnik) == 1):
@@ -215,8 +219,8 @@ class Herni_kamen(tk.Frame):
             vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
             if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
                 hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
-            else:
-                hraci[StavHry.get_stav()].get_vysledky.clear()
+           # else:
+           #     hraci[StavHry.get_stav()].get_vysledky.clear()
 
         kamen._pozice_kamene = point
         kamen.pridej_pozici_do_historie()

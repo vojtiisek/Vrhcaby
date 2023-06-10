@@ -6,6 +6,12 @@ from Mapa_kamenu import Mapa_kamenu
 class Bar:
     bar_bily = Zasobnik(15)
     bar_cerny = Zasobnik(15)
+    
+    bary = {"bila":bar_bily, "cerna":bar_cerny}
+
+    def get_bary(barva : str):
+        if(barva == "bila" or barva == "cerna"):
+            return Bar.bary[barva]
 
     def presun_na_bar(platno : Canvas, pozice_kamene : tuple):
         mapa_kamenu = Mapa_kamenu._mapa_kamenu

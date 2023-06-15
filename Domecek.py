@@ -1,6 +1,6 @@
 import pygame
 from tkinter import Canvas, Button
-from Dvojkostka import Dvojkostka
+
 from Zasobnik import Zasobnik
 from Mapa_pozic import Mapa_pozic
 from Mapa_kamenu import Mapa_kamenu

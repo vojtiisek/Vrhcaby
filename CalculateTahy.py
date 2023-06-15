@@ -19,7 +19,7 @@ class CalculateTahy:
     hrac = None
 
     def vyhodnotit_mozne_tahy(platno : Canvas, pozice_kamene : tuple, vysledek_dvojkostky : list) -> list: 
-        
+        print("vyhodnocuji tahy")
         CalculateTahy.mozne_tahy = []
         CalculateTahy.vysledne_zasobniky_bily.clear()
         CalculateTahy.vysledne_zasobniky_cerny.clear()
@@ -38,7 +38,7 @@ class CalculateTahy:
             if(kamen._default_color == "bila"):
                 pozice_kamene = (0,0)
             else:
-                pozice_kamene = (24,0)
+                pozice_kamene = (25,0)
 
         print(f"pozice_kamene: {pozice_kamene}")
         print(f"vysledek_dvojkostky: {vysledek_dvojkostky}")
@@ -83,6 +83,7 @@ class CalculateTahy:
         CalculateTahy.kontrola_budoucich_mist()
         CalculateTahy.splnuje_podminky(kamen._default_color)
 
+        print("vyhodnoceno")
         return CalculateTahy.mozne_tahy
 
     def vykreslit_pozice(seznam_tahu):

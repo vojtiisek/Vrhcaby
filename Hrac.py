@@ -21,6 +21,7 @@ class Hrac(ABC):
         return self._vysledky_dvojkostky    
    
     def set_vysledky(self, values : list):
+        print(f"Set vysledky {self.get_barva}")
         self._vysledky_dvojkostky = values
 
     @property
@@ -35,6 +36,7 @@ class Hrac(ABC):
         return self._prvni_hod
       
     def set_prvni_hod(self, value : int):
+        print(f"Set prvni hod {self.get_barva}")
         self._prvni_hod = value
 
     @property

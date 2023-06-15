@@ -126,6 +126,7 @@ class HerniDeska:
         Hra.rozhodni_o_barve_hrace()
         StavHry.set_stav("hrac1_kostka")
         Label_manager.zmena_stavu(HerniDeska.platno_hra, "","Ceka se na hod dvojkostkou Hrace1")
+        Label_manager.vytvorit_labely_domecku(HerniDeska.platno_hra)
 
     @classmethod
     def pokracovat_button_click(cls):
@@ -283,10 +284,11 @@ class Hra:
         hraci = StavHry.get_hraci()
         hrac1 = hraci["Hrac1"]
         hrac2 = hraci["Hrac2"]
+        print(hrac1.get_barva)
+        print(hrac2.get_barva)
 
         if(StavHry.get_stav() == "hrac1_kostka" or StavHry.get_stav() == "hrac2_kostka"):
-            print("rozehrani")
-            Dvojkostka.rozehrat()
+            Dvojkostka.rozehrat(HerniDeska.platno_hra)
             SoundManager.throw_sound.play() # Pustí throw.mp3 sound z soundManageru
         else:
             if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
@@ -297,6 +299,8 @@ class Hra:
                     else:
                         hraci[StavHry.get_stav()].set_hozeny_pocet(2)
                     SoundManager.throw_sound.play()
+                    Label_manager.zobraz_vysledky_dvojkostky(HerniDeska.platno_hra, hraci[StavHry.get_stav()].get_barva, hraci[StavHry.get_stav()].get_vysledky)
+
                 else:
                     messagebox.showinfo("Informace", f"Jiz jste si kostkou hodili. Nyni, pokud mozno, hrajte s kameny. Vase barva: {hraci[StavHry.get_stav()].get_barva}")
 

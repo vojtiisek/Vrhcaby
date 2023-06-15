@@ -123,6 +123,7 @@ class Herni_kamen(tk.Frame):
                 break
 
         if(point == (99,1) or point == (99,2)):
+            print("tenhle pripad")
             ...
         else:
             if(Zasobnik.zasobniky[point[0]] in CalculateTahy.mozne_tahy) :
@@ -160,6 +161,7 @@ class Herni_kamen(tk.Frame):
 
         #print(f"{self.historie[-2], self.historie[-1]}")
         #print(f"HISTORIE PŘED VYPSÁNÍM: {self._historie}")
+        Label_manager.update_domecku(self._platno, self._default_color)
         Label_manager.zmena_stavu(self._platno, "",f"{StavHry.get_stav()} hraje ({hraci[StavHry.get_stav()].get_barva}). Hodte si dvojkostkou!")
         Label_manager.zmena_pozice(self._platno,self._default_color, self.historie[-2], self._historie[-1], None)
 
@@ -188,11 +190,6 @@ class Herni_kamen(tk.Frame):
                     Herni_kamen.vyhodit_na_bar(vyhozeny_kamen)
             Bar.presun_z_baru(kamen._pozice_kamene)
             Zasobnik.zasobniky[point[0]].push(kamen)
-            vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
-            if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
-                hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
-            else:
-                hraci[StavHry.get_stav()].get_vysledky.clear()
         elif(point == (99,1) or point == (99,2)): 
             ... # nic se nevykona protoze tento if je true poouze v pripade automatickeho presunu vyhozeneho kamene, nejedna se o presun podle Dvojkostky na pozici z CalculateTahy
         elif(point == (0,1) or point == (0,2)):
@@ -200,14 +197,7 @@ class Herni_kamen(tk.Frame):
                 Domecek.domecek_bily.push(kamen)
             else:
                 Domecek.domecek_cerny.push(kamen)
-
-            vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
-            if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
-                hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
-          #  else:
-          #      hraci[StavHry.get_stav()].get_vysledky.clear()
         else:
-            print(f"Point: {point}")
             if(len(Zasobnik.zasobniky[point[0]].zasobnik) == 1):
                 if(Zasobnik.zasobniky[point[0]].rear()._default_color != kamen._default_color):
                     vyhozeny_kamen = Zasobnik.zasobniky[point[0]].rear()
@@ -216,11 +206,12 @@ class Herni_kamen(tk.Frame):
                     Zasobnik.zasobniky[point[0]].pop()
                     Herni_kamen.vyhodit_na_bar(vyhozeny_kamen)
             Zasobnik.zasobniky[point[0]].push(kamen)
-            vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
-            if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
-                hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
-           # else:
-           #     hraci[StavHry.get_stav()].get_vysledky.clear()
+
+        vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
+        if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
+            hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
+
+        Label_manager.zobraz_vysledky_dvojkostky(kamen._platno, hraci[StavHry.get_stav()].get_barva, hraci[StavHry.get_stav()].get_vysledky)
 
         kamen._pozice_kamene = point
         kamen.pridej_pozici_do_historie()
@@ -245,6 +236,7 @@ class Herni_kamen(tk.Frame):
             return (nova_pozice - puvodni_pozice)
 
     def vykreslit_kamen(kamen, mozne_tahy):
+        kamen.destroy()
         if(kamen._barva_kamene == "bila" or kamen._barva_kamene == "cerna"):
                         
             CalculateTahy.vykreslit_pozice(mozne_tahy)
@@ -254,8 +246,6 @@ class Herni_kamen(tk.Frame):
             Herni_kamen.zvoleny_kamen = kamen
 
         elif(kamen._barva_kamene == "selected"):
-
-
 
             CalculateTahy.skryj_pozice(kamen._platno, mozne_tahy)
             kamen._barva_kamene = kamen._default_color

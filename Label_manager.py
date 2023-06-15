@@ -2,7 +2,12 @@ from tkinter import Tk as tk
 from tkinter import Label, Canvas
 import textwrap
 
+from StavHry import StavHry
+from Domecek import Domecek
+
 class Label_manager:
+
+    dvojkostka_labely = {}
 
     def zmena_pozice(platno : Canvas, barva : str, z_pozice : tuple, na_pozici: tuple, sebrany_kamen : tuple) -> None:
         z_pozice_processed = z_pozice
@@ -43,3 +48,58 @@ class Label_manager:
         aktualni_stav_hry_lbl.config(text=textwrap.fill(stav, 25), font=("Arial", 16), fg="white", bg="#843c24") 
         aktualni_stav_hry_lbl.place(x=705, y=235)
         aktualni_stav_hry_lbl.update()
+
+    def zobraz_vysledky_dvojkostky(platno : Canvas, barva : str, vysledek : list):
+        print(f"Barva: {barva}")
+        print(f"Vysledek: {vysledek}")
+        nick = ""
+        if barva == "bila":
+            nick = "Bily"
+        else:
+            nick = "Cerny"
+
+        if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
+            Label_manager.dvojkostka_labely["bila"].destroy()
+            Label_manager.dvojkostka_labely["cerna"].destroy()
+
+        text = f"{nick} hodil: "
+        if(len(vysledek) > 0):
+            for cislo in vysledek:
+                text = text + str(cislo) + "; "
+
+            if(barva == "bila"):
+
+                vysledek_dvojkostky_bila_lbl = Label(platno, text=text)
+                vysledek_dvojkostky_bila_lbl.config(font=("Arial", 16), fg="white", bg="#843c24")
+                vysledek_dvojkostky_bila_lbl.place(x=50, y=300)
+                Label_manager.dvojkostka_labely["bila"] = vysledek_dvojkostky_bila_lbl
+            else:
+                vysledek_dvojkostky_cerna_lbl = Label(platno, text=text)
+                vysledek_dvojkostky_cerna_lbl.config(font=("Arial", 16), fg="white", bg="#843c24")
+                vysledek_dvojkostky_cerna_lbl.place(x=400, y=300)
+                Label_manager.dvojkostka_labely["cerna"] = vysledek_dvojkostky_cerna_lbl
+        else:
+            if(barva == "bila"):
+                Label_manager.dvojkostka_labely["bila"].destroy()
+            else:
+                Label_manager.dvojkostka_labely["cerna"].destroy()
+
+
+    def update_domecku(platno : Canvas, barva : str):
+        if(barva == "bila"):
+            domecek_bila_lbl = Label(platno, text=textwrap.fill(f"{len(Domecek.domecek_bily.zasobnik)}/15", 2))
+            domecek_bila_lbl.config(font=("Arial", 20), fg="white", bg="#843c24")
+            domecek_bila_lbl.place(x=650, y=159)
+        else:
+            domecek_cerna_lbl = Label(platno, text=textwrap.fill(f"{len(Domecek.domecek_cerny.zasobnik)}/15", 2))
+            domecek_cerna_lbl.config(font=("Arial", 20), fg="white", bg="#843c24")
+            domecek_cerna_lbl.place(x=650, y=459)
+
+    def vytvorit_labely_domecku(platno : Canvas):
+        domecek_bila_lbl = Label(platno, text=textwrap.fill("0/15", 2))
+        domecek_bila_lbl.config(font=("Arial", 20), fg="white", bg="#843c24")
+        domecek_bila_lbl.place(x=650, y=159)
+
+        domecek_cerna_lbl = Label(platno, text=textwrap.fill("0/15", 2))
+        domecek_cerna_lbl.config(font=("Arial", 20), fg="white", bg="#843c24")
+        domecek_cerna_lbl.place(x=650, y=459)

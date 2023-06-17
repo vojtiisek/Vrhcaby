@@ -207,7 +207,28 @@ class Herni_kamen(tk.Frame):
                     Herni_kamen.vyhodit_na_bar(vyhozeny_kamen)
             Zasobnik.zasobniky[point[0]].push(kamen)
 
-        vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, puvodni_pozice[0], point[0])
+        pozice_pro_vypocet = puvodni_pozice
+        print(f"Puvodni pozice pred kontrolou: {puvodni_pozice}")
+        if(puvodni_pozice[0] == 99):
+            if(kamen._default_color == "bila"):
+                pozice_pro_vypocet = (0, puvodni_pozice[1])
+            else:
+                pozice_pro_vypocet = (25, puvodni_pozice[1])
+        if(puvodni_pozice[0] == 0):
+            if(kamen._default_color == "bila"):
+                pozice_pro_vypocet = (25, puvodni_pozice[1])
+        if(puvodni_pozice[0] == 25):
+            if(kamen._default_color == "cerna"):
+                pozice_pro_vypocet = (0, puvodni_pozice[1])   
+
+        point_pro_vypocet = point
+        if(point[0] == 0):
+            if(kamen._default_color == "bila"):
+                point_pro_vypocet = (25, point[1])
+
+        vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, pozice_pro_vypocet[0], point_pro_vypocet[0])
+        print(f"Vypocet vzdalenosti: K.D_C: {kamen._default_color} P_P: {pozice_pro_vypocet} P: {point_pro_vypocet} V: {vzdalenost}")
+        print(f"Vysledky: {hraci[StavHry.get_stav()].get_vysledky}  Obsahuje?: {vzdalenost in hraci[StavHry.get_stav()].get_vysledky}")
         if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
             hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
 

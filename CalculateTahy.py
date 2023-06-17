@@ -34,13 +34,15 @@ class CalculateTahy:
             if kamen._pozice_kamene == pozice_kamene:
                 break
 
+        print(f"pozice kamene pred: {pozice_kamene}")
+        print(f"barva: {kamen._default_color}")
         if(pozice_kamene[0] == 99):
             if(kamen._default_color == "bila"):
                 pozice_kamene = (0,0)
             else:
                 pozice_kamene = (25,0)
 
-        print(f"pozice_kamene: {pozice_kamene}")
+        print(f"pozice_kamene po: {pozice_kamene}")
         print(f"vysledek_dvojkostky: {vysledek_dvojkostky}")
         if(len(vysledek_dvojkostky) == 4 or len(vysledek_dvojkostky) == 3): 
             CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
@@ -73,11 +75,11 @@ class CalculateTahy:
              messagebox.showinfo("Chyba", f"Chyba pri rozhodovani o vyslednych zasobnicich, velikost vysledek_dvojkostky: {len(vysledek_dvojkostky)}"  )
 
 
-        mapa_kamenu = Mapa_kamenu.get_mapa_kamenu()
-        kamen = None
-        for kamen in mapa_kamenu.keys():
-            if kamen._pozice_kamene == pozice_kamene:
-                break
+        #mapa_kamenu = Mapa_kamenu.get_mapa_kamenu()
+        #kamen = None
+        #for kamen in mapa_kamenu.keys():
+        #    if kamen._pozice_kamene == pozice_kamene:
+        #        break
 
 
         CalculateTahy.kontrola_budoucich_mist()
@@ -155,9 +157,11 @@ class CalculateTahy:
         if(len(CalculateTahy.vysledne_zasobniky_bily) > 0):
             for point in CalculateTahy.vysledne_zasobniky_bily:
                 if(point < 1 or point > 25):
+                    print(f"Odstranuji v kontrole BILY: {point}")
                     CalculateTahy.vysledne_zasobniky_bily.remove(point)
 
         if(len(CalculateTahy.vysledne_zasobniky_cerny) > 0):
             for point in CalculateTahy.vysledne_zasobniky_cerny:
                 if(point < 0 or point > 24):
+                    print(f"Odstranuji v kontrole CERNY: {point}")
                     CalculateTahy.vysledne_zasobniky_cerny.remove(point)

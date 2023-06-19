@@ -3,7 +3,7 @@ from StavHry import StavHry
 from Label_manager import Label_manager
 
 class Dvojkostka:
-
+    zvoleny_souper = ""
     def hod_dvojkostkou() -> list:
 
         vysledek_hodu = []
@@ -21,6 +21,8 @@ class Dvojkostka:
 
         if StavHry.get_stav() == "hrac1_kostka":
             hraci["Hrac1"].set_prvni_hod(random.randint(1, 6))
+            if Dvojkostka.zvoleny_souper == "AI":
+                hraci["Hrac2"].set_prvni_hod(random.randint(1, 6))
 
         if StavHry.get_stav() == "hrac2_kostka":
             hraci["Hrac2"].set_prvni_hod(random.randint(1, 6))
@@ -36,9 +38,14 @@ class Dvojkostka:
         
 
         Label_manager.zobraz_vysledky_dvojkostky(platno, hraci[stav_hrac].get_barva, [hraci[stav_hrac].get_prvni_hod])
+        if Dvojkostka.zvoleny_souper == "AI":
+            Label_manager.zobraz_vysledky_dvojkostky(platno, hraci["Hrac2"].get_barva, [hraci["Hrac2"].get_prvni_hod])
 
         if StavHry.get_stav() == "hrac1_kostka":
-            StavHry.set_stav("hrac2_kostka")           
+            if Dvojkostka.zvoleny_souper == "AI":
+                ... # rozhodne se v bloku kodu pod timto
+            else:
+                StavHry.set_stav("hrac2_kostka")           
         
         if(hraci["Hrac1"].get_prvni_hod > 0 and hraci["Hrac2"].get_prvni_hod > 0):
             if hraci["Hrac1"].get_prvni_hod > hraci["Hrac2"].get_prvni_hod:

@@ -5,6 +5,7 @@ from tkinter import messagebox, Message
 from PIL import ImageTk, Image 
 from pathlib import Path
 from CalculateTahy import CalculateTahy
+import random
 
 from Mapa_pozic import Mapa_pozic
 from Mapa_kamenu import Mapa_kamenu
@@ -13,6 +14,8 @@ from Label_manager import Label_manager
 from Bar import Bar
 from StavHry import StavHry
 from Domecek import Domecek
+import SoundManager
+from Dvojkostka import Dvojkostka
 
 class Herni_kamen(tk.Frame):
     zvoleny_kamen = None
@@ -170,6 +173,9 @@ class Herni_kamen(tk.Frame):
             if(StavHry.get_stav() == "Hrac1"):
                 print("zmena na hrace2")
                 StavHry.set_stav("Hrac2")
+                if(Dvojkostka.zvoleny_souper == "AI"):
+                    hraci[StavHry.get_stav()].set_vysledky(Dvojkostka.hod_dvojkostkou())
+                    Herni_kamen.AI_tah(self._platno)
             else:
                 print("zmena na hrace1")
                 StavHry.set_stav("Hrac1")      
@@ -322,3 +328,47 @@ class Herni_kamen(tk.Frame):
             return False
         else:
             return True
+
+    def AI_tah(platno : Canvas):
+        mapa_pozic = Mapa_pozic._mapa_pozic
+        hraci = StavHry.get_hraci()
+        hrac2 = hraci["Hrac2"]
+
+        barva = hrac2.get_barva
+        vysledek_dvojkostky = hrac2.get_vysledky
+
+        aktualni_pointy = []
+        for point in Zasobnik.zasobniky:
+            if len(point.zasobnik) > 0 and point.rear()._default_color == barva:
+                aktualni_pointy.append(point)
+        if(len(hrac2.get_aktualni_pointy) <= 0):
+            hrac2.set_aktualni_pointy(aktualni_pointy)
+
+        random_point = aktualni_pointy[(random.randint(1, len(aktualni_pointy)))-1]
+        random_kamen = random_point.rear()
+        Herni_kamen.zvoleny_kamen = random_kamen
+        mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(platno, random_kamen._pozice_kamene, vysledek_dvojkostky)
+
+        if(len(mozne_tahy) > 0):
+            random_tah = mozne_tahy[(random.randint(1, len(mozne_tahy))) -1]
+            vyska = len(random_tah.zasobnik) + 1
+            print(random_tah.zasobnik)
+            point = (Zasobnik.zasobniky.index(random_tah),vyska)
+            pozice = mapa_pozic[point]
+
+            Herni_kamen.presun_kamen(Herni_kamen.zvoleny_kamen, pozice)
+
+            Herni_kamen.zvoleny_kamen.update_po_presunu(pozice)
+            SoundManager.move_sound.play() # Pustí move.mp3 z soundManageru
+
+            if(StavHry.get_stav() == "Hrac2"):
+                Herni_kamen.AI_tah(platno)
+        else:
+            if random_point in hrac2.get_aktualni_pointy:
+                hrac2.get_aktualni_pointy.remove(random_point)
+            
+            if(len(hrac2.get_aktualni_pointy) <= 0):
+                ... # nemuze hrat, zmena stavu na Hrac1
+            else:
+                Herni_kamen.AI_tah(platno)
+        

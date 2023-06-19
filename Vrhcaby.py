@@ -288,6 +288,7 @@ class Hra:
         print(hrac2.get_barva)
 
         if(StavHry.get_stav() == "hrac1_kostka" or StavHry.get_stav() == "hrac2_kostka"):
+            Dvojkostka.zvoleny_souper = HerniDeska.get_zvoleny_souper()
             Dvojkostka.rozehrat(HerniDeska.platno_hra)
             SoundManager.throw_sound.play() # Pustí throw.mp3 sound z soundManageru
         else:
@@ -323,7 +324,13 @@ class Hra:
             Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac1 hraje ({hrac1.get_barva}). Hodte si dvojkostkou!")
 
         if(StavHry.get_stav() == "Hrac2"):
-            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva}). Hodte si dvojkostkou!")
+            if(HerniDeska.get_zvoleny_souper() == "AI"):
+                Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva} - AI)")
+                if(len(hrac2.get_vysledky) <= 0):
+                    Hra.hod_kostkou()
+                Herni_kamen.AI_tah(HerniDeska.platno_hra)
+            else:
+                Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva}). Hodte si dvojkostkou!")
 
 
         # Pouze na otestovani ulozeni hry
@@ -333,3 +340,8 @@ if __name__ == "__main__":
     app = Hra(root)
     root.mainloop()
 
+
+    # PRACE DAL:
+    # Bar u AI - aby hralo nejdrive s kamenem na baru
+    # Zda se mi, ze si nejak vymysli tahy nebo ze hraje s vice kameny, nez by mela
+    # Zpomalit ji, aby to vypadalo realneji

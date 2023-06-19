@@ -300,6 +300,18 @@ class Hra:
                         hraci[StavHry.get_stav()].set_hozeny_pocet(2)
                     SoundManager.throw_sound.play()
                     Label_manager.zobraz_vysledky_dvojkostky(HerniDeska.platno_hra, hraci[StavHry.get_stav()].get_barva, hraci[StavHry.get_stav()].get_vysledky)
+                    if(Herni_kamen.kontrola_hrac_muze_hrat(HerniDeska.platno_hra, hraci[StavHry.get_stav()].get_barva, hraci[StavHry.get_stav()].get_vysledky) == False):
+                        hraci["Hrac1"].get_odehrane_kameny.clear()
+                        hraci["Hrac2"].get_odehrane_kameny.clear()
+                        hraci[StavHry.get_stav()].get_vysledky.clear()
+                        if(StavHry.get_stav() == "Hrac1"):
+                            print("zmena na hrace2 z duvodu zadnych moznych tahu")
+                            StavHry.set_stav("Hrac2")
+                            Label_manager.zmena_stavu(HerniDeska.platno_hra, "tojejedno", "Hrac1 nemohl hrat, hraje Hrac2.")
+                        else:
+                            print("zmena na hrace1 z duvodu zadnych moznych tahu")
+                            StavHry.set_stav("Hrac1")  
+                            Label_manager.zmena_stavu(HerniDeska.platno_hra, "tojejedno", "Hrac2 nemohl hrat, hraje Hrac1.")
 
                 else:
                     messagebox.showinfo("Informace", f"Jiz jste si kostkou hodili. Nyni, pokud mozno, hrajte s kameny. Vase barva: {hraci[StavHry.get_stav()].get_barva}")

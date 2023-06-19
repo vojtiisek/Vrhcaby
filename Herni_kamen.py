@@ -91,6 +91,18 @@ class Herni_kamen(tk.Frame):
                         if(self._pozice_kamene[0] == 99):
                             mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(self._platno, self._pozice_kamene, hraci[StavHry.get_stav()].get_vysledky)
                             Herni_kamen.vykreslit_kamen(self, mozne_tahy)
+                            if(self._pozice_kamene[0] == 99 and len(mozne_tahy) <= 0):
+                                hraci["Hrac1"].get_odehrane_kameny.clear()
+                                hraci["Hrac2"].get_odehrane_kameny.clear()
+                                hraci[StavHry.get_stav()].get_vysledky.clear()
+                                if(StavHry.get_stav() == "Hrac1"):
+                                    print("zmena na hrace2 z duvodu zadnych moznych tahu")
+                                    StavHry.set_stav("Hrac2")
+                                    Label_manager.zmena_stavu(self._platno, "tojejedno", "Hrac1 nemohl hrat, hraje Hrac2.")
+                                else:
+                                    print("zmena na hrace1 z duvodu zadnych moznych tahu")
+                                    StavHry.set_stav("Hrac1")  
+                                    Label_manager.zmena_stavu(self._platno, "tojejedno", "Hrac2 nemohl hrat, hraje Hrac1.")
                         elif(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
                             if(len(hraci[StavHry.get_stav()].get_vysledky) > 0 ) :
                                 if(hraci[StavHry.get_stav()].get_hozeny_pocet == 4 and self in hraci[StavHry.get_stav()].get_odehrane_kameny):
@@ -291,3 +303,19 @@ class Herni_kamen(tk.Frame):
         pozice = mapa.get(kamen._pozice_kamene)
 
         kamen._platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=kamen.kamen_button, tags=kamen._tag)
+
+    def kontrola_hrac_muze_hrat(platno : Canvas, barva : str, vysledek_dvojkostky : list):
+        bar = Bar.bary[barva]
+        mozne_tahy_celkem = []
+        if(len(bar.zasobnik) > 0):
+            mozne_tahy_celkem.append(CalculateTahy.vyhodnotit_mozne_tahy(platno, bar.rear()._pozice_kamene, vysledek_dvojkostky))
+        else:
+            for zasobnik in Zasobnik.zasobniky:
+                if(len(zasobnik.zasobnik) > 0 and zasobnik.rear()._default_color == barva):
+                    mozne_tahy_celkem.append(CalculateTahy.vyhodnotit_mozne_tahy(platno, zasobnik.rear()._pozice_kamene, vysledek_dvojkostky))
+
+        print(f"kontrola_hrac_muze_hrat: {len(mozne_tahy_celkem)}")
+        if(len(mozne_tahy_celkem) <=0):
+            return False
+        else:
+            return True

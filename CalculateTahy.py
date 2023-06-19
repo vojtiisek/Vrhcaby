@@ -152,7 +152,8 @@ class CalculateTahy:
                         pass
         splnuje = []
         for zasobnik in CalculateTahy.mozne_tahy:
-            splnuje.append(Zasobnik.zasobniky.index(zasobnik))
+            if(zasobnik in Zasobnik.zasobniky):
+                splnuje.append(Zasobnik.zasobniky.index(zasobnik))
         print(f"Splnuje podminky: {splnuje}")
 
 
@@ -168,6 +169,12 @@ class CalculateTahy:
                 if(point < 0 or point > 24):
                     print(f"Odstranuji v kontrole CERNY: {point}")
                     CalculateTahy.vysledne_zasobniky_cerny.remove(point)
+
+        for prvek in CalculateTahy.vysledne_zasobniky_bily:
+            print(f"Zasobnik bily: {prvek}")
+
+        for prvek in CalculateTahy.vysledne_zasobniky_cerny:
+            print(f"Zasobnik cerny: {prvek}")
 
 
 

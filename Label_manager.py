@@ -50,8 +50,6 @@ class Label_manager:
         aktualni_stav_hry_lbl.update()
 
     def zobraz_vysledky_dvojkostky(platno : Canvas, barva : str, vysledek : list):
-        print(f"Barva: {barva}")
-        print(f"Vysledek: {vysledek}")
         nick = ""
         if barva == "bila":
             nick = "Bily"

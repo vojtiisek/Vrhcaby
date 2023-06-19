@@ -103,6 +103,9 @@ class Herni_kamen(tk.Frame):
                                     print("zmena na hrace1 z duvodu zadnych moznych tahu")
                                     StavHry.set_stav("Hrac1")  
                                     Label_manager.zmena_stavu(self._platno, "tojejedno", "Hrac2 nemohl hrat, hraje Hrac1.")
+                                
+                                Herni_kamen.vykreslit_kamen(self, [])
+                                Herni_kamen.zvoleny_kamen = None
                         elif(Zasobnik.zasobniky[self._pozice_kamene[0]].rear() == self):        
                             if(len(hraci[StavHry.get_stav()].get_vysledky) > 0 ) :
                                 if(hraci[StavHry.get_stav()].get_hozeny_pocet == 4 and self in hraci[StavHry.get_stav()].get_odehrane_kameny):

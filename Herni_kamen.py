@@ -18,6 +18,8 @@ import SoundManager
 from Dvojkostka import Dvojkostka
 
 class Herni_kamen(tk.Frame):
+    root = None
+
     zvoleny_kamen = None
     barva_hrace = None
     posledni_vysledky_hodu = []
@@ -164,7 +166,7 @@ class Herni_kamen(tk.Frame):
                 StavHry.set_stav("Hrac2")
                 if(Dvojkostka.zvoleny_souper == "AI"):
                     hraci[StavHry.get_stav()].set_vysledky(Dvojkostka.hod_dvojkostkou())
-                    Herni_kamen.AI_tah(self._platno)
+                    Herni_kamen.AI_tah(Herni_kamen.root, self._platno)
             else:
                 StavHry.set_stav("Hrac1")      
 
@@ -311,7 +313,7 @@ class Herni_kamen(tk.Frame):
         else:
             return True
 
-    def AI_tah(platno : Canvas):
+    def AI_tah(root : Tk, platno : Canvas):
         mapa_pozic = Mapa_pozic._mapa_pozic
         hraci = StavHry.get_hraci()
         hrac2 = hraci["Hrac2"]
@@ -349,7 +351,7 @@ class Herni_kamen(tk.Frame):
                 SoundManager.move_sound.play() # Pustí move.mp3 z soundManageru
 
                 if(StavHry.get_stav() == "Hrac2"):
-                    Herni_kamen.AI_tah(platno)
+                    root.after(5000, Herni_kamen.AI_tah(Herni_kamen.root, platno))
             else:
                 if random_point in hrac2.get_aktualni_pointy:
                     hrac2.get_aktualni_pointy.remove(random_point)
@@ -357,7 +359,7 @@ class Herni_kamen(tk.Frame):
                 if(len(hrac2.get_aktualni_pointy) <= 0):
                     ... # nemuze hrat, zmena stavu na Hrac1
                 else:
-                    Herni_kamen.AI_tah(platno)
+                    root.after(5000, Herni_kamen.AI_tah(Herni_kamen.root, platno))
         
         else:
             kamen = bar.rear()
@@ -377,6 +379,6 @@ class Herni_kamen(tk.Frame):
                 SoundManager.move_sound.play() # Pustí move.mp3 z soundManageru
 
                 if(StavHry.get_stav() == "Hrac2"):
-                    Herni_kamen.AI_tah(platno)
+                    root.after(5000, Herni_kamen.AI_tah(Herni_kamen.root, platno))
             else:
                 ... # nemuze hrat, zmena stavu na Hrac1

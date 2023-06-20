@@ -169,6 +169,7 @@ class Hra:
     def __init__(self, hra):
         self.hra = hra
         self.platno = HerniDeska()
+        Herni_kamen.root = hra
 
     def rozhodni_o_barve_hrace():
         barva_hrace = "error"
@@ -325,7 +326,7 @@ class Hra:
                 Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva} - AI)")
                 if(len(hrac2.get_vysledky) <= 0):
                     Hra.hod_kostkou()
-                Herni_kamen.AI_tah(HerniDeska.platno_hra)
+                root.after(5000, Herni_kamen.AI_tah(Herni_kamen.root, HerniDeska.platno_hra))
             else:
                 Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva}). Hodte si dvojkostkou!")
 

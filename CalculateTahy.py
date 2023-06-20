@@ -19,7 +19,7 @@ class CalculateTahy:
     hrac = None
 
     def vyhodnotit_mozne_tahy(platno : Canvas, pozice_kamene : tuple, vysledek_dvojkostky : list) -> list: 
-        print("vyhodnocuji tahy")
+
         CalculateTahy.mozne_tahy = []
         CalculateTahy.vysledne_zasobniky_bily.clear()
         CalculateTahy.vysledne_zasobniky_cerny.clear()
@@ -34,16 +34,12 @@ class CalculateTahy:
             if kamen._pozice_kamene == pozice_kamene:
                 break
 
-        print(f"pozice kamene pred: {pozice_kamene}")
-        print(f"barva: {kamen._default_color}")
         if(pozice_kamene[0] == 99):
             if(kamen._default_color == "bila"):
                 pozice_kamene = (0,0)
             else:
                 pozice_kamene = (25,0)
 
-        print(f"pozice_kamene po: {pozice_kamene}")
-        print(f"vysledek_dvojkostky: {vysledek_dvojkostky}")
         if(len(vysledek_dvojkostky) == 4 or len(vysledek_dvojkostky) == 3): 
             CalculateTahy.vysledne_zasobniky_bily.append(pozice_kamene[0] + vysledek_dvojkostky[0])
 
@@ -85,7 +81,6 @@ class CalculateTahy:
         CalculateTahy.kontrola_budoucich_mist()
         CalculateTahy.splnuje_podminky(kamen._default_color)
 
-        print("vyhodnoceno")
         return CalculateTahy.mozne_tahy
 
     def vykreslit_pozice(seznam_tahu):
@@ -125,7 +120,6 @@ class CalculateTahy:
     def splnuje_podminky(barva_hrace : str) -> None:
         if(barva_hrace == "bila"):
             for zasobnik in CalculateTahy.vysledne_zasobniky_bily:
-                print(f"Zasobnik ve for: {zasobnik}")
                 if(zasobnik == 25):
                     CalculateTahy.mozne_tahy.append(Domecek.domecek_bily)
                 else:
@@ -154,27 +148,20 @@ class CalculateTahy:
         for zasobnik in CalculateTahy.mozne_tahy:
             if(zasobnik in Zasobnik.zasobniky):
                 splnuje.append(Zasobnik.zasobniky.index(zasobnik))
-        print(f"Splnuje podminky: {splnuje}")
 
 
     def kontrola_budoucich_mist():
         if(len(CalculateTahy.vysledne_zasobniky_bily) > 0):
             for point in CalculateTahy.vysledne_zasobniky_bily:
-                if(point < 1 or point > 25):
-                    print(f"Odstranuji v kontrole BILY: {point}")
+                if(point <= 0 or point >= 26):
                     CalculateTahy.vysledne_zasobniky_bily.remove(point)
 
         if(len(CalculateTahy.vysledne_zasobniky_cerny) > 0):
             for point in CalculateTahy.vysledne_zasobniky_cerny:
-                if(point < 0 or point > 24):
-                    print(f"Odstranuji v kontrole CERNY: {point}")
+                if(point <= (-1) or point >= 25):
                     CalculateTahy.vysledne_zasobniky_cerny.remove(point)
 
-        for prvek in CalculateTahy.vysledne_zasobniky_bily:
-            print(f"Zasobnik bily: {prvek}")
 
-        for prvek in CalculateTahy.vysledne_zasobniky_cerny:
-            print(f"Zasobnik cerny: {prvek}")
 
 
 

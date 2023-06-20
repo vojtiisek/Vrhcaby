@@ -284,8 +284,7 @@ class Hra:
         hraci = StavHry.get_hraci()
         hrac1 = hraci["Hrac1"]
         hrac2 = hraci["Hrac2"]
-        print(hrac1.get_barva)
-        print(hrac2.get_barva)
+
 
         if(StavHry.get_stav() == "hrac1_kostka" or StavHry.get_stav() == "hrac2_kostka"):
             Dvojkostka.zvoleny_souper = HerniDeska.get_zvoleny_souper()
@@ -306,11 +305,9 @@ class Hra:
                         hraci["Hrac2"].get_odehrane_kameny.clear()
                         hraci[StavHry.get_stav()].get_vysledky.clear()
                         if(StavHry.get_stav() == "Hrac1"):
-                            print("zmena na hrace2 z duvodu zadnych moznych tahu")
                             StavHry.set_stav("Hrac2")
                             Label_manager.zmena_stavu(HerniDeska.platno_hra, "tojejedno", "Hrac1 nemohl hrat, hraje Hrac2.")
                         else:
-                            print("zmena na hrace1 z duvodu zadnych moznych tahu")
                             StavHry.set_stav("Hrac1")  
                             Label_manager.zmena_stavu(HerniDeska.platno_hra, "tojejedno", "Hrac2 nemohl hrat, hraje Hrac1.")
 
@@ -342,6 +339,5 @@ if __name__ == "__main__":
 
 
     # PRACE DAL:
-    # Bar u AI - aby hralo nejdrive s kamenem na baru
     # Zda se mi, ze si nejak vymysli tahy nebo ze hraje s vice kameny, nez by mela
     # Zpomalit ji, aby to vypadalo realneji

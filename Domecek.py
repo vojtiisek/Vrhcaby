@@ -9,6 +9,8 @@ class Domecek:
     
     domecek_cerny = Zasobnik(15)
     domecek_bily = Zasobnik(15)
+    domecky = {"bila" : domecek_bily, 
+               "cerna" : domecek_cerny}
     
     #zjistit stav a barvu hrace -> zjistit pozici vybraneho kamene v kvadrantu ktery by mohl do domecku -> spocitat jestli se hod kostky rovná s pozicí kamene -> poslat do domečku
     def presun_do_domecku(self, pozice_kamene : tuple):
@@ -23,3 +25,9 @@ class Domecek:
             Domecek.domecek_bily.push(kamen)
         else:
             Domecek.domecek_cerny.push(kamen)
+
+    def get_pozice(barva : str) -> tuple:
+        if(barva == "bila"):
+            return (0,1)
+        else:
+            return (0,2)

@@ -45,8 +45,6 @@ class Pozice(tk.Frame):
         return self._souradnice
 
     def hint_clicked(self):
-        print(self._souradnice)
-        print(self)
         if(Herni_kamen.zvoleny_kamen != None):
 
             Herni_kamen.presun_kamen(Herni_kamen.zvoleny_kamen, self)

@@ -73,18 +73,12 @@ class Herni_kamen(tk.Frame):
             self._pozice_kamene = nova_pozice_kamene
 
     def pridej_pozici_do_historie(self) -> None:
-        #print(f"POZICE KAMENE {self._pozice_kamene}")
-        #print(f"HISTORIE {self._historie}")
         if(self._pozice_kamene != (99,1) or self._pozice_kamene != (99,2)): 
             self._historie.append(self._pozice_kamene)
         else:
             self._historie.append("Bar")
 
-    def __str__(self) -> str:
-        return f"Tento {self.barva_kamene} kamen je na pozici {self.pozice_kamene}"
-
     def click_event(self):
-        print(f"Self: {self._pozice_kamene}")
         hraci = StavHry.get_hraci()
         if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
             if(self._default_color.__eq__(hraci[StavHry.get_stav()].get_barva)):
@@ -99,11 +93,9 @@ class Herni_kamen(tk.Frame):
                                 hraci["Hrac2"].get_odehrane_kameny.clear()
                                 hraci[StavHry.get_stav()].get_vysledky.clear()
                                 if(StavHry.get_stav() == "Hrac1"):
-                                    print("zmena na hrace2 z duvodu zadnych moznych tahu")
                                     StavHry.set_stav("Hrac2")
                                     Label_manager.zmena_stavu(self._platno, "tojejedno", "Hrac1 nemohl hrat, hraje Hrac2.")
                                 else:
-                                    print("zmena na hrace1 z duvodu zadnych moznych tahu")
                                     StavHry.set_stav("Hrac1")  
                                     Label_manager.zmena_stavu(self._platno, "tojejedno", "Hrac2 nemohl hrat, hraje Hrac1.")
                                 
@@ -141,8 +133,7 @@ class Herni_kamen(tk.Frame):
                 break
 
         if(point == (99,1) or point == (99,2)):
-            print("tenhle pripad")
-            ...
+            pass
         else:
             if(Zasobnik.zasobniky[point[0]] in CalculateTahy.mozne_tahy) :
                 CalculateTahy.mozne_tahy.remove(Zasobnik.zasobniky[point[0]])
@@ -166,22 +157,17 @@ class Herni_kamen(tk.Frame):
         hraci = StavHry.get_hraci()
 
         hraci[StavHry.get_stav()].get_odehrane_kameny.append(self)
-        print(f"Odehrane kameny: {hraci[StavHry.get_stav()].get_odehrane_kameny}")
         if(len(hraci[StavHry.get_stav()].get_vysledky) < 1):
             hraci["Hrac1"].get_odehrane_kameny.clear()
             hraci["Hrac2"].get_odehrane_kameny.clear()
             if(StavHry.get_stav() == "Hrac1"):
-                print("zmena na hrace2")
                 StavHry.set_stav("Hrac2")
                 if(Dvojkostka.zvoleny_souper == "AI"):
                     hraci[StavHry.get_stav()].set_vysledky(Dvojkostka.hod_dvojkostkou())
                     Herni_kamen.AI_tah(self._platno)
             else:
-                print("zmena na hrace1")
                 StavHry.set_stav("Hrac1")      
 
-        #print(f"{self.historie[-2], self.historie[-1]}")
-        #print(f"HISTORIE PŘED VYPSÁNÍM: {self._historie}")
         Label_manager.update_domecku(self._platno, self._default_color)
         Label_manager.zmena_stavu(self._platno, "",f"{StavHry.get_stav()} hraje ({hraci[StavHry.get_stav()].get_barva}). Hodte si dvojkostkou!")
         Label_manager.zmena_pozice(self._platno,self._default_color, self.historie[-2], self._historie[-1], None)
@@ -229,7 +215,6 @@ class Herni_kamen(tk.Frame):
             Zasobnik.zasobniky[point[0]].push(kamen)
 
         pozice_pro_vypocet = puvodni_pozice
-        print(f"Puvodni pozice pred kontrolou: {puvodni_pozice}")
         if(puvodni_pozice[0] == 99):
             if(kamen._default_color == "bila"):
                 pozice_pro_vypocet = (0, puvodni_pozice[1])
@@ -248,8 +233,6 @@ class Herni_kamen(tk.Frame):
                 point_pro_vypocet = (25, point[1])
 
         vzdalenost = Herni_kamen.vypocitej_vzdalenost(kamen._default_color, pozice_pro_vypocet[0], point_pro_vypocet[0])
-        print(f"Vypocet vzdalenosti: K.D_C: {kamen._default_color} P_P: {pozice_pro_vypocet} P: {point_pro_vypocet} V: {vzdalenost}")
-        print(f"Vysledky: {hraci[StavHry.get_stav()].get_vysledky}  Obsahuje?: {vzdalenost in hraci[StavHry.get_stav()].get_vysledky}")
         if(vzdalenost in hraci[StavHry.get_stav()].get_vysledky):
             hraci[StavHry.get_stav()].get_vysledky.remove(vzdalenost)
 
@@ -323,7 +306,6 @@ class Herni_kamen(tk.Frame):
                 if(len(zasobnik.zasobnik) > 0 and zasobnik.rear()._default_color == barva):
                     mozne_tahy_celkem.append(CalculateTahy.vyhodnotit_mozne_tahy(platno, zasobnik.rear()._pozice_kamene, vysledek_dvojkostky))
 
-        print(f"kontrola_hrac_muze_hrat: {len(mozne_tahy_celkem)}")
         if(len(mozne_tahy_celkem) <=0):
             return False
         else:
@@ -336,39 +318,65 @@ class Herni_kamen(tk.Frame):
 
         barva = hrac2.get_barva
         vysledek_dvojkostky = hrac2.get_vysledky
+        bar = Bar.bary[barva]
 
-        aktualni_pointy = []
-        for point in Zasobnik.zasobniky:
-            if len(point.zasobnik) > 0 and point.rear()._default_color == barva:
-                aktualni_pointy.append(point)
-        if(len(hrac2.get_aktualni_pointy) <= 0):
-            hrac2.set_aktualni_pointy(aktualni_pointy)
-
-        random_point = aktualni_pointy[(random.randint(1, len(aktualni_pointy)))-1]
-        random_kamen = random_point.rear()
-        Herni_kamen.zvoleny_kamen = random_kamen
-        mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(platno, random_kamen._pozice_kamene, vysledek_dvojkostky)
-
-        if(len(mozne_tahy) > 0):
-            random_tah = mozne_tahy[(random.randint(1, len(mozne_tahy))) -1]
-            vyska = len(random_tah.zasobnik) + 1
-            print(random_tah.zasobnik)
-            point = (Zasobnik.zasobniky.index(random_tah),vyska)
-            pozice = mapa_pozic[point]
-
-            Herni_kamen.presun_kamen(Herni_kamen.zvoleny_kamen, pozice)
-
-            Herni_kamen.zvoleny_kamen.update_po_presunu(pozice)
-            SoundManager.move_sound.play() # Pustí move.mp3 z soundManageru
-
-            if(StavHry.get_stav() == "Hrac2"):
-                Herni_kamen.AI_tah(platno)
-        else:
-            if random_point in hrac2.get_aktualni_pointy:
-                hrac2.get_aktualni_pointy.remove(random_point)
-            
+        if(len(bar.zasobnik) <= 0):
+            aktualni_pointy = []
+            for point in Zasobnik.zasobniky:
+                if len(point.zasobnik) > 0 and point.rear()._default_color == barva:
+                    aktualni_pointy.append(point)
             if(len(hrac2.get_aktualni_pointy) <= 0):
-                ... # nemuze hrat, zmena stavu na Hrac1
+                hrac2.set_aktualni_pointy(aktualni_pointy)
+
+            random_point = aktualni_pointy[(random.randint(1, len(aktualni_pointy)))-1]
+            random_kamen = random_point.rear()
+            Herni_kamen.zvoleny_kamen = random_kamen
+            mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(platno, random_kamen._pozice_kamene, vysledek_dvojkostky)
+
+            if(len(mozne_tahy) > 0):
+                random_tah = mozne_tahy[(random.randint(1, len(mozne_tahy))) -1]
+                vyska = len(random_tah.zasobnik) + 1
+
+                if(random_tah in Zasobnik.zasobniky):
+                    point = (Zasobnik.zasobniky.index(random_tah),vyska)
+                else:
+                    point = Domecek.get_pozice(barva)
+                pozice = mapa_pozic[point]
+
+                Herni_kamen.presun_kamen(Herni_kamen.zvoleny_kamen, pozice)
+
+                Herni_kamen.zvoleny_kamen.update_po_presunu(pozice)
+                SoundManager.move_sound.play() # Pustí move.mp3 z soundManageru
+
+                if(StavHry.get_stav() == "Hrac2"):
+                    Herni_kamen.AI_tah(platno)
             else:
-                Herni_kamen.AI_tah(platno)
+                if random_point in hrac2.get_aktualni_pointy:
+                    hrac2.get_aktualni_pointy.remove(random_point)
+            
+                if(len(hrac2.get_aktualni_pointy) <= 0):
+                    ... # nemuze hrat, zmena stavu na Hrac1
+                else:
+                    Herni_kamen.AI_tah(platno)
         
+        else:
+            kamen = bar.rear()
+            Herni_kamen.zvoleny_kamen = kamen
+            mozne_tahy = CalculateTahy.vyhodnotit_mozne_tahy(platno, kamen._pozice_kamene, vysledek_dvojkostky)
+
+            if(len(mozne_tahy) > 0):
+                random_tah = mozne_tahy[(random.randint(1, len(mozne_tahy))) -1]
+                vyska = len(random_tah.zasobnik) + 1
+
+                point = (Zasobnik.zasobniky.index(random_tah),vyska)
+                pozice = mapa_pozic[point]
+
+                Herni_kamen.presun_kamen(Herni_kamen.zvoleny_kamen, pozice)
+
+                Herni_kamen.zvoleny_kamen.update_po_presunu(pozice)
+                SoundManager.move_sound.play() # Pustí move.mp3 z soundManageru
+
+                if(StavHry.get_stav() == "Hrac2"):
+                    Herni_kamen.AI_tah(platno)
+            else:
+                ... # nemuze hrat, zmena stavu na Hrac1

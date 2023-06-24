@@ -176,13 +176,13 @@ class Herni_kamen(tk.Frame):
 
     def presun_kamen(kamen, nova_pozice):
         hraci = StavHry.get_hraci()
-        aktualni_hrac_statistiky = hraci[StavHry.get_stav()].get_statistiky()
+        aktualni_hrac_statistiky = hraci[StavHry.get_stav()].get_statistiky
         opacny_hrac_statistiky = {}
 
         if(hraci[StavHry.get_stav()] == "Hrac1"):
-            opacny_hrac_statistiky =  hraci["Hrac2"].get_statistiky()
+            opacny_hrac_statistiky =  hraci["Hrac2"].get_statistiky
         else:
-            opacny_hrac_statistiky =  hraci["Hrac1"].get_statistiky()
+            opacny_hrac_statistiky =  hraci["Hrac1"].get_statistiky
 
         puvodni_pozice = kamen._pozice_kamene
         

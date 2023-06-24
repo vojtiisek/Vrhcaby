@@ -176,6 +176,14 @@ class Herni_kamen(tk.Frame):
 
     def presun_kamen(kamen, nova_pozice):
         hraci = StavHry.get_hraci()
+        aktualni_hrac_statistiky = hraci[StavHry.get_stav()].get_statistiky()
+        opacny_hrac_statistiky = {}
+
+        if(hraci[StavHry.get_stav()] == "Hrac1"):
+            opacny_hrac_statistiky =  hraci["Hrac2"].get_statistiky()
+        else:
+            opacny_hrac_statistiky =  hraci["Hrac1"].get_statistiky()
+
         puvodni_pozice = kamen._pozice_kamene
         
         kamen._platno.delete(kamen._tag)
@@ -197,6 +205,10 @@ class Herni_kamen(tk.Frame):
                     nova_pozice = mapa_kamenu[vyhozeny_kamen]
                     Zasobnik.zasobniky[point[0]].pop()
                     Herni_kamen.vyhodit_na_bar(vyhozeny_kamen)
+
+                    aktualni_hrac_statistiky["pocet_vyhozenych_kamenu"] = aktualni_hrac_statistiky["pocet_vyhozenych_kamenu"] +1
+                    opacny_hrac_statistiky["pocet_vyhozenych_svych_kamenu"] = opacny_hrac_statistiky["pocet_vyhozenych_svych_kamenu"] + 1
+
             Bar.presun_z_baru(kamen._pozice_kamene)
             Zasobnik.zasobniky[point[0]].push(kamen)
         elif(point == (99,1) or point == (99,2)): 
@@ -206,6 +218,7 @@ class Herni_kamen(tk.Frame):
                 Domecek.domecek_bily.push(kamen)
             else:
                 Domecek.domecek_cerny.push(kamen)
+            aktualni_hrac_statistiky["pocet_vyvedenych_kamenu"] = aktualni_hrac_statistiky["pocet_vyvedenych_kamenu"] +1
         else:
             if(len(Zasobnik.zasobniky[point[0]].zasobnik) == 1):
                 if(Zasobnik.zasobniky[point[0]].rear()._default_color != kamen._default_color):
@@ -214,6 +227,10 @@ class Herni_kamen(tk.Frame):
                     nova_pozice = mapa_kamenu[vyhozeny_kamen]
                     Zasobnik.zasobniky[point[0]].pop()
                     Herni_kamen.vyhodit_na_bar(vyhozeny_kamen)
+
+                    aktualni_hrac_statistiky["pocet_vyhozenych_kamenu"] = aktualni_hrac_statistiky["pocet_vyhozenych_kamenu"] +1
+                    opacny_hrac_statistiky["pocet_vyhozenych_svych_kamenu"] = opacny_hrac_statistiky["pocet_vyhozenych_svych_kamenu"] + 1
+
             Zasobnik.zasobniky[point[0]].push(kamen)
 
         pozice_pro_vypocet = puvodni_pozice

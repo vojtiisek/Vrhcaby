@@ -108,6 +108,22 @@ class HerniDeska:
         width=kostky_textura_tk.width(), height=kostky_textura_tk.height())
     platno_hra.create_window(830, 360, window=kostky_button)
 
+    ulozit_hru = Image.open("save.png") 
+    ulozit_hru_tk = ImageTk.PhotoImage(ulozit_hru)
+    ulozit_hru_button = Button(platno_hra, image=ulozit_hru_tk,
+                                 command=lambda: save_file())
+    ulozit_hru_button.config(
+        width=ulozit_hru_tk.width(), height=ulozit_hru_tk.height())
+    platno_hra.create_window(830, 480, window=ulozit_hru_button)
+
+    zpet_menu = Image.open("menu.png") 
+    zpet_menu_tk = ImageTk.PhotoImage(zpet_menu)
+    zpet_menu_button = Button(platno_hra, image=zpet_menu_tk,
+                                 command=lambda: HerniDeska.zpet_do_menu())
+    zpet_menu_button.config(
+        width=zpet_menu_tk.width(), height=zpet_menu_tk.height())
+    platno_hra.create_window(830, 600, window=zpet_menu_button)
+
     @classmethod
     def vytvor_pointy(cls):
         Zasobnik.zasobniky = []
@@ -140,7 +156,10 @@ class HerniDeska:
         HerniDeska.vykresli_hraci_desku()
         Hra.pridej_pozice(cls)
         HerniDeska.vytvor_pointy()
-        
+
+    def zpet_do_menu():
+        HerniDeska.platno_hra.pack_forget()
+        HerniDeska.platno_menu.pack()        
         
     @classmethod
     def ukoncit_hru(cls):
@@ -326,10 +345,10 @@ class Hra:
                 Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva} - AI)")
                 if(len(hrac2.get_vysledky) <= 0):
                     Hra.hod_kostkou()
-                root.after(5000, Herni_kamen.AI_tah(Herni_kamen.root, HerniDeska.platno_hra))
+                else:
+                    Herni_kamen.AI_tah(Herni_kamen.root, HerniDeska.platno_hra)
             else:
                 Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva}). Hodte si dvojkostkou!")
-
 
         # Pouze na otestovani ulozeni hry
         #save_file()

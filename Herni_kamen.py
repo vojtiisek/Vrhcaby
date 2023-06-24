@@ -351,15 +351,24 @@ class Herni_kamen(tk.Frame):
                 SoundManager.move_sound.play() # Pustí move.mp3 z soundManageru
 
                 if(StavHry.get_stav() == "Hrac2"):
-                    root.after(5000, Herni_kamen.AI_tah(Herni_kamen.root, platno))
+                    Herni_kamen.AI_tah(Herni_kamen.root, platno)
+
             else:
                 if random_point in hrac2.get_aktualni_pointy:
                     hrac2.get_aktualni_pointy.remove(random_point)
             
                 if(len(hrac2.get_aktualni_pointy) <= 0):
-                    ... # nemuze hrat, zmena stavu na Hrac1
+                    hraci["Hrac1"].get_odehrane_kameny.clear()
+                    hraci["Hrac2"].get_odehrane_kameny.clear()
+                    hraci[StavHry.get_stav()].get_vysledky.clear()
+                    if(StavHry.get_stav() == "Hrac1"):
+                        StavHry.set_stav("Hrac2")
+                        Label_manager.zmena_stavu(platno, "tojejedno", "Hrac1 nemohl hrat, hraje Hrac2.")
+                    else:
+                        StavHry.set_stav("Hrac1")  
+                        Label_manager.zmena_stavu(platno, "tojejedno", "Hrac2 nemohl hrat, hraje Hrac1.")
                 else:
-                    root.after(5000, Herni_kamen.AI_tah(Herni_kamen.root, platno))
+                    Herni_kamen.AI_tah(Herni_kamen.root, platno)
         
         else:
             kamen = bar.rear()
@@ -379,6 +388,14 @@ class Herni_kamen(tk.Frame):
                 SoundManager.move_sound.play() # Pustí move.mp3 z soundManageru
 
                 if(StavHry.get_stav() == "Hrac2"):
-                    root.after(5000, Herni_kamen.AI_tah(Herni_kamen.root, platno))
+                    Herni_kamen.AI_tah(Herni_kamen.root, platno)
             else:
-                ... # nemuze hrat, zmena stavu na Hrac1
+                hraci["Hrac1"].get_odehrane_kameny.clear()
+                hraci["Hrac2"].get_odehrane_kameny.clear()
+                hraci[StavHry.get_stav()].get_vysledky.clear()
+                if(StavHry.get_stav() == "Hrac1"):
+                    StavHry.set_stav("Hrac2")
+                    Label_manager.zmena_stavu(platno, "tojejedno", "Hrac1 nemohl hrat, hraje Hrac2.")
+                else:
+                    StavHry.set_stav("Hrac1")  
+                    Label_manager.zmena_stavu(platno, "tojejedno", "Hrac2 nemohl hrat, hraje Hrac1.")

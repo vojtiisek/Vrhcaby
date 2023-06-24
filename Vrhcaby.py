@@ -31,6 +31,11 @@ def save_file():
     with open("vrhcaby_json.json", "w") as soubor:
         soubor.write(json_objects)
     print("Hra ulozena")
+    load_file() # jen pro test
+
+def load_file():
+    with open("vrhcaby_json.json", "r") as json_file:
+        data = json.load(json_file)
         
 class HerniDeska:
     # Okno
@@ -222,12 +227,14 @@ class Hra:
     def pole_kamenu_k_ulozeni():
         mapa_kamenu = Mapa_kamenu._mapa_kamenu
         pole_kamenu = []
-        # mapa_kamenu.keys()
-        for kamen in mapa_kamenu:
+        
+        for kamen in mapa_kamenu.keys():
             slovnik = {
-                "barva_kamene": kamen.barva_kamene,
-                "historie": kamen.historie,
-                "pozice_kamene": kamen.pozice_kamene
+                str(kamen): {
+                    "barva_kamene": kamen.barva_kamene,
+                    "historie": kamen.historie,
+                    "pozice_kamene": kamen.pozice_kamene
+                }
             }
             pole_kamenu.append(slovnik)        
         return pole_kamenu 

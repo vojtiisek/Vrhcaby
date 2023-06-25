@@ -30,8 +30,6 @@ def save_file():
 
     with open("vrhcaby_json.json", "w") as soubor:
         soubor.write(json_objects)
-    print("Hra ulozena")
-    load_file() # jen pro test
 
 def load_file():
     with open("vrhcaby_json.json", "r") as json_file:
@@ -238,6 +236,47 @@ class Hra:
             }
             pole_kamenu.append(slovnik)        
         return pole_kamenu 
+
+    def hrac1_k_ulozeni():
+        hraci = StavHry.get_hraci()
+        hrac = hraci["Hrac1"]
+        
+        slovnik = {
+            "Hrac1": {
+                "barva": hrac.get_barva,
+                "vysledky_dvojkostky": hrac.get_vysledky,
+                "mozne_tahy": hrac.get_mozne_tahy,
+                "prvni_hod": hrac.get_prvni_hod,
+                "pocet_hozenych_cisel": hrac.get_hozeny_pocet,
+                "odehrane_kameny": hrac.get_odehrane_kameny,
+                "statistiky": hrac.get_statistiky
+
+            }
+        }
+      
+        return slovnik 
+
+    def hrac2_k_ulozeni():
+        hraci = StavHry.get_hraci()
+        hrac = hraci["Hrac2"]
+        
+        slovnik = {
+            "Hrac2": {
+                "barva": hrac.get_barva,
+                "vysledky_dvojkostky": hrac.get_vysledky,
+                "mozne_tahy": hrac.get_mozne_tahy,
+                "prvni_hod": hrac.get_prvni_hod,
+                "pocet_hozenych_cisel": hrac.get_hozeny_pocet,
+                "odehrane_kameny": hrac.get_odehrane_kameny,
+                "statistiky": hrac.get_statistiky
+
+            }
+        }
+
+        if(HerniDeska.get_zvoleny_souper() == "AI"):
+            slovnik["Hrac2"]["aktualni_pointy"] = hrac.get_aktualni_pointy
+      
+        return slovnik 
     
     def loadni_kameny(self, json_file):
         mapa = Mapa_pozic._mapa_pozic
@@ -246,7 +285,11 @@ class Hra:
         data = json.load(open(json_file))
         for i in data:
             list_of_values = list(i.values())
-            mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, list_of_values[0], tuple(list_of_values[2]), list_of_values[1])] = mapa[tuple(list_of_values[2])]
+            mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, list_of_values[0]["barva_kamene"], tuple(list_of_values[0]["pozice_kamene"]), list_of_values[0]["historie"])] = mapa[tuple(list_of_values[0]["pozice_kamene"])]
+
+    def loadni_hrace(self, json_file):
+        
+        ...
 
     def pridej_zakladni_kameny(self):
         mapa = Mapa_pozic._mapa_pozic

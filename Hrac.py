@@ -40,6 +40,9 @@ class Hrac(ABC):
     def get_statistiky(self):
         return self._statistiky   
 
+    def set_statistiky(self, value):
+        self._statistiky   = value
+
     @property
     def get_prvni_hod(self) -> int:
         return self._prvni_hod
@@ -58,3 +61,6 @@ class Hrac(ABC):
     @property
     def get_odehrane_kameny(self) -> list:
         return self._odehrane_kameny
+
+    def set_odehrane_kameny(self, value) -> list:
+        self._odehrane_kameny = value

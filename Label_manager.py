@@ -57,8 +57,10 @@ class Label_manager:
             nick = "Cerny"
 
         if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
-            Label_manager.dvojkostka_labely["bila"].destroy()
-            Label_manager.dvojkostka_labely["cerna"].destroy()
+            if("bila" in Label_manager.dvojkostka_labely):
+                Label_manager.dvojkostka_labely["bila"].destroy()
+            if("cerna" in Label_manager.dvojkostka_labely):
+                Label_manager.dvojkostka_labely["cerna"].destroy()
 
         text = f"{nick} hodil: "
         if(len(vysledek) > 0):
@@ -84,12 +86,23 @@ class Label_manager:
 
 
     def update_domecku(platno : Canvas, barva : str):
+        hraci = StavHry.get_hraci()
+        hrac_dle_barvy = hraci["Hrac1"]
+
+        if(hraci["Hrac1"].get_barva == barva):
+            hrac_dle_barvy = hraci["Hrac1"]
+        else:
+            hrac_dle_barvy = hraci["Hrac2"]
+
+        statistiky = hrac_dle_barvy.get_statistiky
+        pocet_kamenu = statistiky["pocet_vyvedenych_kamenu"]
+
         if(barva == "bila"):
-            domecek_bila_lbl = Label(platno, text=textwrap.fill(f"{len(Domecek.domecek_bily.zasobnik)}/15", 2))
+            domecek_bila_lbl = Label(platno, text=textwrap.fill(f"{pocet_kamenu}/15", 2))
             domecek_bila_lbl.config(font=("Arial", 20), fg="white", bg="#843c24")
             domecek_bila_lbl.place(x=650, y=159)
         else:
-            domecek_cerna_lbl = Label(platno, text=textwrap.fill(f"{len(Domecek.domecek_cerny.zasobnik)}/15", 2))
+            domecek_cerna_lbl = Label(platno, text=textwrap.fill(f"{pocet_kamenu}/15", 2))
             domecek_cerna_lbl.config(font=("Arial", 20), fg="white", bg="#843c24")
             domecek_cerna_lbl.place(x=650, y=459)
 

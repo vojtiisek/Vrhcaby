@@ -43,14 +43,15 @@ class Herni_kamen(tk.Frame):
         else:
             self.kamen_bg = Image.open("error_piece.png")
 
-        self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
-        self.kamen_button= Button(platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
-        self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
+        if(not self._pozice_kamene[0] == 0):
+            self.kamen_bg_tk = ImageTk.PhotoImage(self.kamen_bg)
+            self.kamen_button= Button(platno, image=self.kamen_bg_tk, command=lambda : Herni_kamen.click_event(self), bd=0, highlightthickness=0)
+            self.kamen_button.config(width=self.kamen_bg_tk.width(), height=self.kamen_bg_tk.height())
 
-        mapa = Mapa_pozic._mapa_pozic
-        pozice = mapa.get(self._pozice_kamene)
+            mapa = Mapa_pozic._mapa_pozic
+            pozice = mapa.get(self._pozice_kamene)
 
-        platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
+            platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
 
     @property
     def barva_kamene(self) -> str:

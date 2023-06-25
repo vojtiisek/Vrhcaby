@@ -22,18 +22,21 @@ from Label_manager import Label_manager
 
 root = tk.Tk()
 
-def open_file():
-    return filedialog.askopenfilename(title="Vyberte soubor", filetypes=([("JSON files", "*.json")]))
-
 def save_file():
     json_objects = json.dumps(Hra.pole_kamenu_k_ulozeni(), indent=4)
 
-    with open("vrhcaby_json.json", "w") as soubor:
+    with open("kameny_save.json", "w") as soubor:
         soubor.write(json_objects)
 
-def load_file():
-    with open("vrhcaby_json.json", "r") as json_file:
-        data = json.load(json_file)
+    json_objects = json.dumps(Hra.hrac1_k_ulozeni(), indent=4)
+
+    with open("hrac1_save.json", "w") as soubor:
+        soubor.write(json_objects)
+
+    json_objects = json.dumps(Hra.hrac2_k_ulozeni(), indent=4)
+
+    with open("hrac2_save.json", "w") as soubor:
+        soubor.write(json_objects)
         
 class HerniDeska:
     # Okno
@@ -151,8 +154,28 @@ class HerniDeska:
     def pokracovat_button_click(cls):
         HerniDeska.priprav_hraci_desku(cls)
         
-        file_path = open_file()
-        Hra.loadni_kameny(cls, file_path)
+        Hra.loadni_kameny(cls, "kameny_save.json")
+        Hra.loadni_hrace(cls, "hrac1_save.json", "hrac2_save.json")
+
+        hraci = StavHry.get_hraci()
+        hrac1 = hraci["Hrac1"]
+        hrac2 = hraci["Hrac2"]
+
+        Label_manager.vytvorit_labely_domecku(HerniDeska.platno_hra) 
+        Label_manager.update_domecku(HerniDeska.platno_hra, hrac1.get_barva) 
+        Label_manager.update_domecku(HerniDeska.platno_hra, hrac2.get_barva) 
+
+        if(len(hrac1.get_vysledky) > 0):
+            StavHry.set_stav("Hrac1")
+            Label_manager.zobraz_vysledky_dvojkostky(HerniDeska.platno_hra, hrac1.get_barva, hrac1.get_vysledky)
+            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac1 hraje ({hrac1.get_barva}). Hodte si dvojkostkou!")
+        elif(len(hrac2.get_vysledky) > 0):
+            StavHry.set_stav("Hrac2")
+            Label_manager.zobraz_vysledky_dvojkostky(HerniDeska.platno_hra, hrac2.get_barva, hrac2.get_vysledky)
+            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva}). Hodte si dvojkostkou!")
+        else:
+            StavHry.set_stav("Hrac2")
+            Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva}). Hodte si dvojkostkou!")
 
     def priprav_hraci_desku(cls):
         HerniDeska.shovej_menu()
@@ -273,8 +296,8 @@ class Hra:
             }
         }
 
-        if(HerniDeska.get_zvoleny_souper() == "AI"):
-            slovnik["Hrac2"]["aktualni_pointy"] = hrac.get_aktualni_pointy
+        #if(HerniDeska.get_zvoleny_souper() == "AI"):
+        #    slovnik["Hrac2"]["aktualni_pointy"] = hrac.get_aktualni_pointy
       
         return slovnik 
     
@@ -287,9 +310,51 @@ class Hra:
             list_of_values = list(i.values())
             mapa_kamenu[Herni_kamen(HerniDeska.platno_hra, list_of_values[0]["barva_kamene"], tuple(list_of_values[0]["pozice_kamene"]), list_of_values[0]["historie"])] = mapa[tuple(list_of_values[0]["pozice_kamene"])]
 
-    def loadni_hrace(self, json_file):
-        
-        ...
+    def loadni_hrace(self, json_file1, json_file2):
+        hraci = StavHry.get_hraci()
+
+        try:
+            data = json.load(open(json_file1))
+        except:
+            messagebox.showinfo("Informace", f"Vyskytla se chyba pri ziskavani dat Hrace1")
+        try:
+            hraci["Hrac1"] = Konzolovy_Hrac(data["Hrac1"]["barva"])
+
+            opacna_barva = ""
+            if(data["Hrac1"]["barva"] == "bila"):
+                opacna_barva = "cerna"
+            else:
+                opacna_barva = "bila"
+
+            if(HerniDeska.get_zvoleny_souper() == "AI"):
+                hraci["Hrac2"] = AI_Hrac(opacna_barva)
+            else:
+                hraci["Hrac2"] = Konzolovy_Hrac(opacna_barva)
+
+            hraci["Hrac1"].set_vysledky(data["Hrac1"]["vysledky_dvojkostky"])
+            hraci["Hrac1"].set_mozne_tahy(data["Hrac1"]["mozne_tahy"])
+            hraci["Hrac1"].set_prvni_hod(data["Hrac1"]["prvni_hod"])
+            hraci["Hrac1"].set_hozeny_pocet(data["Hrac1"]["pocet_hozenych_cisel"])
+            hraci["Hrac1"].set_odehrane_kameny(data["Hrac1"]["odehrane_kameny"])
+            hraci["Hrac1"].set_statistiky(data["Hrac1"]["statistiky"])
+        except:
+            messagebox.showinfo("Informace", f"Vyskytla se chyba pri nacitani Hrace1")
+
+        try:
+            data = json.load(open(json_file2))
+        except:
+            messagebox.showinfo("Informace", f"Vyskytla se chyba pri ziskavani dat Hrace1")
+        try:
+            hraci["Hrac2"].set_vysledky(data["Hrac2"]["vysledky_dvojkostky"])
+            hraci["Hrac2"].set_mozne_tahy(data["Hrac2"]["mozne_tahy"])
+            hraci["Hrac2"].set_prvni_hod(data["Hrac2"]["prvni_hod"])
+            hraci["Hrac2"].set_hozeny_pocet(data["Hrac2"]["pocet_hozenych_cisel"])
+            hraci["Hrac2"].set_odehrane_kameny(data["Hrac2"]["odehrane_kameny"])
+            hraci["Hrac2"].set_statistiky(data["Hrac2"]["statistiky"])
+            #if(HerniDeska.get_zvoleny_souper() == "AI"):
+            #    hraci["Hrac2"].set_aktualni_pointy(data["Hrac2"]["aktualni_pointy"])
+        except:
+            messagebox.showinfo("Informace", f"Vyskytla se chyba pri nacitani Hrace2")
 
     def pridej_zakladni_kameny(self):
         mapa = Mapa_pozic._mapa_pozic

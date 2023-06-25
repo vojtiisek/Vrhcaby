@@ -4,7 +4,6 @@ class StavHry:
 
     def set_stav(value : str):
         StavHry._stav = value
-        print(f"Novy stav input: {value}, nastaveny stav: {StavHry._stav}")
 
     def get_stav():
         return StavHry._stav

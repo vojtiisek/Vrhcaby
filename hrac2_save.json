@@ -3,12 +3,11 @@
         "barva": "bila",
         "vysledky_dvojkostky": [],
         "mozne_tahy": [],
-        "prvni_hod": 4,
-        "pocet_hozenych_cisel": 4,
-        "odehrane_kameny": [],
+        "prvni_hod": 1,
+        "pocet_hozenych_cisel": 0,
         "statistiky": {
-            "pocet_vyvedenych_kamenu": 0,
-            "pocet_vyhozenych_kamenu": 0,
+            "pocet_vyvedenych_kamenu": 1,
+            "pocet_vyhozenych_kamenu": 1,
             "pocet_vyhozenych_svych_kamenu": 0,
             "prumerna_zivotnost_kamene": 0.0
         }

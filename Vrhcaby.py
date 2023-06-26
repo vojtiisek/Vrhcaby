@@ -276,7 +276,6 @@ class Hra:
                 "mozne_tahy": hrac.get_mozne_tahy,
                 "prvni_hod": hrac.get_prvni_hod,
                 "pocet_hozenych_cisel": hrac.get_hozeny_pocet,
-                "odehrane_kameny": hrac.get_odehrane_kameny,
                 "statistiky": hrac.get_statistiky
 
             }
@@ -295,14 +294,10 @@ class Hra:
                 "mozne_tahy": hrac.get_mozne_tahy,
                 "prvni_hod": hrac.get_prvni_hod,
                 "pocet_hozenych_cisel": hrac.get_hozeny_pocet,
-                "odehrane_kameny": hrac.get_odehrane_kameny,
                 "statistiky": hrac.get_statistiky
 
             }
         }
-
-        #if(HerniDeska.get_zvoleny_souper() == "AI"):
-        #    slovnik["Hrac2"]["aktualni_pointy"] = hrac.get_aktualni_pointy
       
         return slovnik 
     
@@ -340,7 +335,6 @@ class Hra:
             hraci["Hrac1"].set_mozne_tahy(data["Hrac1"]["mozne_tahy"])
             hraci["Hrac1"].set_prvni_hod(data["Hrac1"]["prvni_hod"])
             hraci["Hrac1"].set_hozeny_pocet(data["Hrac1"]["pocet_hozenych_cisel"])
-            hraci["Hrac1"].set_odehrane_kameny(data["Hrac1"]["odehrane_kameny"])
             hraci["Hrac1"].set_statistiky(data["Hrac1"]["statistiky"])
         except:
             messagebox.showinfo("Informace", f"Vyskytla se chyba pri nacitani Hrace1")
@@ -354,10 +348,7 @@ class Hra:
             hraci["Hrac2"].set_mozne_tahy(data["Hrac2"]["mozne_tahy"])
             hraci["Hrac2"].set_prvni_hod(data["Hrac2"]["prvni_hod"])
             hraci["Hrac2"].set_hozeny_pocet(data["Hrac2"]["pocet_hozenych_cisel"])
-            hraci["Hrac2"].set_odehrane_kameny(data["Hrac2"]["odehrane_kameny"])
             hraci["Hrac2"].set_statistiky(data["Hrac2"]["statistiky"])
-            #if(HerniDeska.get_zvoleny_souper() == "AI"):
-            #    hraci["Hrac2"].set_aktualni_pointy(data["Hrac2"]["aktualni_pointy"])
         except:
             messagebox.showinfo("Informace", f"Vyskytla se chyba pri nacitani Hrace2")
 

@@ -6,6 +6,7 @@ from PIL import ImageTk, Image
 from pathlib import Path
 from CalculateTahy import CalculateTahy
 import random
+import time
 
 from Mapa_pozic import Mapa_pozic
 from Mapa_kamenu import Mapa_kamenu
@@ -19,6 +20,7 @@ from Dvojkostka import Dvojkostka
 
 class Herni_kamen(tk.Frame):
     root = None
+    posledni_cas_kliknuti = 0
 
     zvoleny_kamen = None
     barva_hrace = None
@@ -52,6 +54,7 @@ class Herni_kamen(tk.Frame):
             pozice = mapa.get(self._pozice_kamene)
 
             platno.create_window(pozice.get_souradnice[0], pozice.get_souradnice[1], window=self.kamen_button, tags=self._tag)
+            #self.kamen_button.bind('<<Double-Button-1>>', lambda: Herni_kamen.zobraz_historii(self))
 
     @property
     def barva_kamene(self) -> str:
@@ -81,7 +84,15 @@ class Herni_kamen(tk.Frame):
         else:
             self._historie.append("Bar")
 
+    def zobraz_historii(self):
+        messagebox.showinfo(f"Historie zvoleného kamene", f"{self._historie}")
+
     def click_event(self):
+        aktualni_cas_kliknuti = time.time()
+        if((Herni_kamen.posledni_cas_kliknuti > 0) and (aktualni_cas_kliknuti - Herni_kamen.posledni_cas_kliknuti < 0.2)):
+            self.zobraz_historii()
+        Herni_kamen.posledni_cas_kliknuti = aktualni_cas_kliknuti
+
         hraci = StavHry.get_hraci()
         if(StavHry.get_stav() == "Hrac1" or StavHry.get_stav() == "Hrac2"):
             if(self._default_color.__eq__(hraci[StavHry.get_stav()].get_barva)):

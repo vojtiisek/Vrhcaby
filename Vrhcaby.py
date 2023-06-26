@@ -130,6 +130,13 @@ class HerniDeska:
         width=zpet_menu_tk.width(), height=zpet_menu_tk.height())
     platno_hra.create_window(830, 600, window=zpet_menu_button)
 
+
+    pozadi_konec_hry = ImageTk.PhotoImage(pozadi_obrazek)
+    # Platno - konec hry
+    platno_konec_hry= tk.Canvas(hra, width=964, height=669)
+    platno_konec_hry.create_image(0, 0, image=pozadi_konec_hry, anchor=tk.NW)
+    platno_konec_hry.pack_forget()
+
     @classmethod
     def vytvor_pointy(cls):
         Zasobnik.zasobniky = []
@@ -189,8 +196,16 @@ class HerniDeska:
         HerniDeska.vytvor_pointy()
 
     def zpet_do_menu():
+        #HerniDeska.platno_hra.pack_forget()
+        #HerniDeska.platno_menu.pack()  
+        HerniDeska.konec_hry_platno()
+        
+    def konec_hry_platno():
         HerniDeska.platno_hra.pack_forget()
-        HerniDeska.platno_menu.pack()        
+        HerniDeska.platno_konec_hry.pack()  
+
+        Label_manager.zobraz_vyherce(HerniDeska.platno_konec_hry)
+        Label_manager.zobraz_statistiky(HerniDeska.platno_konec_hry)
         
     @classmethod
     def ukoncit_hru(cls):

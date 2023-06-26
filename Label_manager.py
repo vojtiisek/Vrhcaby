@@ -114,3 +114,44 @@ class Label_manager:
         domecek_cerna_lbl = Label(platno, text=textwrap.fill("0/15", 2))
         domecek_cerna_lbl.config(font=("Arial", 20), fg="white", bg="#843c24")
         domecek_cerna_lbl.place(x=650, y=459)
+
+    def zobraz_vyherce(platno : Canvas):
+        vyherce = "Hrac1" # musi se dodelat 
+        vyherce_lbl = Label(platno, text=f"Vyhral: {vyherce}")
+        vyherce_lbl.config(font=("Arial", 20), fg="white", bg="#843c24")
+        vyherce_lbl.place(x=400, y=150)
+
+    def zobraz_statistiky(platno : Canvas):
+
+        #"pocet_vyvedenych_kamenu" : 0,
+        #"pocet_vyhozenych_kamenu" : 0,
+        #"pocet_vyhozenych_svych_kamenu" : 0,
+        #"prumerna_zivotnost_kamene" : 0.0} 
+
+
+        hraci = StavHry.get_hraci()
+        hrac1 = hraci["Hrac1"]
+        hrac2 = hraci["Hrac2"]
+
+        hrac1_statistiky = hrac1.get_statistiky
+
+        hrac1_pocet_vyvedenych_kamenu = hrac1_statistiky["pocet_vyvedenych_kamenu"]
+        hrac1_pocet_vyhozenych_kamenu = hrac1_statistiky["pocet_vyhozenych_kamenu"]
+        hrac1_pocet_vyhozenych_svych_kamenu = hrac1_statistiky["pocet_vyhozenych_svych_kamenu"]
+        hrac1_prumerna_zivotnost_kamene = hrac1_statistiky["prumerna_zivotnost_kamene"]
+
+        hrac1_statistiky_lbl = Label(platno, text=f"Statistiky Hrace1 ({hrac1.get_barva}):\nPocet vyvedenych kamenu: {hrac1_pocet_vyvedenych_kamenu}\nPocet vyhozenych kamenu nepratele: {hrac1_pocet_vyhozenych_kamenu}\nPocet kamenu na baru: {hrac1_pocet_vyhozenych_svych_kamenu}\nPrumerna zivotnost kamene: {hrac1_prumerna_zivotnost_kamene}")
+        hrac1_statistiky_lbl.config(font=("Arial", 18), fg="white", bg="#843c24")
+        hrac1_statistiky_lbl.place(x=20, y=250)
+
+
+        hrac2_statistiky = hrac1.get_statistiky
+
+        hrac2_pocet_vyvedenych_kamenu = hrac2_statistiky["pocet_vyvedenych_kamenu"]
+        hrac2_pocet_vyhozenych_kamenu = hrac2_statistiky["pocet_vyhozenych_kamenu"]
+        hrac2_pocet_vyhozenych_svych_kamenu = hrac2_statistiky["pocet_vyhozenych_svych_kamenu"]
+        hrac2_prumerna_zivotnost_kamene = hrac2_statistiky["prumerna_zivotnost_kamene"]
+
+        hrac2_statistiky_lbl = Label(platno, text=f"Statistiky Hrace2 ({hrac2.get_barva}):\nPocet vyvedenych kamenu: {hrac2_pocet_vyvedenych_kamenu}\nPocet vyhozenych kamenu nepratele: {hrac2_pocet_vyhozenych_kamenu}\nPocet kamenu na baru: {hrac2_pocet_vyhozenych_svych_kamenu}\nPrumerna zivotnost kamene: {hrac2_prumerna_zivotnost_kamene}")
+        hrac2_statistiky_lbl.config(font=("Arial", 18), fg="white", bg="#843c24")
+        hrac2_statistiky_lbl.place(x=510, y=250)

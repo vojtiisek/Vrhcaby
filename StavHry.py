@@ -3,6 +3,7 @@ class StavHry:
     _hraci = {}
 
     def set_stav(value : str):
+        print(f"New stav: {value}")
         StavHry._stav = value
 
     def get_stav():

@@ -1,13 +1,16 @@
 {
     "Hrac1": {
         "barva": "cerna",
-        "vysledky_dvojkostky": [],
+        "vysledky_dvojkostky": [
+            5,
+            4
+        ],
         "mozne_tahy": [],
-        "prvni_hod": 4,
-        "pocet_hozenych_cisel": 0,
+        "prvni_hod": 1,
+        "pocet_hozenych_cisel": 2,
         "odehrane_kameny": [],
         "statistiky": {
-            "pocet_vyvedenych_kamenu": 1,
+            "pocet_vyvedenych_kamenu": 0,
             "pocet_vyhozenych_kamenu": 0,
             "pocet_vyhozenych_svych_kamenu": 0,
             "prumerna_zivotnost_kamene": 0.0

@@ -152,6 +152,7 @@ class HerniDeska:
 
     @classmethod
     def pokracovat_button_click(cls):
+        Dvojkostka.zvoleny_souper = HerniDeska.get_zvoleny_souper()
         HerniDeska.priprav_hraci_desku(cls)
         
         Hra.loadni_kameny(cls, "kameny_save.json")
@@ -165,6 +166,8 @@ class HerniDeska:
         Label_manager.update_domecku(HerniDeska.platno_hra, hrac1.get_barva) 
         Label_manager.update_domecku(HerniDeska.platno_hra, hrac2.get_barva) 
 
+        print(hrac1.get_vysledky)
+        print(hrac2.get_vysledky)
         if(len(hrac1.get_vysledky) > 0):
             StavHry.set_stav("Hrac1")
             Label_manager.zobraz_vysledky_dvojkostky(HerniDeska.platno_hra, hrac1.get_barva, hrac1.get_vysledky)
@@ -176,6 +179,8 @@ class HerniDeska:
         else:
             StavHry.set_stav("Hrac2")
             Label_manager.zmena_stavu(HerniDeska.platno_hra, "",f"Hrac2 hraje ({hrac2.get_barva}). Hodte si dvojkostkou!")
+
+        Hra.roztrid_kameny_do_zasobniku(cls)
 
     def priprav_hraci_desku(cls):
         HerniDeska.shovej_menu()

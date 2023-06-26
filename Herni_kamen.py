@@ -165,9 +165,14 @@ class Herni_kamen(tk.Frame):
             hraci["Hrac2"].get_odehrane_kameny.clear()
             if(StavHry.get_stav() == "Hrac1"):
                 StavHry.set_stav("Hrac2")
+                print("tady0")
                 if(Dvojkostka.zvoleny_souper == "AI"):
+
                     hraci[StavHry.get_stav()].set_vysledky(Dvojkostka.hod_dvojkostkou())
+                    print("tady1")
                     Herni_kamen.AI_tah(Herni_kamen.root, self._platno)
+                    print("tady2")
+
             else:
                 StavHry.set_stav("Hrac1")      
 

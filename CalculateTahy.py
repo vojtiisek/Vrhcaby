@@ -120,6 +120,8 @@ class CalculateTahy:
     def splnuje_podminky(barva_hrace : str) -> None:
         if(barva_hrace == "bila"):
             for zasobnik in CalculateTahy.vysledne_zasobniky_bily:
+                if(zasobnik > 25 or zasobnik < 1):
+                    continue
                 if(zasobnik == 25):
                     CalculateTahy.mozne_tahy.append(Domecek.domecek_bily)
                 else:
@@ -133,6 +135,8 @@ class CalculateTahy:
                         pass
         else:
             for zasobnik in CalculateTahy.vysledne_zasobniky_cerny:
+                if(zasobnik > 24 or zasobnik < 0):
+                    continue
                 if(zasobnik == 0):
                     CalculateTahy.mozne_tahy.append(Domecek.domecek_cerny)
                 else:
